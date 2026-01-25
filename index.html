@@ -728,19 +728,19 @@
                 flex-direction: column;
                 padding: 2rem;
                 box-shadow: var(--shadow);
-                transform: translateY(-100%);
-                opacity: 0;
-                transition: var(--transition);
+                transform: translateX(-100%);
+                opacity: 1;
+                transition: transform 0.3s ease;
                 z-index: 999;
                 gap: 1.5rem;
-                height: calc(100vh - 70px);
+                height: auto;
+                max-height: calc(100vh - 70px);
                 overflow-y: auto;
                 -webkit-overflow-scrolling: touch;
             }
 
             .nav-list.active {
-                transform: translateY(0);
-                opacity: 1;
+                transform: translateX(0);
             }
 
             .nav-list li {
@@ -752,6 +752,20 @@
                 display: block;
                 padding: 0.75rem;
                 font-size: 1.1rem;
+            }
+            
+            /* OCULTAR FOTOS EN MÓVIL */
+            .profile-img-container {
+                display: none !important;
+            }
+            
+            .hero-container {
+                grid-template-columns: 1fr !important;
+                text-align: center;
+            }
+            
+            .hero-content {
+                order: 1;
             }
             
             .hero-content h1 {
@@ -1090,7 +1104,7 @@
             updateImagesForTheme();
         });
         
-        // Menú móvil
+        // Menú móvil - CÓDIGO CORREGIDO (sin bloquear el scroll)
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const navList = document.getElementById('navList');
         
@@ -1101,9 +1115,7 @@
                 ? '<i class="fas fa-times"></i>' 
                 : '<i class="fas fa-bars"></i>';
             mobileMenuBtn.setAttribute('aria-label', isActive ? 'Cerrar menú' : 'Abrir menú');
-            
-            // Prevenir scroll del body cuando el menú está abierto
-            document.body.style.overflow = isActive ? 'hidden' : '';
+            // NOTA: Se eliminó la línea que deshabilitaba el scroll
         });
         
         // Cerrar menú al hacer clic en un enlace
@@ -1112,7 +1124,7 @@
                 navList.classList.remove('active');
                 mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
                 mobileMenuBtn.setAttribute('aria-label', 'Abrir menú');
-                document.body.style.overflow = '';
+                // NOTA: Se eliminó la línea que deshabilitaba el scroll
             });
         });
         
@@ -1122,7 +1134,7 @@
                 navList.classList.remove('active');
                 mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
                 mobileMenuBtn.setAttribute('aria-label', 'Abrir menú');
-                document.body.style.overflow = '';
+                // NOTA: Se eliminó la línea que deshabilitaba el scroll
             }
         });
         
