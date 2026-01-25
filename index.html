@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHIMI - Solucionador de Problemas Tecnológicos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💻</text></svg>">
+    <style>
+        /* ===== VARIABLES CSS - Modo Oscuro por defecto ===== */
+        :root {
+            /* Colores modo oscuro */
+            --primary-color: #3b82f6;
+            --primary-dark: #2563eb;
+            --accent-color: #06b6d4;
+            --accent-dark: #0891b2;
+            --text-color: #e2e8f0;
+            --text-light: #94a3b8;
+            --bg-color: #0f172a;
+            --bg-light: #1e293b;
+            --bg-dark: #020617;
+            --border-color: #334155;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+            --border-radius: 8px;
+            --transition: all 0.3s ease;
+            --max-width: 1200px;
+        }
+
+        /* Variables modo claro - se activan con clase */
+        .light-mode {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --accent-color: #06b6d4;
+            --accent-dark: #0891b2;
+            --text-color: #334155;
+            --text-light: #64748b;
+            --bg-color: #ffffff;
+            --bg-light: #f8fafc;
+            --bg-dark: #0f172a;
+            --border-color: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* ===== RESET Y ESTILOS GLOBALES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            width: 100%;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        section {
+            padding: 5rem 0;
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background-color: var(--bg-light);
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-accent {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .btn-accent:hover {
+            background-color: var(--accent-dark);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 3rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            border-radius: 2px;
+        }
+
+        .hidden {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== HEADER Y NAVEGACIÓN ===== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .light-mode header {
+            background-color: rgba(255, 255, 255, 0.95);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        /* Logo oscuro por defecto */
+        .logo-dark {
+            display: flex;
+        }
+
+        .logo-light {
+            display: none;
+        }
+
+        .light-mode .logo-dark {
+            display: none;
+        }
+
+        .light-mode .logo-light {
+            display: flex;
+        }
+
+        .logo-dark span {
+            color: var(--accent-color);
+        }
+
+        .logo-light span {
+            color: var(--primary-color);
+        }
+
+        .nav-list {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            font-weight: 600;
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            color: var(--accent-color);
+        }
+
+        /* Botón de tema */
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--bg-light);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-color);
+            cursor: pointer;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            padding-top: 8rem;
+            padding-bottom: 5rem;
+            background: linear-gradient(135deg, #0c4a6e 0%, #082f49 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .light-mode .hero {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        }
+
+        .hero-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        @media (min-width: 768px) {
+            .hero-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .hero-content h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+        }
+
+        .tagline {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .highlight {
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+
+        .light-mode .highlight {
+            color: var(--primary-color);
+        }
+
+        .profile-img-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .profile-img {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--bg-light);
+            box-shadow: var(--shadow-lg);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .profile-img-dark {
+            position: absolute;
+            opacity: 1;
+        }
+
+        .light-mode .profile-img-dark {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        .profile-img-light {
+            position: absolute;
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        .light-mode .profile-img-light {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* ===== ENFOQUE SECTION ===== */
+        .approach {
+            background-color: var(--bg-dark);
+        }
+
+        .light-mode .approach {
+            background-color: var(--bg-light);
+        }
+
+        .approach-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .approach-content {
+            background-color: var(--bg-light);
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .approach-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .callout-box {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .callout-box h3 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        /* ===== PROYECTOS SECTION ===== */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (min-width: 768px) {
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .projects-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .project-card {
+            background-color: var(--bg-light);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--border-color);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .project-icon {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+        }
+
+        .project-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-content h3 {
+            margin-bottom: 1rem;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .tech-tag {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: var(--primary-color);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .light-mode .tech-tag {
+            background-color: rgba(37, 99, 235, 0.1);
+        }
+
+        .project-buttons {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: auto;
+        }
+
+        .project-buttons .btn {
+            flex: 1;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+
+        .section-cta {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        /* ===== CONTACTO SECTION ===== */
+        .contact {
+            background-color: var(--bg-dark);
+        }
+
+        .light-mode .contact {
+            background-color: var(--bg-light);
+        }
+
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 3rem 0;
+        }
+
+        @media (min-width: 768px) {
+            .contact-buttons {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+
+        .contact-buttons .btn {
+            min-width: 200px;
+        }
+
+        .response-time {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background-color: #020617;
+            color: white;
+            padding: 3rem 0 2rem;
+        }
+
+        .light-mode footer {
+            background-color: var(--bg-dark);
+        }
+
+        .footer-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.875rem;
+            margin-top: 2rem;
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.75rem;
+            }
+
+            section {
+                padding: 3rem 0;
+            }
+
+            .hero {
+                padding-top: 6rem;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .theme-toggle {
+                margin-left: auto;
+                margin-right: 1rem;
+            }
+
+            .nav-list {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: var(--bg-color);
+                flex-direction: column;
+                padding: 2rem;
+                box-shadow: var(--shadow);
+                transform: translateY(-100%);
+                opacity: 0;
+                transition: var(--transition);
+                z-index: 999;
+            }
+
+            .nav-list.active {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            .nav-list li {
+                margin: 0.5rem 0;
+            }
+
+            .approach-content, .callout-box {
+                padding: 1.5rem;
+            }
+
+            .project-content {
+                padding: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header y Navegación -->
+    <header>
+        <div class="container header-container">
+            <!-- Logo modo oscuro (visible por defecto) -->
+            <a href="#" class="logo logo-dark">
+                <i class="fas fa-code"></i>
+                <span>CHIMI</span>
+            </a>
+            
+            <!-- Logo modo claro (oculto por defecto) -->
+            <a href="#" class="logo logo-light">
+                <i class="fas fa-code" style="color: #2563eb;"></i>
+                <span>CHIMI</span>
+            </a>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul class="nav-list" id="navList">
+                <li><a href="#hero" class="nav-link">Inicio</a></li>
+                <li><a href="#approach" class="nav-link">Mi Enfoque</a></li>
+                <li><a href="#projects" class="nav-link">Proyectos</a></li>
+                <li><a href="#contact" class="nav-link">Contacto</a></li>
+                <li>
+                    <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+                        <i class="fas fa-sun"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="container hero-container">
+            <div class="hero-content hidden">
+                <h1>CHIMI</h1>
+                <p class="tagline">Solucionador de problemas tecnológicos</p>
+                <p>Transformo desafíos complejos en <span class="highlight">soluciones digitales efectivas</span>. No solo escribo código, sino que entiendo las necesidades de negocio y creo tecnología que realmente funciona.</p>
+                <p>Especializado en desarrollo full-stack, automatización de procesos y optimización de sistemas existentes.</p>
+                <div style="margin-top: 2rem;">
+                    <a href="#contact" class="btn btn-primary" style="margin-right: 1rem;">Contactar Ahora</a>
+                    <a href="#projects" class="btn btn-secondary">Ver Proyectos</a>
+                </div>
+            </div>
+            
+            <div class="profile-img-container hidden">
+                <!-- Imagen para modo oscuro -->
+                <img src="foto-presentacion-oscuro.jpeg" alt="CHIMI - Foto de perfil modo oscuro" class="profile-img profile-img-dark">
+                
+                <!-- Imagen para modo claro -->
+                <img src="foto-presentacion-claro.png" alt="CHIMI - Foto de perfil modo claro" class="profile-img profile-img-light">
+            </div>
+        </div>
+    </section>
+
+    <!-- Mi Enfoque Section -->
+    <section class="approach" id="approach">
+        <div class="container approach-container">
+            <h2 class="section-title hidden">Mi Enfoque</h2>
+            
+            <div class="approach-content hidden">
+                <div class="approach-icon">
+                    <i class="fas fa-bullseye"></i>
+                </div>
+                <h3>Resolviendo problemas, no solo escribiendo código</h3>
+                <p>Mi filosofía de trabajo se basa en entender primero el <span class="highlight">problema de negocio</span> antes de pensar en la solución tecnológica. Escucho, analizo y luego desarrollo.</p>
+                <p>Como desarrollador full-stack, tengo la capacidad de ver el panorama completo: desde la experiencia del usuario hasta la infraestructura del servidor, asegurando que cada parte de la solución funcione en armonía.</p>
+                <p>Creo que la mejor tecnología es la que <span class="highlight">resuelve problemas reales</span> de manera eficiente, sostenible y escalable. Por eso, me enfoco en crear soluciones que sean mantenibles a largo plazo y que realmente agreguen valor.</p>
+            </div>
+            
+            <div class="callout-box hidden">
+                <h3>¿Tienes un problema tecnológico que resolver?</h3>
+                <p>Hablemos sobre cómo puedo ayudarte a transformar ese desafío en una ventaja competitiva.</p>
+                <a href="#contact" class="btn btn-accent" style="margin-top: 1rem;">Conversemos sobre tu proyecto</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proyectos en Vivo Section -->
+    <section class="projects" id="projects">
+        <div class="container">
+            <h2 class="section-title hidden">Proyectos en Vivo</h2>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto 3rem;" class="hidden">Estos son algunos de los proyectos que he desarrollado para resolver problemas específicos de negocio.</p>
+            
+            <div class="projects-grid">
+                <!-- Proyecto 1 - Generador de Menús para Restaurantes -->
+                <div class="project-card hidden">
+                    <div class="project-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>MenuGenius - Generador de Menús</h3>
+                        <p>Solución que automatiza la creación de menús digitales e impresos para restaurantes. Resuelve el problema de la falta de actualización constante en cartas físicas y la dificultad para gestionar cambios de precios y disponibilidad.</p>
+                        
+                        <div class="project-tech">
+                            <span class="tech-tag">HTML</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">CSS</span>
+                        </div>
+                        
+                        <div class="project-buttons">
+                            <a href="https://chimigb.github.io/Generador-de-menus-digitales/" class="btn btn-primary">Probar Demo</a>
+                            <a href="https://github.com/CHIMIgb/Generador-de-menus-digitales" class="btn btn-secondary">Ver Código</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Proyecto 2 - Sistema de Tickets y Seguimiento -->
+                <div class="project-card hidden">
+                    <div class="project-icon">
+                        <i class="fas fa-ticket-alt"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>TicketFlow - Gestor de Tickets</h3>
+                        <p>Sistema inteligente para crear, clasificar y dar seguimiento a tickets de soporte o incidencias. Resuelve el problema de la pérdida de tickets, falta de priorización y dificultad para medir tiempos de respuesta en equipos de soporte.</p>
+                        
+                        <div class="project-tech">
+                            <span class="tech-tag">HTML</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">CSS</span>
+                        </div>
+                        
+                        <div class="project-buttons">
+                            <a href="https://chimigb.github.io/sistema-de-tickets/" class="btn btn-primary">Probar Demo</a>
+                            <a href="https://github.com/CHIMIgb/sistema-de-tickets" class="btn btn-secondary">Ver Código</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Proyecto 3 - Creador de Paletas de Colores -->
+                <div class="project-card hidden">
+                    <div class="project-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>ColorExtract - Generador de Paletas</h3>
+                        <p>Aplicación web que analiza imágenes subidas por usuarios y extrae paletas de colores armónicas. Resuelve el problema de diseñadores y desarrolladores para encontrar combinaciones de colores coherentes a partir de imágenes de referencia.</p>
+                        
+                        <div class="project-tech">
+                            <span class="tech-tag">HTML</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">CSS</span>
+                            <span class="tech-tag">Analisis de imagen</span>
+                        </div>
+                        
+                        <div class="project-buttons">
+                            <a href="https://chimigb.github.io/generar-paletas-de-colores/" class="btn btn-primary">Probar Demo</a>
+                            <a href="https://github.com/CHIMIgb/generar-paletas-de-colores" class="btn btn-secondary">Ver Código</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto Section -->
+    <section class="contact" id="contact">
+        <div class="container contact-container">
+            <h2 class="section-title hidden">Transformemos tu idea en realidad</h2>
+            <p class="hidden" style="max-width: 600px; margin: 0 auto 2rem;">¿Tienes un proyecto en mente o un problema tecnológico que resolver? Estoy listo para colaborar contigo y crear la solución perfecta.</p>
+            
+            <div class="contact-buttons hidden">
+                <a href="mailto:chimisolucionesdigitales@gmail.com?subject=Consulta%20desde%20portafolio" class="btn btn-primary">
+                    <i class="fas fa-envelope"></i> Enviar Email
+                </a>
+                
+                <a href="https://wa.me/523231013548?text=Hola,%20vi%20tu%20portafolio%20y%20me%20gustaría%20conversar%20sobre%20un%20proyecto." target="_blank" class="btn btn-primary" style="background-color: #25D366;">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </a>
+            </div>
+            
+            <p class="response-time hidden">Generalmente respondo en menos de 2 horas.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-logo">
+                <i class="fas fa-code"></i>
+                <span>CHIMI</span>
+            </div>
+            
+            <p style="margin-top: 1rem; color: rgba(255, 255, 255, 0.8);">Soluciones Digitales</p>            
+            <p class="copyright">
+                &copy; <span id="currentYear"></span> CHIMI. Desarrollado con <i class="fas fa-heart" style="color: #ef4444;"></i> y código.
+            </p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Año actual para el footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        // Sistema de tema oscuro/claro con cambio de imagen
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Comprobar tema guardado en localStorage o usar modo oscuro por defecto
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        if (savedTheme === 'light') {
+            body.classList.add('light-mode');
+            themeIcon.classList.remove('fa-sun');
+            themeIcon.classList.add('fa-moon');
+        }
+        
+        // Función para cambiar las imágenes según el tema
+        function updateImagesForTheme() {
+            // Las imágenes ya están en el HTML con clases que las muestran/ocultan
+            // CSS se encarga de la transición con opacidad
+            console.log('Tema cambiado a:', body.classList.contains('light-mode') ? 'claro' : 'oscuro');
+        }
+        
+        // Alternar tema
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('light-mode');
+            
+            if (body.classList.contains('light-mode')) {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            } else {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            }
+            
+            // Actualizar imágenes según el tema
+            updateImagesForTheme();
+        });
+        
+        // Menú móvil
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navList = document.getElementById('navList');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navList.classList.toggle('active');
+            mobileMenuBtn.innerHTML = navList.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Cerrar menú al hacer clic en un enlace
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navList.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+        
+        // Animaciones al hacer scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        }, observerOptions);
+        
+        // Observar todos los elementos con clase 'hidden'
+        document.querySelectorAll('.hidden').forEach(element => {
+            observer.observe(element);
+        });
+        
+        // Efecto de sombra en el header al hacer scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2)';
+                if (body.classList.contains('light-mode')) {
+                    header.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)';
+                }
+            } else {
+                header.style.boxShadow = 'none';
+            }
+        });
+        
+        // Prevenir envío de formularios (si los hubiera)
+        document.querySelectorAll('a[href="#"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+            });
+        });
+        
+        // Inicializar imágenes según el tema actual
+        updateImagesForTheme();
+    </script>
+</body>
+</html>
