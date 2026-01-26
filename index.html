@@ -278,7 +278,7 @@
 
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 30px;
         }
 
@@ -288,6 +288,9 @@
             overflow: hidden;
             transition: var(--transition);
             border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
         }
 
         .project-card:hover {
@@ -296,36 +299,35 @@
             border-color: var(--accent-primary);
         }
 
-        .project-img {
-            height: 200px;
-            width: 100%;
-            background-color: #333;
+        .project-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(0, 194, 255, 0.1), transparent);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
+            margin-bottom: 20px;
             color: var(--accent-primary);
-            font-size: 50px;
-        }
-
-        .project-content {
-            padding: 25px;
+            font-size: 24px;
         }
 
         .project-content h3 {
             font-size: 1.5rem;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         .project-content p {
             color: var(--accent-secondary);
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            flex-grow: 1;
         }
 
         .project-tech {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .tech-tag {
@@ -336,23 +338,10 @@
             font-size: 0.85rem;
         }
 
-        .project-links {
+        .project-buttons {
             display: flex;
             gap: 15px;
-        }
-
-        .project-link {
-            color: var(--accent-primary);
-            text-decoration: none;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            transition: var(--transition);
-        }
-
-        .project-link:hover {
-            color: var(--text-primary);
+            margin-top: auto;
         }
 
         /* About Section */
@@ -403,6 +392,7 @@
             justify-content: center;
             position: relative;
             animation: float 6s ease-in-out infinite;
+            overflow: hidden;
         }
 
         @keyframes float {
@@ -410,18 +400,24 @@
             50% { transform: translateY(-20px); }
         }
 
-        .visual-container::before {
+        .visual-container img {
+            width: 90%;
+            height: 90%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(0, 194, 255, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .visual-container::after {
             content: '';
             position: absolute;
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            background: radial-gradient(circle, transparent 60%, rgba(0, 194, 255, 0.1) 100%);
-        }
-
-        .visual-container i {
-            font-size: 100px;
-            color: var(--accent-primary);
+            background: radial-gradient(circle, transparent 40%, rgba(0, 194, 255, 0.1) 100%);
+            z-index: 1;
         }
 
         /* Contact Section */
@@ -574,40 +570,6 @@
             transition: width 0.3s ease;
         }
 
-        .visual-container {
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent-primary), transparent);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            animation: float 6s ease-in-out infinite;
-            overflow: hidden; /* Añadido para contener la imagen */
-        }
-
-        .visual-container img {
-            width: 90%;
-            height: 90%;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid rgba(0, 194, 255, 0.3);
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Opcional: efecto de superposición para que combine mejor */
-        .visual-container::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: radial-gradient(circle, transparent 40%, rgba(0, 194, 255, 0.1) 100%);
-            z-index: 1;
-        }
-
         /* Responsive Design */
         @media (max-width: 992px) {
             .about-content, .contact-content {
@@ -658,6 +620,10 @@
                 grid-template-columns: 1fr;
             }
 
+            .project-buttons {
+                flex-direction: column;
+            }
+
             .footer-content {
                 flex-direction: column;
                 gap: 30px;
@@ -684,6 +650,10 @@
 
             .btn {
                 padding: 10px 20px;
+            }
+
+            .project-card {
+                padding: 20px;
             }
         }
     </style>
@@ -732,15 +702,78 @@
                 <h2>Mis Proyectos</h2>
                 <p>Una selección de mis trabajos más recientes en desarrollo web y soluciones digitales.</p>
             </div>
+            <!--
             <div class="projects-filter" id="projectsFilter">
                 <button class="filter-btn active" data-filter="all">Todos</button>
-                <button class="filter-btn" data-filter="web">Web</button>
-                <button class="filter-btn" data-filter="app">Aplicaciones</button>
-                <button class="filter-btn" data-filter="ecommerce">E-commerce</button>
-                <button class="filter-btn" data-filter="responsive">Responsive</button>
+                <button class="filter-btn" data-filter="html">HTML</button>
+                <button class="filter-btn" data-filter="javascript">JavaScript</button>
+                <button class="filter-btn" data-filter="css">CSS</button>
             </div>
-            <div class="projects-grid" id="projectsGrid">
-                <!-- Proyectos se cargarán dinámicamente con JavaScript -->
+            -->
+            <div class="projects-grid">
+                <!-- Proyecto 1 - Generador de Menús para Restaurantes -->
+                <div class="project-card hidden" data-category="html javascript css">
+                    <div class="project-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Generador de Menús PDF</h3>
+                        <p>Solución que automatiza la creación de menús digitales e impresos para restaurantes. Resuelve el problema de la falta de actualización constante en cartas físicas y la dificultad para gestionar cambios de precios y disponibilidad.</p>
+                        
+                        <div class="project-tech">
+                            <span class="tech-tag">HTML</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">CSS</span>
+                        </div>
+                        
+                        <div class="project-buttons">
+                            <a href="https://chimigb.github.io/Generador-de-menus-digitales/" class="btn btn-primary" target="_blank">Probar Demo</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Proyecto 2 - Sistema de Tickets y Seguimiento -->
+                <div class="project-card hidden" data-category="html javascript css">
+                    <div class="project-icon">
+                        <i class="fas fa-ticket-alt"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Sistema de Tickets de Soporte</h3>
+                        <p>Sistema inteligente para crear, clasificar y dar seguimiento a tickets de soporte o incidencias. Resuelve el problema de la pérdida de tickets, falta de priorización y dificultad para medir tiempos de respuesta en equipos de soporte.</p>
+                        
+                        <div class="project-tech">
+                            <span class="tech-tag">HTML</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">CSS</span>
+                        </div>
+                        
+                        <div class="project-buttons">
+                            <a href="https://chimigb.github.io/sistema-de-tickets/" class="btn btn-primary" target="_blank">Probar Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Proyecto 3 - Creador de Paletas de Colores -->
+                <div class="project-card hidden" data-category="html javascript css">
+                    <div class="project-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>ColorBrand - Generador de Paletas</h3>
+                        <p>Aplicación web que analiza imágenes subidas por usuarios y extrae paletas de colores armónicas. Resuelve el problema de diseñadores y desarrolladores para encontrar combinaciones de colores coherentes a partir de imágenes de referencia.</p>
+                        
+                        <div class="project-tech">
+                            <span class="tech-tag">HTML</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">CSS</span>
+                            <span class="tech-tag">Análisis de imagen</span>
+                        </div>
+                        
+                        <div class="project-buttons">
+                            <a href="https://chimigb.github.io/generar-paletas-de-colores/" class="btn btn-primary" target="_blank">Probar Demo</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -760,11 +793,18 @@
                     <p>Mi filosofía es simple: entender las necesidades del cliente, diseñar soluciones efectivas y ejecutar con excelencia técnica.</p>
                     <div class="skills-list">
                         <div class="skill-item">HTML5 & CSS3</div>
-                        <div class="skill-item">JavaScript ES6+</div>
-                        <div class="skill-item">React.js</div>
+                        <div class="skill-item">PHP</div>
+                        <div class="skill-item">Flight PHP</div>
+                        <div class="skill-item">JavaScript</div>
+                        <div class="skill-item">TypeScript</div>
+                        <div class="skill-item">React Native</div>
+                        <div class="skill-item">Expo</div>
+                        <div class="skill-item">Angular</div>
                         <div class="skill-item">Node.js</div>
                         <div class="skill-item">Responsive Design</div>
                         <div class="skill-item">UI/UX Design</div>
+                        <div class="skill-item">PostgreSQL</div>
+                        <div class="skill-item">MySQL</div>
                     </div>
                 </div>
                 <div class="about-visual">
@@ -776,68 +816,71 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact">
-        <div class="container">
-            <div class="section-header">
-                <h2>Contáctame</h2>
-                <p>¿Tienes un proyecto en mente? Hablemos sobre cómo puedo ayudarte a hacerlo realidad.</p>
+<!-- Contact Section -->
+<section id="contact">
+    <div class="container">
+        <div class="section-header">
+            <h2>Contáctame</h2>
+            <p>¿Tienes un proyecto en mente? Hablemos sobre cómo puedo ayudarte a hacerlo realidad.</p>
+        </div>
+        <div class="contact-content">
+            <div class="contact-form">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <input type="text" id="name" placeholder="Tu nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" placeholder="Tu email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="subject" placeholder="Asunto" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" placeholder="Tu mensaje" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enviar Mensaje <i class="fas fa-paper-plane"></i></button>
+                </form>
             </div>
-            <div class="contact-content">
-                <div class="contact-form">
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <input type="text" id="name" placeholder="Tu nombre" required>
+            <div class="contact-info">
+                <div class="contact-methods">
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
                         </div>
-                        <div class="form-group">
-                            <input type="email" id="email" placeholder="Tu email" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" id="subject" placeholder="Asunto" required>
-                        </div>
-                        <div class="form-group">
-                            <textarea id="message" placeholder="Tu mensaje" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Enviar Mensaje <i class="fas fa-paper-plane"></i></button>
-                    </form>
-                </div>
-                <div class="contact-info">
-                    <div class="contact-methods">
-                        <div class="contact-method">
-                            <div class="contact-icon">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <div class="contact-details">
-                                <h4>Email</h4>
-                                <p>Contáctame directamente por correo</p>
-                                <a href="mailto:contacto@chimi-soluciones.com" class="contact-link">contacto@chimi-soluciones.com</a>
-                            </div>
-                        </div>
-                        <div class="contact-method">
-                            <div class="contact-icon">
-                                <i class="fab fa-whatsapp"></i>
-                            </div>
-                            <div class="contact-details">
-                                <h4>WhatsApp</h4>
-                                <p>Conversemos en tiempo real</p>
-                                <a href="https://wa.me/5491122334455?text=Hola%20CHIMI,%20quiero%20consultarte%20sobre%20un%20proyecto" target="_blank" class="contact-link">+54 9 11 2233-4455</a>
-                            </div>
+                        <div class="contact-details">
+                            <h4>Email</h4>
+                            <p>Contáctame directamente por correo</p>
+                            <a href="mailto:chimisolucionesdigitales@gmail.com?subject=Consulta%20desde%20Portafolio%20CHIMI&body=Hola%20CHIMI,%0D%0A%0D%0AMe%20interesa%20conocer%20m%C3%A1s%20sobre%20tus%20servicios%20de%20soluciones%20digitales.%0D%0A%0D%0ATe%20escribo%20porque%20quiero%20(describir%20tu%20proyecto%20o%20consulta):%0D%0A%0D%0A%0D%0AEspero%20tu%20respuesta,%0D%0A%0D%0A%5BTu%20Nombre%5D" 
+                               class="contact-link">chimisolucionesdigitales@gmail.com</a>
                         </div>
                     </div>
                     <div class="contact-method">
                         <div class="contact-icon">
-                            <i class="fas fa-clock"></i>
+                            <i class="fab fa-whatsapp"></i>
                         </div>
                         <div class="contact-details">
-                            <h4>Disponibilidad</h4>
-                            <p>Lunes a Viernes: 9:00 - 18:00</p>
-                            <p>Respondo en menos de 24 horas</p>
+                            <h4>WhatsApp</h4>
+                            <p>Conversemos en tiempo real</p>
+                            <a href="https://wa.me/523231013548?text=Hola%20CHIMI,%20quiero%20consultarte%20sobre%20un%20proyecto" target="_blank" class="contact-link">+52 323 101 3548</a>
                         </div>
                     </div>
                 </div>
+                <!--
+                <div class="contact-method">
+                    <div class="contact-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h4>Disponibilidad</h4>
+                        <p>Lunes a Viernes: 9:00 - 18:00</p>
+                        <p>Respondo en menos de 24 horas</p>
+                    </div>
+                </div>
+                -->
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Footer -->
     <footer>
@@ -846,77 +889,17 @@
                 <a href="#" class="logo">CHIMI<span>SOLUCIONES DIGITALES</span></a>
                 <div class="social-links">
                     <a href="#" class="social-link"><i class="fab fa-github"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
                     <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
             <div class="copyright">
-                <p>&copy; 2023 CHIMI Soluciones Digitales. Todos los derechos reservados.</p>
+                <p>&copy; 2026 CHIMI Soluciones Digitales. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        // Datos de proyectos
-        const projects = [
-            {
-                id: 1,
-                title: "E-commerce Moderno",
-                description: "Plataforma de comercio electrónico con carrito de compras, pasarela de pago y panel de administración.",
-                technologies: ["React", "Node.js", "MongoDB", "Stripe"],
-                category: ["web", "ecommerce", "responsive"],
-                demoLink: "#",
-                codeLink: "#"
-            },
-            {
-                id: 2,
-                title: "Dashboard Analítico",
-                description: "Panel de control interactivo para visualización de datos con gráficos en tiempo real.",
-                technologies: ["Vue.js", "D3.js", "Express", "Firebase"],
-                category: ["app", "web"],
-                demoLink: "#",
-                codeLink: "#"
-            },
-            {
-                id: 3,
-                title: "Landing Page Responsive",
-                description: "Diseño moderno y completamente responsive para producto digital con alto índice de conversión.",
-                technologies: ["HTML5", "CSS3", "JavaScript", "GSAP"],
-                category: ["web", "responsive"],
-                demoLink: "#",
-                codeLink: "#"
-            },
-            {
-                id: 4,
-                title: "App de Tareas",
-                description: "Aplicación web para gestión de tareas con arrastrar y soltar, recordatorios y colaboración.",
-                technologies: ["React", "Redux", "Material-UI", "Node.js"],
-                category: ["app", "web"],
-                demoLink: "#",
-                codeLink: "#"
-            },
-            {
-                id: 5,
-                title: "Portafolio Creativo",
-                description: "Sitio web para artista visual con galería interactiva, filtros y sistema de contacto.",
-                technologies: ["JavaScript", "CSS Grid", "PHP", "MySQL"],
-                category: ["web", "responsive"],
-                demoLink: "#",
-                codeLink: "#"
-            },
-            {
-                id: 6,
-                title: "Sistema de Reservas",
-                description: "Plataforma para gestión de reservas en línea con calendario integrado y confirmaciones automáticas.",
-                technologies: ["React", "Express", "MongoDB", "SendGrid"],
-                category: ["app", "web"],
-                demoLink: "#",
-                codeLink: "#"
-            }
-        ];
-
         // Mobile Menu Toggle
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const navLinks = document.getElementById('navLinks');
@@ -993,53 +976,10 @@
             });
         });
 
-        // Cargar proyectos en el grid
-        const projectsGrid = document.getElementById('projectsGrid');
-        const filterButtons = document.querySelectorAll('.filter-btn');
-
-        function renderProjects(filter = 'all') {
-            projectsGrid.innerHTML = '';
-            
-            const filteredProjects = filter === 'all' 
-                ? projects 
-                : projects.filter(project => project.category.includes(filter));
-            
-            filteredProjects.forEach(project => {
-                const projectCard = document.createElement('div');
-                projectCard.className = 'project-card';
-                projectCard.setAttribute('data-category', project.category.join(' '));
-                
-                // Crear etiquetas de tecnologías
-                const techTags = project.technologies.map(tech => 
-                    `<span class="tech-tag">${tech}</span>`
-                ).join('');
-                
-                projectCard.innerHTML = `
-                    <div class="project-img" style="background: linear-gradient(135deg, #1A1A1A, #0A0A0A);">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <div class="project-content">
-                        <h3>${project.title}</h3>
-                        <p>${project.description}</p>
-                        <div class="project-tech">
-                            ${techTags}
-                        </div>
-                        <div class="project-links">
-                            <a href="${project.demoLink}" class="project-link" target="_blank">
-                                <i class="fas fa-external-link-alt"></i> Demo
-                            </a>
-                            <a href="${project.codeLink}" class="project-link" target="_blank">
-                                <i class="fab fa-github"></i> Código
-                            </a>
-                        </div>
-                    </div>
-                `;
-                
-                projectsGrid.appendChild(projectCard);
-            });
-        }
-
         // Filtro de proyectos
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+
         filterButtons.forEach(button => {
             button.addEventListener('click', () => {
                 // Remover clase active de todos los botones
@@ -1049,7 +989,14 @@
                 
                 // Filtrar proyectos
                 const filterValue = button.getAttribute('data-filter');
-                renderProjects(filterValue);
+                
+                projectCards.forEach(card => {
+                    if (filterValue === 'all' || card.getAttribute('data-category').includes(filterValue)) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
             });
         });
 
@@ -1105,6 +1052,11 @@
                 opacity: 1;
                 transform: translateY(0);
             }
+            
+            .hidden {
+                opacity: 0;
+                transform: translateY(20px);
+            }
         `;
         document.head.appendChild(style);
 
@@ -1112,10 +1064,16 @@
         window.addEventListener('scroll', revealOnScroll);
         window.addEventListener('load', revealOnScroll);
 
-        // Inicializar proyectos
-        renderProjects();
         // Forzar revelación inicial después de un breve retraso
         setTimeout(revealOnScroll, 100);
+        
+        // Inicializar animaciones para proyectos
+        setTimeout(() => {
+            document.querySelectorAll('.project-card').forEach(card => {
+                card.classList.remove('hidden');
+            });
+            revealOnScroll();
+        }, 300);
     </script>
 </body>
 </html>
