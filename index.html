@@ -1104,18 +1104,18 @@
             updateImagesForTheme();
         });
         
-        // Menú móvil - CÓDIGO CORREGIDO (sin bloquear el scroll)
+        // Menú móvil - CORREGIDO
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const navList = document.getElementById('navList');
         
-        mobileMenuBtn.addEventListener('click', () => {
+        mobileMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevenir que el clic se propague
             navList.classList.toggle('active');
             const isActive = navList.classList.contains('active');
             mobileMenuBtn.innerHTML = isActive 
                 ? '<i class="fas fa-times"></i>' 
                 : '<i class="fas fa-bars"></i>';
             mobileMenuBtn.setAttribute('aria-label', isActive ? 'Cerrar menú' : 'Abrir menú');
-            // NOTA: Se eliminó la línea que deshabilitaba el scroll
         });
         
         // Cerrar menú al hacer clic en un enlace
@@ -1124,17 +1124,24 @@
                 navList.classList.remove('active');
                 mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
                 mobileMenuBtn.setAttribute('aria-label', 'Abrir menú');
-                // NOTA: Se eliminó la línea que deshabilitaba el scroll
             });
         });
         
-        // Cerrar menú al hacer clic fuera
+        // Cerrar menú al hacer clic fuera del menú
         document.addEventListener('click', (e) => {
             if (!navList.contains(e.target) && !mobileMenuBtn.contains(e.target) && navList.classList.contains('active')) {
                 navList.classList.remove('active');
                 mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
                 mobileMenuBtn.setAttribute('aria-label', 'Abrir menú');
-                // NOTA: Se eliminó la línea que deshabilitaba el scroll
+            }
+        });
+        
+        // Cerrar menú al hacer scroll
+        window.addEventListener('scroll', () => {
+            if (navList.classList.contains('active')) {
+                navList.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                mobileMenuBtn.setAttribute('aria-label', 'Abrir menú');
             }
         });
         
