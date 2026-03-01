@@ -299,6 +299,31 @@
             border-color: var(--accent-primary);
         }
 
+        /* ROMs Vault featured card */
+        .project-card.featured {
+            border-color: rgba(0, 194, 255, 0.3);
+            background: linear-gradient(135deg, #1A1A1A 0%, #0d1f2a 100%);
+            position: relative;
+        }
+
+        .project-card.featured::before {
+            content: '⭐ Destacado';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, var(--accent-primary), #0088bb);
+            color: var(--primary-dark);
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .project-card.featured:hover {
+            box-shadow: 0 0 30px rgba(0, 194, 255, 0.4);
+        }
+
         .project-icon {
             width: 60px;
             height: 60px;
@@ -342,6 +367,24 @@
             display: flex;
             gap: 15px;
             margin-top: auto;
+        }
+
+        /* Console badges for ROMs Vault */
+        .console-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+
+        .console-badge {
+            background-color: rgba(255, 255, 255, 0.06);
+            color: var(--text-secondary);
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            border: 1px solid rgba(255,255,255,0.08);
+            font-family: monospace;
         }
 
         /* About Section */
@@ -702,15 +745,45 @@
                 <h2>Mis Proyectos</h2>
                 <p>Una selección de mis trabajos más recientes en desarrollo web y soluciones digitales.</p>
             </div>
-            <!--
-            <div class="projects-filter" id="projectsFilter">
-                <button class="filter-btn active" data-filter="all">Todos</button>
-                <button class="filter-btn" data-filter="html">HTML</button>
-                <button class="filter-btn" data-filter="javascript">JavaScript</button>
-                <button class="filter-btn" data-filter="css">CSS</button>
-            </div>
-            -->
             <div class="projects-grid">
+
+                <!-- Proyecto Destacado - ROMs Vault -->
+                <div class="project-card featured hidden" data-category="html javascript css php">
+                    <div class="project-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>ROMs Vault</h3>
+                        <p>Plataforma web completa para descubrir, descargar y ejecutar juegos retro directamente en el navegador. Integra EmulatorJS para emulación online sin instalaciones, con soporte para múltiples consolas clásicas y streaming de ISOs grandes desde Google Drive.</p>
+
+                        <div class="console-badges">
+                            <span class="console-badge">PSP</span>
+                            <span class="console-badge">PS1</span>
+                            <span class="console-badge">N64</span>
+                            <span class="console-badge">GBA</span>
+                            <span class="console-badge">GBC</span>
+                            <span class="console-badge">NES</span>
+                            <span class="console-badge">SNES</span>
+                            <span class="console-badge">Sega Genesis</span>
+                        </div>
+
+                        <div class="project-tech">
+                            <span class="tech-tag">PHP</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">EmulatorJS</span>
+                            <span class="tech-tag">Google Drive API</span>
+                            <span class="tech-tag">MySQL</span>
+                            <span class="tech-tag">CSS</span>
+                        </div>
+
+                        <div class="project-buttons">
+                            <a href="https://roms-vault.up.railway.app/" class="btn btn-primary" target="_blank">
+                                <i class="fas fa-play"></i> Ver Proyecto
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Proyecto 1 - Generador de Menús para Restaurantes -->
                 <div class="project-card hidden" data-category="html javascript css">
                     <div class="project-icon">
@@ -816,71 +889,59 @@
         </div>
     </section>
 
-<!-- Contact Section -->
-<section id="contact">
-    <div class="container">
-        <div class="section-header">
-            <h2>Contáctame</h2>
-            <p>¿Tienes un proyecto en mente? Hablemos sobre cómo puedo ayudarte a hacerlo realidad.</p>
-        </div>
-        <div class="contact-content">
-            <div class="contact-form">
-                <form id="contactForm">
-                    <div class="form-group">
-                        <input type="text" id="name" placeholder="Tu nombre" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" id="email" placeholder="Tu email" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" id="subject" placeholder="Asunto" required>
-                    </div>
-                    <div class="form-group">
-                        <textarea id="message" placeholder="Tu mensaje" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Enviar Mensaje <i class="fas fa-paper-plane"></i></button>
-                </form>
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Contáctame</h2>
+                <p>¿Tienes un proyecto en mente? Hablemos sobre cómo puedo ayudarte a hacerlo realidad.</p>
             </div>
-            <div class="contact-info">
-                <div class="contact-methods">
-                    <div class="contact-method">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
+            <div class="contact-content">
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <input type="text" id="name" placeholder="Tu nombre" required>
                         </div>
-                        <div class="contact-details">
-                            <h4>Email</h4>
-                            <p>Contáctame directamente por correo</p>
-                            <a href="mailto:chimisolucionesdigitales@gmail.com?subject=Consulta%20desde%20Portafolio%20CHIMI&body=Hola%20CHIMI,%0D%0A%0D%0AMe%20interesa%20conocer%20m%C3%A1s%20sobre%20tus%20servicios%20de%20soluciones%20digitales.%0D%0A%0D%0ATe%20escribo%20porque%20quiero%20(describir%20tu%20proyecto%20o%20consulta):%0D%0A%0D%0A%0D%0AEspero%20tu%20respuesta,%0D%0A%0D%0A%5BTu%20Nombre%5D" 
-                               class="contact-link">chimisolucionesdigitales@gmail.com</a>
+                        <div class="form-group">
+                            <input type="email" id="email" placeholder="Tu email" required>
                         </div>
-                    </div>
-                    <div class="contact-method">
-                        <div class="contact-icon">
-                            <i class="fab fa-whatsapp"></i>
+                        <div class="form-group">
+                            <input type="text" id="subject" placeholder="Asunto" required>
                         </div>
-                        <div class="contact-details">
-                            <h4>WhatsApp</h4>
-                            <p>Conversemos en tiempo real</p>
-                            <a href="https://wa.me/523231013548?text=Hola%20CHIMI,%20quiero%20consultarte%20sobre%20un%20proyecto" target="_blank" class="contact-link">+52 323 101 3548</a>
+                        <div class="form-group">
+                            <textarea id="message" placeholder="Tu mensaje" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enviar Mensaje <i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+                <div class="contact-info">
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>Email</h4>
+                                <p>Contáctame directamente por correo</p>
+                                <a href="mailto:chimisolucionesdigitales@gmail.com?subject=Consulta%20desde%20Portafolio%20CHIMI&body=Hola%20CHIMI,%0D%0A%0D%0AMe%20interesa%20conocer%20m%C3%A1s%20sobre%20tus%20servicios%20de%20soluciones%20digitales.%0D%0A%0D%0ATe%20escribo%20porque%20quiero%20(describir%20tu%20proyecto%20o%20consulta):%0D%0A%0D%0A%0D%0AEspero%20tu%20respuesta,%0D%0A%0D%0A%5BTu%20Nombre%5D" 
+                                   class="contact-link">chimisolucionesdigitales@gmail.com</a>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>WhatsApp</h4>
+                                <p>Conversemos en tiempo real</p>
+                                <a href="https://wa.me/523231013548?text=Hola%20CHIMI,%20quiero%20consultarte%20sobre%20un%20proyecto" target="_blank" class="contact-link">+52 323 101 3548</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <!--
-                <div class="contact-method">
-                    <div class="contact-icon">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <div class="contact-details">
-                        <h4>Disponibilidad</h4>
-                        <p>Lunes a Viernes: 9:00 - 18:00</p>
-                        <p>Respondo en menos de 24 horas</p>
-                    </div>
-                </div>
-                -->
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <!-- Footer -->
     <footer>
@@ -924,14 +985,12 @@
         const scrollIndicator = document.getElementById('scrollIndicator');
 
         window.addEventListener('scroll', () => {
-            // Header effect
             if (window.scrollY > 50) {
                 header.classList.add('scrolled');
             } else {
                 header.classList.remove('scrolled');
             }
 
-            // Scroll indicator
             const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             const scrolled = (winScroll / height) * 100;
@@ -976,30 +1035,6 @@
             });
         });
 
-        // Filtro de proyectos
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        const projectCards = document.querySelectorAll('.project-card');
-
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                // Remover clase active de todos los botones
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                // Agregar clase active al botón clickeado
-                button.classList.add('active');
-                
-                // Filtrar proyectos
-                const filterValue = button.getAttribute('data-filter');
-                
-                projectCards.forEach(card => {
-                    if (filterValue === 'all' || card.getAttribute('data-category').includes(filterValue)) {
-                        card.style.display = 'flex';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-            });
-        });
-
         // Formulario de contacto
         const contactForm = document.getElementById('contactForm');
         
@@ -1011,16 +1046,10 @@
             const subject = document.getElementById('subject').value;
             const message = document.getElementById('message').value;
             
-            // Aquí normalmente enviarías el formulario a un servidor
-            // Para este ejemplo, simulamos el envío
             const mailtoLink = `mailto:contacto@chimi-soluciones.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Nombre: ${name}\nEmail: ${email}\n\nMensaje:\n${message}`)}`;
             
             window.location.href = mailtoLink;
-            
-            // Limpiar formulario
             contactForm.reset();
-            
-            // Mostrar mensaje de éxito (en una implementación real)
             alert('¡Gracias por tu mensaje! Serás redirigido a tu cliente de correo.');
         });
 
@@ -1038,7 +1067,6 @@
             });
         }
 
-        // Añadir clase CSS para las animaciones
         const style = document.createElement('style');
         style.textContent = `
             .section-header, .project-card, .about-content, .contact-content {
@@ -1060,14 +1088,10 @@
         `;
         document.head.appendChild(style);
 
-        // Llamar a la función al cargar y al hacer scroll
         window.addEventListener('scroll', revealOnScroll);
         window.addEventListener('load', revealOnScroll);
-
-        // Forzar revelación inicial después de un breve retraso
         setTimeout(revealOnScroll, 100);
         
-        // Inicializar animaciones para proyectos
         setTimeout(() => {
             document.querySelectorAll('.project-card').forEach(card => {
                 card.classList.remove('hidden');
