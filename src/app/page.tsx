@@ -15,12 +15,19 @@ export default function Home() {
       touchMultiplier: 2,
     });
 
-    function raf(time: number) {
+    const raf = (time: number) => {
       lenis.raf(time);
       requestAnimationFrame(raf);
     }
 
     requestAnimationFrame(raf);
+
+    // Smooth reset scroll to top when reaching the end
+    lenis.on('scroll', ({ scroll, limit }: { scroll: number, limit: number }) => {
+      if (scroll > limit - 20) {
+        lenis.scrollTo(0, { duration: 2, easing: (t: number) => 1 - Math.pow(1 - t, 4) });
+      }
+    });
 
     // Initial log for UX
     console.log("Welcome to CHIMI 3D Portfolio!");
