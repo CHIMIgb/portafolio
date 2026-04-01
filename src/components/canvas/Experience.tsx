@@ -1,45 +1,31 @@
 "use client";
 
 import { useFrame, useThree } from "@react-three/fiber";
-import { Float, Stars } from "@react-three/drei";
-import { useRef } from "react";
+import { Stars } from "@react-three/drei";
+import { useState } from "react";
 import * as THREE from "three";
 import { projects } from "../../data/projects";
 import ProjectPortal from "./ProjectPortal";
 import Corridor from "./Corridor";
 
-export default function Experience() {
+export default function Experience({ scroll }: { scroll: number }) {
   const { camera } = useThree();
   
-  // The distance at which the whole scene repeats perfectly
-  const CYCLE_DISTANCE = 100;
+  // The length of one full project cycle in 3D units
+  const LOOP_LENGTH = 100;
   
-  useFrame((state, delta) => {
-    // Current scroll position handled by Lenis
-    const scrolled = window.scrollY;
+  useFrame((state) => {
+    // Persistent Z coordinate mapping (matching speed in page.tsx)
+    const targetZ = -(scroll * 0.05);
     
-    // speed factor: 0.02 means 5000px = 100 units
-    const speed = 0.02;
+    // Smooth camera movement towards the target
+    camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetZ + 5, 0.1);
     
-    // Calculate a repeating Z position for the camera
-    const virtualZ = scrolled * speed;
-    const targetZ = -(virtualZ % CYCLE_DISTANCE);
-    const cameraTargetZ = targetZ + 5;
+    // Subtle camera shake based on mouse
+    state.camera.position.x = THREE.MathUtils.lerp(state.camera.position.x, state.mouse.x * 0.5, 0.05);
+    state.camera.position.y = THREE.MathUtils.lerp(state.camera.position.y, state.mouse.y * 0.5, 0.05);
     
-    // Smooth camera movement along Z
-    // DETECT JUMP: If the target is far (e.g., during a scroll reset), 
-    // snap instantly instead of lerping to avoid 'going back' animation.
-    if (Math.abs(cameraTargetZ - camera.position.z) > CYCLE_DISTANCE / 2) {
-      camera.position.z = cameraTargetZ;
-    } else {
-      camera.position.z = THREE.MathUtils.lerp(camera.position.z, cameraTargetZ, 0.1);
-    }
-    
-    // Subtle camera shake/movement
-    state.camera.position.x = THREE.MathUtils.lerp(state.camera.position.x, state.mouse.x * 0.4, 0.05);
-    state.camera.position.y = THREE.MathUtils.lerp(state.camera.position.y, state.mouse.y * 0.4, 0.05);
-    
-    // Look ahead
+    // Look ahead of the current position
     camera.lookAt(0, 0, targetZ - 10);
   });
 
@@ -49,8 +35,9 @@ export default function Experience() {
       <ambientLight intensity={0.2} />
       
       {/* 
-          Background and Global Lights follow the camera 
-          to ensure they never 'pop' during a modulo jump 
+          Static Background Group:
+          This group follows the camera position exactly,
+          making the Stars and Lights appear fixed relative to the viewer.
       */}
       <group position={[0, 0, camera.position.z]}>
         <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
@@ -58,25 +45,46 @@ export default function Experience() {
         <pointLight position={[-10, -10, -35]} intensity={1.5} color="#00C2FF" />
       </group>
       
-      <Corridor />
+      <Corridor scroll={scroll} />
       
       {/* 
-          Triple-buffered sets for perfect continuity:
-          Set 0: Behind (+100)
-          Set 1: Current (0)
-          Set 2: Ahead (-100)
+          Leapfrog Projects: 
+          Instead of rendering sets, each project re-positions itself
+          when passed by the camera.
       */}
-      {[1, 0, -1].map((loopOffset) => (
-        <group key={`cycle-${loopOffset}`} position={[0, 0, loopOffset * CYCLE_DISTANCE]}>
-          {projects.map((project, index) => (
-            <ProjectPortal 
-              key={`cycle-${loopOffset}-${project.id}`} 
-              project={project} 
-              index={index} 
-            />
-          ))}
-        </group>
+      {projects.map((project, index) => (
+        <ProjectPortalWithLeapfrog 
+          key={project.id} 
+          project={project} 
+          index={index} 
+          loopLength={LOOP_LENGTH}
+        />
       ))}
     </>
+  );
+}
+
+// Internal component for handling the 'leapfrog' repositioning logic
+function ProjectPortalWithLeapfrog({ project, index, loopLength }: { project: any, index: number, loopLength: number }) {
+  const { camera } = useThree();
+  const [currentZ, setCurrentZ] = useState(project.position[2]);
+
+  useFrame(() => {
+    const originalZ = project.position[2];
+    
+    // Leapfrog formula: calculate the loop depth to place the project in front of the camera
+    const loopOffset = Math.floor((camera.position.z - originalZ + 20) / loopLength);
+    const targetZ = originalZ + (loopOffset * loopLength);
+    
+    if (currentZ !== targetZ) {
+      setCurrentZ(targetZ);
+    }
+  });
+
+  return (
+    <ProjectPortal 
+      project={{...project, position: [project.position[0], project.position[1], currentZ]}} 
+      index={index} 
+    />
   );
 }

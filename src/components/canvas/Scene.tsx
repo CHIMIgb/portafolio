@@ -2,11 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
-import { ScrollControls, Scroll } from "@react-three/drei";
 import Experience from "./Experience";
 import HUD from "../dom/HUD";
 
-export default function Scene() {
+export default function Scene({ scroll }: { scroll: number }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -24,7 +23,7 @@ export default function Scene() {
         <color attach="background" args={["#0A0A0A"]} />
         <fog attach="fog" args={["#0A0A0A", 5, 30]} />
         
-        <Experience />
+        <Experience scroll={scroll} />
       </Canvas>
       <HUD />
     </div>
