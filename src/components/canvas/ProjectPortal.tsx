@@ -17,60 +17,68 @@ export default function ProjectPortal({ project, index }: ProjectPortalProps) {
   const meshRef = useRef<THREE.Group>(null);
   
   // Example image placeholder if the user hasn't provided one yet
-  const imageUrl = `https://picsum.photos/seed/${project.id}/600/400`;
+  const imageUrl = `https://picsum.photos/seed/${project.id}/800/600`;
 
   return (
-    <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
+    <Float 
+      speed={1.5} 
+      rotationIntensity={0.2} 
+      floatIntensity={1} 
+      floatingRange={[-0.2, 0.2]}
+    >
       <group position={project.position} ref={meshRef}>
-        {/* Main Project Card / Frame */}
+        {/* Main Project Card / Frame - LARGER SIZE [6, 3.75] */}
         <mesh 
           onPointerOver={() => setHovered(true)} 
           onPointerOut={() => setHovered(false)}
         >
-          <planeGeometry args={[4, 2.5]} />
+          <planeGeometry args={[6, 3.75]} />
           <meshStandardMaterial 
-            color={hovered ? "#00C2FF" : "#1A1A1A"} 
-            metalness={0.8} 
-            roughness={0.2} 
+            color={hovered ? "#00C2FF" : "#111111"} 
+            metalness={0.9} 
+            roughness={0.1} 
             transparent 
-            opacity={0.9} 
+            opacity={0.95} 
           />
         </mesh>
         
-        {/* Project Image */}
+        {/* Project Image - SCALED UP */}
         <Image 
           url={imageUrl} 
           transparent
-          opacity={0.8}
-          scale={[3.8, 2.3]}
-          position={[0, 0, 0.01]}
-          grayscale={hovered ? 0 : 0.5}
+          opacity={0.85}
+          scale={[5.8, 3.55]}
+          position={[0, 0, 0.02]}
+          grayscale={hovered ? 0 : 0.6}
         />
         
-        {/* Glow Frame */}
+        {/* Neon Glow Frame */}
         <mesh position={[0, 0, -0.01]}>
-          <planeGeometry args={[4.1, 2.6]} />
-          <meshBasicMaterial color="#00C2FF" transparent opacity={hovered ? 0.4 : 0.1} />
+          <planeGeometry args={[6.1, 3.85]} />
+          <meshBasicMaterial 
+            color="#00C2FF" 
+            transparent 
+            opacity={hovered ? 0.6 : 0.2} 
+          />
         </mesh>
         
-        {/* Title Text */}
+        {/* Title Text - Back to default font for stability */}
         <Text
-          position={[0, 2, 0]}
-          fontSize={0.3}
+          position={[0, 2.8, 0]}
+          fontSize={0.4}
           color="white"
           anchorX="center"
-          anchorY="middle"
         >
           {project.title}
         </Text>
         
-        {/* Tech tags as small plane indicators */}
-        <group position={[0, -1.8, 0]}>
-          {project.tech.slice(0, 3).map((t, i) => (
+        {/* Tech tags */}
+        <group position={[0, -2.5, 0]}>
+          {project.tech.slice(0, 4).map((t, i) => (
             <Text
               key={t}
-              position={[(i - 1) * 1.2, 0, 0]}
-              fontSize={0.15}
+              position={[(i - 1.5) * 1.5, 0, 0]}
+              fontSize={0.2}
               color="#00C2FF"
               anchorX="center"
             >
@@ -79,22 +87,25 @@ export default function ProjectPortal({ project, index }: ProjectPortalProps) {
           ))}
         </group>
         
-        {/* Detail Button (Html for easier interaction) */}
+        {/* Detail Button */}
         {hovered && (
-          <Html position={[0, 0, 0.1]} center transform distanceFactor={5}>
+          <Html position={[0, 0, 0.2]} center transform distanceFactor={5}>
             <div 
               style={{ 
                 background: "var(--accent-primary)", 
                 color: "var(--primary-dark)", 
-                padding: "10px 20px", 
-                borderRadius: "5px", 
+                padding: "15px 30px", 
+                borderRadius: "50px", 
                 fontWeight: "bold",
+                fontSize: "1.2rem",
                 cursor: "pointer",
-                whiteSpace: "nowrap"
+                boxShadow: "0 0 20px rgba(0, 194, 255, 0.5)",
+                whiteSpace: "nowrap",
+                transition: "all 0.3s ease"
               }}
               onClick={() => window.open(project.link, "_blank")}
             >
-              Ver {project.title}
+              EXPLORAR
             </div>
           </Html>
         )}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import Experience from "./Experience";
 import HUD from "../dom/HUD";
@@ -21,9 +22,11 @@ export default function Scene({ scroll }: { scroll: number }) {
         gl={{ antialias: true }}
       >
         <color attach="background" args={["#0A0A0A"]} />
-        <fog attach="fog" args={["#0A0A0A", 5, 30]} />
+        <fog attach="fog" args={["#0A0A0A", 5, 80]} />
         
-        <Experience scroll={scroll} />
+        <Suspense fallback={<mesh><sphereGeometry args={[0.1]} /><meshBasicMaterial color="#00C2FF" /></mesh>}>
+          <Experience scroll={scroll} />
+        </Suspense>
       </Canvas>
       <HUD />
     </div>
