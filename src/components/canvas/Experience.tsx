@@ -10,45 +10,72 @@ import Corridor from "./Corridor";
 
 export default function Experience() {
   const { camera } = useThree();
-  const cameraRef = useRef<THREE.PerspectiveCamera>(null);
   
-  // Z distance of the whole experience
-  const MAX_Z = -80;
+  // The distance at which the whole scene repeats perfectly
+  const CYCLE_DISTANCE = 100;
   
   useFrame((state, delta) => {
-    // Get scroll progress from native window scroll (synced with Lenis)
+    // Current scroll position handled by Lenis
     const scrolled = window.scrollY;
-    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-    const offset = Math.max(0, Math.min(1, scrolled / maxScroll));
+    
+    // speed factor: 0.02 means 5000px = 100 units
+    const speed = 0.02;
+    
+    // Calculate a repeating Z position for the camera
+    const virtualZ = scrolled * speed;
+    const targetZ = -(virtualZ % CYCLE_DISTANCE);
+    const cameraTargetZ = targetZ + 5;
     
     // Smooth camera movement along Z
-    const targetZ = offset * MAX_Z;
-    camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetZ + 5, 0.1);
+    // DETECT JUMP: If the target is far (e.g., during a scroll reset), 
+    // snap instantly instead of lerping to avoid 'going back' animation.
+    if (Math.abs(cameraTargetZ - camera.position.z) > CYCLE_DISTANCE / 2) {
+      camera.position.z = cameraTargetZ;
+    } else {
+      camera.position.z = THREE.MathUtils.lerp(camera.position.z, cameraTargetZ, 0.1);
+    }
     
     // Subtle camera shake/movement
-    state.camera.position.x = THREE.MathUtils.lerp(state.camera.position.x, state.mouse.x * 0.5, 0.05);
-    state.camera.position.y = THREE.MathUtils.lerp(state.camera.position.y, state.mouse.y * 0.5, 0.05);
+    state.camera.position.x = THREE.MathUtils.lerp(state.camera.position.x, state.mouse.x * 0.4, 0.05);
+    state.camera.position.y = THREE.MathUtils.lerp(state.camera.position.y, state.mouse.y * 0.4, 0.05);
     
-    // Look ahead slightly
+    // Look ahead
     camera.lookAt(0, 0, targetZ - 10);
   });
 
   return (
     <>
+      <fog attach="fog" args={["#0A0A0A", 10, 80]} />
       <ambientLight intensity={0.2} />
-      <pointLight position={[10, 10, 10]} intensity={1.5} color="#00C2FF" />
-      <pointLight position={[-10, -10, -30]} intensity={1.5} color="#00C2FF" />
       
-      <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
+      {/* 
+          Background and Global Lights follow the camera 
+          to ensure they never 'pop' during a modulo jump 
+      */}
+      <group position={[0, 0, camera.position.z]}>
+        <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
+        <pointLight position={[10, 10, 5]} intensity={1.5} color="#00C2FF" />
+        <pointLight position={[-10, -10, -35]} intensity={1.5} color="#00C2FF" />
+      </group>
       
       <Corridor />
       
-      {projects.map((project, index) => (
-        <ProjectPortal 
-          key={project.id} 
-          project={project} 
-          index={index} 
-        />
+      {/* 
+          Triple-buffered sets for perfect continuity:
+          Set 0: Behind (+100)
+          Set 1: Current (0)
+          Set 2: Ahead (-100)
+      */}
+      {[1, 0, -1].map((loopOffset) => (
+        <group key={`cycle-${loopOffset}`} position={[0, 0, loopOffset * CYCLE_DISTANCE]}>
+          {projects.map((project, index) => (
+            <ProjectPortal 
+              key={`cycle-${loopOffset}-${project.id}`} 
+              project={project} 
+              index={index} 
+            />
+          ))}
+        </group>
       ))}
     </>
   );

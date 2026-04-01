@@ -22,10 +22,15 @@ export default function Home() {
 
     requestAnimationFrame(raf);
 
-    // Smooth reset scroll to top when reaching the end
-    lenis.on('scroll', ({ scroll, limit }: { scroll: number, limit: number }) => {
-      if (scroll > limit - 20) {
-        lenis.scrollTo(0, { duration: 2, easing: (t: number) => 1 - Math.pow(1 - t, 4) });
+    // Instant reset for seamless infinite loop 3D
+    lenis.on('scroll', ({ scroll, limit, direction }: { scroll: number, limit: number, direction: number }) => {
+      // Scrolling DOWN at bottom -> Jump to START instantly
+      if (direction === 1 && scroll >= limit - 1) {
+        lenis.scrollTo(0, { immediate: true });
+      } 
+      // Scrolling UP at top -> Jump to END instantly
+      else if (direction === -1 && scroll <= 1) {
+        lenis.scrollTo(limit - 2, { immediate: true });
       }
     });
 

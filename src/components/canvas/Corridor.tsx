@@ -28,17 +28,17 @@ export default function Corridor() {
         />
       </mesh>
       
-      {/* Digital Rings */}
-      {Array.from({ length: 20 }).map((_, i) => (
+      {/* Digital Rings - Covering two full cycles */}
+      {Array.from({ length: 40 }).map((_, i) => (
         <mesh key={i} position={[0, 0, -i * 5]} rotation={[0, 0, 0]}>
           <ringGeometry args={[2.9, 3, 64]} />
           <meshBasicMaterial color="#00C2FF" transparent opacity={0.3} side={THREE.DoubleSide} />
         </mesh>
       ))}
       
-      {/* Ambient glowing floor grid (flat) */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -2, -50]}>
-        <planeGeometry args={[20, 100, 20, 100]} />
+      {/* Ambient glowing floor grid (flat) - Covering 200 units */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -2, -100]}>
+        <planeGeometry args={[20, 200, 20, 200]} />
         <meshStandardMaterial 
           color="#00C2FF" 
           wireframe 
