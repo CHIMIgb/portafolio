@@ -18,17 +18,21 @@ export default function ProjectPortal({ project, index }: ProjectPortalProps) {
   
   const imageUrl = `https://picsum.photos/seed/${project.id}/800/800`;
 
+  // Tilt towards center based on X position
+  const tiltAngle = project.position[0] > 0 ? -0.3 : 0.3;
+
   // Manual very subtle animation
   useFrame((state) => {
     if (meshRef.current) {
       // Tiny breathe
       meshRef.current.position.y += Math.sin(state.clock.getElapsedTime() + index) * 0.001;
-      meshRef.current.rotation.y = Math.sin(state.clock.getElapsedTime() * 0.5 + index) * 0.02;
+      // Oscillate around the tilt angle
+      meshRef.current.rotation.y = tiltAngle + Math.sin(state.clock.getElapsedTime() * 0.5 + index) * 0.01;
     }
   });
 
   return (
-    <group position={project.position} ref={meshRef}>
+    <group position={project.position} ref={meshRef} rotation={[0, tiltAngle, 0]}>
       {/* Main Project Card - More square-ish [4, 4.5] like the reference */}
       <mesh 
         onPointerOver={() => setHovered(true)} 
