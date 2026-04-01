@@ -17,44 +17,51 @@ export default function Experience({ scroll }: { scroll: number }) {
     // Persistent Z coordinate tracking (synced with page.tsx virtual offset)
     const targetZ = -(scroll * 0.05);
     
-    // ULTRA-SMOOTH Camera movement (reduced from 0.1 to 0.04)
-    camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetZ + 5, 0.04);
+    // GENTLE movement (lerp = 0.03) for a more static/stable feeling
+    camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetZ + 7, 0.03);
     
-    // Immersive camera shake based on mouse position
-    state.camera.position.x = THREE.MathUtils.lerp(state.camera.position.x, state.mouse.x * 0.6, 0.04);
-    state.camera.position.y = THREE.MathUtils.lerp(state.camera.position.y, state.mouse.y * 0.6, 0.04);
+    // Minimal horizontal sway
+    state.camera.position.x = THREE.MathUtils.lerp(state.camera.position.x, state.mouse.x * 0.3, 0.02);
+    state.camera.position.y = THREE.MathUtils.lerp(state.camera.position.y, state.mouse.y * 0.3, 0.02);
     
-    // Smoothly look at the space ahead
-    camera.lookAt(0, 0, targetZ - 15);
+    // Look ahead with a wider perspective
+    camera.lookAt(0, 0, targetZ - 20);
   });
 
   return (
     <>
-      <fog attach="fog" args={["#0A0A0A", 10, 120]} />
-      <ambientLight intensity={0.5} />
+      <fog attach="fog" args={["#0A0A0A", 10, 100]} />
+      <ambientLight intensity={0.6} />
       
       {/* 
-          Anchor Group: Fixed Stars and Lights
+          Stable Environment: Fixed Stars and a subtle Ground
       */}
       <group position={[0, 0, camera.position.z]}>
-        <Stars radius={200} depth={50} count={8000} factor={4} saturation={0} fade speed={0.5} />
-        <pointLight position={[15, 15, 10]} intensity={2.5} color="#00C2FF" />
-        <pointLight position={[-15, -15, -20]} intensity={2.5} color="#FF00F7" />
+        <Stars radius={250} depth={50} count={9000} factor={4} saturation={0} fade speed={0.1} />
+        
+        {/* Subtle dark floor for the stands to rest on */}
+        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -2.35, -50]}>
+          <planeGeometry args={[20, 200]} />
+          <meshStandardMaterial color="#050505" roughness={0} metalness={1} />
+        </mesh>
+
+        <pointLight position={[10, 10, 10]} intensity={2.5} color="#00C2FF" />
+        <pointLight position={[-10, -10, -20]} intensity={2.5} color="#FF00F7" />
       </group>
       
       {/* 
           Leapfrog Project Portals: 
-          Wider position (X = +/- 8)
+          Wonderland-style staggered layout (X = +/- 3.5)
       */}
       {projects.map((project, index) => (
         <ProjectPortalWithLeapfrog 
           key={project.id} 
           project={{
             ...project,
-            // Move projects much farther to the sides (X = +/- 8)
+            // Staggered layout closer to center
             position: [
-              project.position[0] >= 0 ? 8 : -8, 
-              project.position[1], 
+              project.position[0] >= 0 ? 3.5 : -3.5, 
+              0, 
               project.position[2]
             ]
           }} 

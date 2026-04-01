@@ -16,100 +16,109 @@ export default function ProjectPortal({ project, index }: ProjectPortalProps) {
   const [hovered, setHovered] = useState(false);
   const meshRef = useRef<THREE.Group>(null);
   
-  // Example image placeholder if the user hasn't provided one yet
-  const imageUrl = `https://picsum.photos/seed/${project.id}/800/600`;
+  const imageUrl = `https://picsum.photos/seed/${project.id}/800/800`;
+
+  // Manual very subtle animation
+  useFrame((state) => {
+    if (meshRef.current) {
+      // Tiny breathe
+      meshRef.current.position.y += Math.sin(state.clock.getElapsedTime() + index) * 0.001;
+      meshRef.current.rotation.y = Math.sin(state.clock.getElapsedTime() * 0.5 + index) * 0.02;
+    }
+  });
 
   return (
-    <Float 
-      speed={1.5} 
-      rotationIntensity={0.2} 
-      floatIntensity={1} 
-      floatingRange={[-0.2, 0.2]}
-    >
-      <group position={project.position} ref={meshRef}>
-        {/* Main Project Card / Frame - LARGER SIZE [6, 3.75] */}
-        <mesh 
-          onPointerOver={() => setHovered(true)} 
-          onPointerOut={() => setHovered(false)}
-        >
-          <planeGeometry args={[6, 3.75]} />
-          <meshStandardMaterial 
-            color={hovered ? "#00C2FF" : "#111111"} 
-            metalness={0.9} 
-            roughness={0.1} 
-            transparent 
-            opacity={0.95} 
-          />
-        </mesh>
-        
-        {/* Project Image - SCALED UP */}
-        <Image 
-          url={imageUrl} 
-          transparent
-          opacity={0.85}
-          scale={[5.8, 3.55]}
-          position={[0, 0, 0.02]}
-          grayscale={hovered ? 0 : 0.6}
+    <group position={project.position} ref={meshRef}>
+      {/* Main Project Card - More square-ish [4, 4.5] like the reference */}
+      <mesh 
+        onPointerOver={() => setHovered(true)} 
+        onPointerOut={() => setHovered(false)}
+      >
+        <planeGeometry args={[4, 4.5]} />
+        <meshStandardMaterial 
+          color={hovered ? "#00C2FF" : "#0D0D0D"} 
+          metalness={0.9} 
+          roughness={0.1} 
+          transparent 
+          opacity={0.98} 
         />
-        
-        {/* Neon Glow Frame */}
-        <mesh position={[0, 0, -0.01]}>
-          <planeGeometry args={[6.1, 3.85]} />
-          <meshBasicMaterial 
-            color="#00C2FF" 
-            transparent 
-            opacity={hovered ? 0.6 : 0.2} 
-          />
-        </mesh>
-        
-        {/* Title Text - Back to default font for stability */}
-        <Text
-          position={[0, 2.8, 0]}
-          fontSize={0.4}
-          color="white"
-          anchorX="center"
-        >
-          {project.title}
-        </Text>
-        
-        {/* Tech tags */}
-        <group position={[0, -2.5, 0]}>
-          {project.tech.slice(0, 4).map((t, i) => (
-            <Text
-              key={t}
-              position={[(i - 1.5) * 1.5, 0, 0]}
-              fontSize={0.2}
-              color="#00C2FF"
-              anchorX="center"
-            >
-              {t}
-            </Text>
-          ))}
-        </group>
-        
-        {/* Detail Button */}
-        {hovered && (
-          <Html position={[0, 0, 0.2]} center transform distanceFactor={5}>
-            <div 
-              style={{ 
-                background: "var(--accent-primary)", 
-                color: "var(--primary-dark)", 
-                padding: "15px 30px", 
-                borderRadius: "50px", 
-                fontWeight: "bold",
-                fontSize: "1.2rem",
-                cursor: "pointer",
-                boxShadow: "0 0 20px rgba(0, 194, 255, 0.5)",
-                whiteSpace: "nowrap",
-                transition: "all 0.3s ease"
-              }}
-              onClick={() => window.open(project.link, "_blank")}
-            >
-              EXPLORAR
-            </div>
-          </Html>
-        )}
+      </mesh>
+      
+      {/* Project Image */}
+      <Image 
+        url={imageUrl} 
+        transparent
+        opacity={0.9}
+        scale={[3.8, 3.8]}
+        position={[0, 0.2, 0.02]}
+        grayscale={hovered ? 0 : 0.4}
+      />
+      
+      {/* Base/Stand like in the reference image */}
+      <mesh position={[0, -2.3, 0]}>
+        <boxGeometry args={[4.2, 0.1, 0.2]} />
+        <meshBasicMaterial color="#00C2FF" transparent opacity={hovered ? 0.8 : 0.3} />
+      </mesh>
+      
+      {/* Subtle Glow Frame */}
+      <mesh position={[0, 0, -0.01]}>
+        <planeGeometry args={[4.1, 4.6]} />
+        <meshBasicMaterial 
+          color="#00C2FF" 
+          transparent 
+          opacity={hovered ? 0.3 : 0.1} 
+        />
+      </mesh>
+      
+      {/* Title Text - Placed at top in reference */}
+      <Text
+        position={[0, 2.5, 0]}
+        fontSize={0.25}
+        color="white"
+        anchorX="center"
+      >
+        {project.title}
+      </Text>
+      
+      {/* Tech tags - Discrete */}
+      <group position={[0, -1.9, 0.03]}>
+        {project.tech.slice(0, 3).map((t, i) => (
+          <Text
+            key={t}
+            position={[(i - 1) * 1.3, 0, 0]}
+            fontSize={0.12}
+            color="#00C2FF"
+            anchorX="center"
+            fillOpacity={hovered ? 1 : 0.6}
+          >
+            {t}
+          </Text>
+        ))}
       </group>
-    </Float>
+      
+      {/* Explorer Button */}
+      {hovered && (
+        <Html position={[0, 0, 0.2]} center transform distanceFactor={5}>
+          <div 
+            style={{ 
+              background: "rgba(0, 194, 255, 0.9)", 
+              color: "#000", 
+              padding: "10px 20px", 
+              borderRadius: "2px", 
+              fontWeight: "bold",
+              fontSize: "0.8rem",
+              cursor: "pointer",
+              boxShadow: "0 0 30px rgba(0, 194, 255, 0.6)",
+              whiteSpace: "nowrap",
+              letterSpacing: "0.1em",
+              textTransform: "uppercase"
+            }}
+            onClick={() => window.open(project.link, "_blank")}
+          >
+            Explorar Proyecto
+          </div>
+        </Html>
+      )}
+    </group>
   );
 }
