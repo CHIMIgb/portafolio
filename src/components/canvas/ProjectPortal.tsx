@@ -52,10 +52,19 @@ export default function ProjectPortal({ project, index }: ProjectPortalProps) {
 
   return (
     <group position={project.position} ref={meshRef} rotation={[0, tiltAngle, 0]}>
-      {/* Main Project Card */}
+      {/* Main Project Card - Now Clickable */}
       <mesh 
-        onPointerOver={() => setHovered(true)} 
-        onPointerOut={() => setHovered(false)}
+        onPointerOver={() => {
+          setHovered(true);
+          document.body.style.cursor = "pointer";
+        }} 
+        onPointerOut={() => {
+          setHovered(false);
+          document.body.style.cursor = "default";
+        }}
+        onClick={() => {
+          if (project.link) window.open(project.link, "_blank");
+        }}
       >
         <planeGeometry args={[4.5, 5]} />
         <meshStandardMaterial 
@@ -67,7 +76,7 @@ export default function ProjectPortal({ project, index }: ProjectPortalProps) {
         />
       </mesh>
       
-      {/* Project Image */}
+      {/* Project Image - Also Clickable */}
       <Image 
         url={imageUrl} 
         transparent
@@ -75,6 +84,9 @@ export default function ProjectPortal({ project, index }: ProjectPortalProps) {
         scale={[4.2, 4.2]}
         position={[0, 0.25, 0.02]}
         grayscale={hovered ? 0 : 0.45}
+        onClick={() => {
+          if (project.link) window.open(project.link, "_blank");
+        }}
       />
       
       {/* Dynamic Glow Frame */}
@@ -87,57 +99,7 @@ export default function ProjectPortal({ project, index }: ProjectPortalProps) {
         />
       </mesh>
       
-      {/* Title Text */}
-      <Text
-        position={[0, 2.8, 0]}
-        fontSize={0.25}
-        color={hovered ? "#00C2FF" : "white"}
-        anchorX="center"
-      >
-        {project.title}
-      </Text>
-      
-      {/* Tech tags */}
-      <group position={[0, -2.1, 0.03]}>
-        {project.tech.slice(0, 3).map((t, i) => (
-          <Text
-            key={t}
-            position={[(i - 1) * 1.5, 0, 0]}
-            fontSize={0.15}
-            color={hovered ? "white" : "#00C2FF"}
-            anchorX="center"
-            fillOpacity={hovered ? 1 : 0.6}
-          >
-            {t}
-          </Text>
-        ))}
-      </group>
-      
-      {/* Explorer Button */}
-      {hovered && (
-        <Html position={[0, 0, 0.25]} center transform distanceFactor={5}>
-          <div 
-            style={{ 
-              background: "rgba(0, 0, 0, 0.8)", 
-              color: "#00C2FF", 
-              padding: "12px 30px", 
-              borderRadius: "4px", 
-              fontWeight: "900",
-              fontSize: "1rem",
-              cursor: "pointer",
-              border: "2px solid #00C2FF",
-              boxShadow: "0 0 40px rgba(0, 194, 255, 0.8)",
-              whiteSpace: "nowrap",
-              letterSpacing: "0.2em",
-              textTransform: "uppercase",
-              animation: "pulse 1.5s infinite"
-            }}
-            onClick={() => window.open(project.link, "_blank")}
-          >
-            VER DETALLES
-          </div>
-        </Html>
-      )}
+      {/* Tech tags - REMOVED for minimalist look */}
     </group>
   );
 }
