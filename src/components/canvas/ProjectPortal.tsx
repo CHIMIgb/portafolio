@@ -21,18 +21,27 @@ export default function ProjectPortal({ project, index }: ProjectPortalProps) {
   // Tilt towards center based on X position
   const tiltAngle = project.position[0] > 0 ? -0.3 : 0.3;
 
-  // Manual floating and transition animation
+  // Enhanced multi-axis floating animation
   useFrame((state) => {
     if (meshRef.current) {
       const time = state.clock.getElapsedTime();
+      const speed = 0.5;
       
-      // Floating motion
-      meshRef.current.position.y = Math.sin(time * 0.6 + index) * 0.25;
-      meshRef.current.rotation.y = tiltAngle + Math.sin(time * 0.5 + index) * 0.08;
-      meshRef.current.rotation.z = Math.sin(time * 0.3 + index) * 0.02;
+      // Vertical sway (Y) - More pronounced
+      meshRef.current.position.y = Math.sin(time * speed + index) * 0.35;
+      
+      // Lateral movement (X) - Drifting effect
+      meshRef.current.position.x = project.position[0] + Math.cos(time * (speed * 0.8) + index) * 0.25;
+      
+      // Z-depth pulsing (subtle)
+      meshRef.current.position.z = project.position[2] + Math.sin(time * (speed * 0.5) + index) * 0.15;
+      
+      // Rhythmic rotation
+      meshRef.current.rotation.y = tiltAngle + Math.sin(time * 0.4 + index) * 0.12;
+      meshRef.current.rotation.z = Math.sin(time * 0.3 + index) * 0.05;
 
       // Smooth scale on hover
-      const targetScale = hovered ? 1.05 : 1;
+      const targetScale = hovered ? 1.08 : 1;
       meshRef.current.scale.set(
         THREE.MathUtils.lerp(meshRef.current.scale.x, targetScale, 0.1),
         THREE.MathUtils.lerp(meshRef.current.scale.y, targetScale, 0.1),
