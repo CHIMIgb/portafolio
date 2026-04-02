@@ -95,9 +95,8 @@ function ProjectPortalWithLeapfrog({ project, index, loopLength }: { project: an
   useFrame(() => {
     const originalZ = project.position[2];
 
-    // Leapfrog math: jump when well past the camera
-    const jumpThreshold = 30; 
-    const loopOffset = Math.floor((camera.position.z - originalZ + jumpThreshold) / loopLength);
+    // Leapfrog math: find the correct loop index to keep the project in view
+    const loopOffset = Math.floor((camera.position.z - originalZ + 20) / loopLength);
     const targetZ = originalZ + (loopOffset * loopLength);
 
     if (currentZ !== targetZ) {
