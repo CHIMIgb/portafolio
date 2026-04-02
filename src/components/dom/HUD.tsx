@@ -110,7 +110,7 @@ export default function HUD() {
       <footer style={{ position: "absolute", bottom: 0, left: 0, width: "100%", padding: "40px 0", pointerEvents: "auto" }}>
         <div className="container">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <span style={{ color: "var(--accent-secondary)", fontSize: "12px" }}>&copy; 2026 CHIMI Soluciones Digitales</span>
+            <span style={{ color: "var(--accent-secondary)", fontSize: "12px" }}>&copy; 2026 CHIMI</span>
             <div style={{ display: "flex", gap: "20px" }}>
               <a href="#" style={{ color: "white" }}><FaGithub size={20} /></a>
               <a href="#" style={{ color: "white" }}><FaInstagram size={20} /></a>
