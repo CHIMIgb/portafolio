@@ -21,13 +21,23 @@ export default function ProjectPortal({ project, index }: ProjectPortalProps) {
   // Tilt towards center based on X position
   const tiltAngle = project.position[0] > 0 ? -0.3 : 0.3;
 
-  // Manual subtle floating animation
+  // Manual floating and transition animation
   useFrame((state) => {
     if (meshRef.current) {
-      // Gentle vertical sway
-      meshRef.current.position.y = Math.sin(state.clock.getElapsedTime() * 0.5 + index) * 0.1;
-      // Soft rhythmic rotation
-      meshRef.current.rotation.y = tiltAngle + Math.sin(state.clock.getElapsedTime() * 0.3 + index) * 0.02;
+      const time = state.clock.getElapsedTime();
+      
+      // Floating motion
+      meshRef.current.position.y = Math.sin(time * 0.6 + index) * 0.25;
+      meshRef.current.rotation.y = tiltAngle + Math.sin(time * 0.5 + index) * 0.08;
+      meshRef.current.rotation.z = Math.sin(time * 0.3 + index) * 0.02;
+
+      // Smooth scale on hover
+      const targetScale = hovered ? 1.05 : 1;
+      meshRef.current.scale.set(
+        THREE.MathUtils.lerp(meshRef.current.scale.x, targetScale, 0.1),
+        THREE.MathUtils.lerp(meshRef.current.scale.y, targetScale, 0.1),
+        THREE.MathUtils.lerp(meshRef.current.scale.z, targetScale, 0.1)
+      );
     }
   });
 
@@ -40,7 +50,7 @@ export default function ProjectPortal({ project, index }: ProjectPortalProps) {
       >
         <planeGeometry args={[4.5, 5]} />
         <meshStandardMaterial 
-          color={hovered ? "#00C2FF" : "#0D0D0D"} 
+          color={hovered ? "#00C2FF" : "#111"} 
           metalness={0.9} 
           roughness={0.1} 
           transparent 
@@ -52,19 +62,19 @@ export default function ProjectPortal({ project, index }: ProjectPortalProps) {
       <Image 
         url={imageUrl} 
         transparent
-        opacity={0.9}
+        opacity={hovered ? 1 : 0.85}
         scale={[4.2, 4.2]}
         position={[0, 0.25, 0.02]}
-        grayscale={hovered ? 0 : 0.4}
+        grayscale={hovered ? 0 : 0.45}
       />
       
-      {/* Subtle Glow Frame */}
+      {/* Dynamic Glow Frame */}
       <mesh position={[0, 0, -0.01]}>
         <planeGeometry args={[4.6, 5.1]} />
         <meshBasicMaterial 
           color="#00C2FF" 
           transparent 
-          opacity={hovered ? 0.3 : 0.1} 
+          opacity={hovered ? 0.5 : 0.15} 
         />
       </mesh>
       
@@ -72,7 +82,7 @@ export default function ProjectPortal({ project, index }: ProjectPortalProps) {
       <Text
         position={[0, 2.8, 0]}
         fontSize={0.25}
-        color="white"
+        color={hovered ? "#00C2FF" : "white"}
         anchorX="center"
       >
         {project.title}
@@ -85,7 +95,7 @@ export default function ProjectPortal({ project, index }: ProjectPortalProps) {
             key={t}
             position={[(i - 1) * 1.5, 0, 0]}
             fontSize={0.15}
-            color="#00C2FF"
+            color={hovered ? "white" : "#00C2FF"}
             anchorX="center"
             fillOpacity={hovered ? 1 : 0.6}
           >
@@ -96,24 +106,26 @@ export default function ProjectPortal({ project, index }: ProjectPortalProps) {
       
       {/* Explorer Button */}
       {hovered && (
-        <Html position={[0, 0, 0.2]} center transform distanceFactor={5}>
+        <Html position={[0, 0, 0.25]} center transform distanceFactor={5}>
           <div 
             style={{ 
-              background: "rgba(0, 194, 255, 0.9)", 
-              color: "#000", 
-              padding: "10px 25px", 
-              borderRadius: "50px", 
-              fontWeight: "bold",
-              fontSize: "0.9rem",
+              background: "rgba(0, 0, 0, 0.8)", 
+              color: "#00C2FF", 
+              padding: "12px 30px", 
+              borderRadius: "4px", 
+              fontWeight: "900",
+              fontSize: "1rem",
               cursor: "pointer",
-              boxShadow: "0 0 30px rgba(0, 194, 255, 0.6)",
+              border: "2px solid #00C2FF",
+              boxShadow: "0 0 40px rgba(0, 194, 255, 0.8)",
               whiteSpace: "nowrap",
-              letterSpacing: "0.1em",
-              textTransform: "uppercase"
+              letterSpacing: "0.2em",
+              textTransform: "uppercase",
+              animation: "pulse 1.5s infinite"
             }}
             onClick={() => window.open(project.link, "_blank")}
           >
-            Ver Proyecto
+            VER DETALLES
           </div>
         </Html>
       )}

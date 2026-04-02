@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "CHIMI - Soluciones Digitales",
+  title: "CHIMI - Full Stack Developer",
   description: "Portafolio de CHIMI - Desarrollador de Soluciones Digitales. Experiencia inmersiva 3D con proyectos web innovadores.",
 };
 
