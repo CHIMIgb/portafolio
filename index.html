@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CHIMI - Soluciones Digitales</title>
-    <meta name="description" content="Portafolio de CHIMI - Desarrollador de Soluciones Digitales. Proyectos web innovadores y modernos.">
+    <title>CHIMI - Full Stack Developer</title>
+    <meta name="description"
+        content="Portafolio de CHIMI - Desarrollador de Soluciones Digitales. Proyectos web innovadores y modernos.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --primary-dark: #0A0A0A;
@@ -38,7 +42,10 @@
             overflow-x: hidden;
         }
 
-        h1, h2, h3, h4 {
+        h1,
+        h2,
+        h3,
+        h4 {
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
         }
@@ -270,7 +277,8 @@
             transition: var(--transition);
         }
 
-        .filter-btn:hover, .filter-btn.active {
+        .filter-btn:hover,
+        .filter-btn.active {
             background-color: var(--accent-primary);
             color: var(--primary-dark);
             border-color: var(--accent-primary);
@@ -383,7 +391,7 @@
             padding: 3px 10px;
             border-radius: 4px;
             font-size: 0.75rem;
-            border: 1px solid rgba(255,255,255,0.08);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             font-family: monospace;
         }
 
@@ -439,8 +447,15 @@
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
         }
 
         .visual-container img {
@@ -615,7 +630,9 @@
 
         /* Responsive Design */
         @media (max-width: 992px) {
-            .about-content, .contact-content {
+
+            .about-content,
+            .contact-content {
                 grid-template-columns: 1fr;
                 gap: 40px;
             }
@@ -701,6 +718,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Scroll Indicator -->
     <div class="scroll-indicator" id="scrollIndicator"></div>
@@ -729,7 +747,8 @@
         <div class="container">
             <div class="hero-content">
                 <h1>Hola, soy <span>CHIMI</span></h1>
-                <p>Desarrollo <span class="accent">soluciones digitales</span> innovadoras y eficientes. Transformo ideas en experiencias web modernas, responsivas y de alto impacto.</p>
+                <p>Desarrollo <span class="accent">soluciones digitales</span> innovadoras y eficientes. Transformo
+                    ideas en experiencias web modernas, responsivas y de alto impacto.</p>
                 <div class="hero-btns">
                     <a href="#projects" class="btn btn-primary"><i class="fas fa-code"></i> Ver Proyectos</a>
                     <a href="#contact" class="btn btn-secondary"><i class="fas fa-envelope"></i> Contáctame</a>
@@ -754,7 +773,9 @@
                     </div>
                     <div class="project-content">
                         <h3>ROMs Vault</h3>
-                        <p>Plataforma web completa para descubrir, descargar y ejecutar juegos retro directamente en el navegador. Integra EmulatorJS para emulación online sin instalaciones, con soporte para múltiples consolas clásicas y streaming de ISOs grandes desde Google Drive.</p>
+                        <p>Plataforma web completa para descubrir, descargar y ejecutar juegos retro directamente en el
+                            navegador. Integra EmulatorJS para emulación online sin instalaciones, con soporte para
+                            múltiples consolas clásicas y streaming de ISOs grandes desde Google Drive.</p>
 
                         <div class="console-badges">
                             <span class="console-badge">PSP</span>
@@ -770,15 +791,43 @@
                         <div class="project-tech">
                             <span class="tech-tag">PHP</span>
                             <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">Docker</span>
                             <span class="tech-tag">EmulatorJS</span>
                             <span class="tech-tag">Google Drive API</span>
-                            <span class="tech-tag">MySQL</span>
+                            <span class="tech-tag">PostgreSQL</span>
                             <span class="tech-tag">CSS</span>
                         </div>
 
                         <div class="project-buttons">
                             <a href="https://roms-vault.up.railway.app/" class="btn btn-primary" target="_blank">
                                 <i class="fas fa-play"></i> Ver Proyecto
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Proyecto Destacado - Desarrollo Urbano -->
+                <div class="project-card featured hidden" data-category="javascript nodejs postgresql python docker">
+                    <div class="project-icon">
+                        <i class="fas fa-city"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>SaaS de Desarrollo Urbano</h3>
+                        <p>Plataforma para planificación y diseño urbano interactivo. Permite análisis de métricas
+                            espaciales, edición en base a lotes y visualización en un entorno 3D dinámico. Incluye un
+                            sistema robusto de CI/CD para automatizar pruebas y despliegues.</p>
+
+                        <div class="project-tech">
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">MapLibre GL</span>
+                            <span class="tech-tag">Node.js / Express</span>
+                            <span class="tech-tag">PostgreSQL / Supabase</span>
+                            <span class="tech-tag">Docker</span>
+                        </div>
+
+                        <div class="project-buttons">
+                            <a href="https://desarrollo-urbano.onrender.com/" class="btn btn-primary" target="_blank">
+                                <i class="fas fa-play"></i> Probar Demo
                             </a>
                         </div>
                     </div>
@@ -791,20 +840,23 @@
                     </div>
                     <div class="project-content">
                         <h3>Generador de Menús PDF</h3>
-                        <p>Solución que automatiza la creación de menús digitales e impresos para restaurantes. Resuelve el problema de la falta de actualización constante en cartas físicas y la dificultad para gestionar cambios de precios y disponibilidad.</p>
-                        
+                        <p>Solución que automatiza la creación de menús digitales e impresos para restaurantes. Resuelve
+                            el problema de la falta de actualización constante en cartas físicas y la dificultad para
+                            gestionar cambios de precios y disponibilidad.</p>
+
                         <div class="project-tech">
                             <span class="tech-tag">HTML</span>
                             <span class="tech-tag">JavaScript</span>
                             <span class="tech-tag">CSS</span>
                         </div>
-                        
+
                         <div class="project-buttons">
-                            <a href="https://chimigb.github.io/Generador-de-menus-digitales/" class="btn btn-primary" target="_blank">Probar Demo</a>
+                            <a href="https://chimigb.github.io/Generador-de-menus-digitales/" class="btn btn-primary"
+                                target="_blank">Probar Demo</a>
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Proyecto 2 - Sistema de Tickets y Seguimiento -->
                 <div class="project-card hidden" data-category="html javascript css">
                     <div class="project-icon">
@@ -812,16 +864,19 @@
                     </div>
                     <div class="project-content">
                         <h3>Sistema de Tickets de Soporte</h3>
-                        <p>Sistema inteligente para crear, clasificar y dar seguimiento a tickets de soporte o incidencias. Resuelve el problema de la pérdida de tickets, falta de priorización y dificultad para medir tiempos de respuesta en equipos de soporte.</p>
-                        
+                        <p>Sistema inteligente para crear, clasificar y dar seguimiento a tickets de soporte o
+                            incidencias. Resuelve el problema de la pérdida de tickets, falta de priorización y
+                            dificultad para medir tiempos de respuesta en equipos de soporte.</p>
+
                         <div class="project-tech">
                             <span class="tech-tag">HTML</span>
                             <span class="tech-tag">JavaScript</span>
                             <span class="tech-tag">CSS</span>
                         </div>
-                        
+
                         <div class="project-buttons">
-                            <a href="https://chimigb.github.io/sistema-de-tickets/" class="btn btn-primary" target="_blank">Probar Demo</a>
+                            <a href="https://chimigb.github.io/sistema-de-tickets/" class="btn btn-primary"
+                                target="_blank">Probar Demo</a>
                         </div>
                     </div>
                 </div>
@@ -833,17 +888,20 @@
                     </div>
                     <div class="project-content">
                         <h3>ColorBrand - Generador de Paletas</h3>
-                        <p>Aplicación web que analiza imágenes subidas por usuarios y extrae paletas de colores armónicas. Resuelve el problema de diseñadores y desarrolladores para encontrar combinaciones de colores coherentes a partir de imágenes de referencia.</p>
-                        
+                        <p>Aplicación web que analiza imágenes subidas por usuarios y extrae paletas de colores
+                            armónicas. Resuelve el problema de diseñadores y desarrolladores para encontrar
+                            combinaciones de colores coherentes a partir de imágenes de referencia.</p>
+
                         <div class="project-tech">
                             <span class="tech-tag">HTML</span>
                             <span class="tech-tag">JavaScript</span>
                             <span class="tech-tag">CSS</span>
                             <span class="tech-tag">Análisis de imagen</span>
                         </div>
-                        
+
                         <div class="project-buttons">
-                            <a href="https://chimigb.github.io/generar-paletas-de-colores/" class="btn btn-primary" target="_blank">Probar Demo</a>
+                            <a href="https://chimigb.github.io/generar-paletas-de-colores/" class="btn btn-primary"
+                                target="_blank">Probar Demo</a>
                         </div>
                     </div>
                 </div>
@@ -861,19 +919,29 @@
             <div class="about-content">
                 <div class="about-text">
                     <h3>Desarrollador de Soluciones Digitales</h3>
-                    <p>Soy CHIMI, un apasionado desarrollador especializado en crear soluciones digitales innovadoras y eficientes. Mi enfoque combina creatividad, funcionalidad y mejores prácticas de desarrollo para ofrecer productos de alta calidad.</p>
-                    <p>Con experiencia en diversas tecnologías y frameworks, me especializo en construir aplicaciones web modernas, responsivas y escalables que cumplen con los objetivos de negocio de mis clientes.</p>
-                    <p>Mi filosofía es simple: entender las necesidades del cliente, diseñar soluciones efectivas y ejecutar con excelencia técnica.</p>
+                    <p>Soy CHIMI, un apasionado desarrollador especializado en crear soluciones digitales innovadoras y
+                        eficientes. Mi enfoque combina creatividad, funcionalidad y mejores prácticas de desarrollo para
+                        ofrecer productos de alta calidad.</p>
+                    <p>Con experiencia en diversas tecnologías y frameworks, me especializo en construir aplicaciones
+                        web modernas, responsivas y escalables que cumplen con los objetivos de negocio de mis clientes.
+                    </p>
+                    <p>Mi filosofía es simple: entender las necesidades del cliente, diseñar soluciones efectivas y
+                        ejecutar con excelencia técnica.</p>
                     <div class="skills-list">
                         <div class="skill-item">HTML5 & CSS3</div>
                         <div class="skill-item">PHP</div>
+                        <div class="skill-item">Docker</div>
                         <div class="skill-item">Flight PHP</div>
                         <div class="skill-item">JavaScript</div>
                         <div class="skill-item">TypeScript</div>
                         <div class="skill-item">React Native</div>
                         <div class="skill-item">Expo</div>
                         <div class="skill-item">Angular</div>
+                        <div class="skill-item">Nest.js</div>
+                        <div class="skill-item">Python</div>
+                        <div class="skill-item">Next.js</div>
                         <div class="skill-item">Node.js</div>
+                        <div class="skill-item">API developer</div>
                         <div class="skill-item">Responsive Design</div>
                         <div class="skill-item">UI/UX Design</div>
                         <div class="skill-item">PostgreSQL</div>
@@ -882,7 +950,8 @@
                 </div>
                 <div class="about-visual">
                     <div class="visual-container">
-                        <img src="foto-presentacion-oscuro.jpeg" alt="CHIMI - Soluciones Digitales" class="profile-image">
+                        <img src="foto-presentacion-oscuro.jpeg" alt="CHIMI - Soluciones Digitales"
+                            class="profile-image">
                     </div>
                 </div>
             </div>
@@ -911,7 +980,8 @@
                         <div class="form-group">
                             <textarea id="message" placeholder="Tu mensaje" required></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Enviar Mensaje <i class="fas fa-paper-plane"></i></button>
+                        <button type="submit" class="btn btn-primary">Enviar Mensaje <i
+                                class="fas fa-paper-plane"></i></button>
                     </form>
                 </div>
                 <div class="contact-info">
@@ -923,8 +993,8 @@
                             <div class="contact-details">
                                 <h4>Email</h4>
                                 <p>Contáctame directamente por correo</p>
-                                <a href="mailto:chimisolucionesdigitales@gmail.com?subject=Consulta%20desde%20Portafolio%20CHIMI&body=Hola%20CHIMI,%0D%0A%0D%0AMe%20interesa%20conocer%20m%C3%A1s%20sobre%20tus%20servicios%20de%20soluciones%20digitales.%0D%0A%0D%0ATe%20escribo%20porque%20quiero%20(describir%20tu%20proyecto%20o%20consulta):%0D%0A%0D%0A%0D%0AEspero%20tu%20respuesta,%0D%0A%0D%0A%5BTu%20Nombre%5D" 
-                                   class="contact-link">chimisolucionesdigitales@gmail.com</a>
+                                <a href="mailto:chimisolucionesdigitales@gmail.com?subject=Consulta%20desde%20Portafolio%20CHIMI&body=Hola%20CHIMI,%0D%0A%0D%0AMe%20interesa%20conocer%20m%C3%A1s%20sobre%20tus%20servicios%20de%20soluciones%20digitales.%0D%0A%0D%0ATe%20escribo%20porque%20quiero%20(describir%20tu%20proyecto%20o%20consulta):%0D%0A%0D%0A%0D%0AEspero%20tu%20respuesta,%0D%0A%0D%0A%5BTu%20Nombre%5D"
+                                    class="contact-link">chimisolucionesdigitales@gmail.com</a>
                             </div>
                         </div>
                         <div class="contact-method">
@@ -934,7 +1004,8 @@
                             <div class="contact-details">
                                 <h4>WhatsApp</h4>
                                 <p>Conversemos en tiempo real</p>
-                                <a href="https://wa.me/523231013548?text=Hola%20CHIMI,%20quiero%20consultarte%20sobre%20un%20proyecto" target="_blank" class="contact-link">+52 323 101 3548</a>
+                                <a href="https://wa.me/523231013548?text=Hola%20CHIMI,%20quiero%20consultarte%20sobre%20un%20proyecto"
+                                    target="_blank" class="contact-link">+52 323 101 3548</a>
                             </div>
                         </div>
                     </div>
@@ -967,8 +1038,8 @@
 
         mobileMenuBtn.addEventListener('click', () => {
             navLinks.classList.toggle('active');
-            mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
-                ? '<i class="fas fa-times"></i>' 
+            mobileMenuBtn.innerHTML = navLinks.classList.contains('active')
+                ? '<i class="fas fa-times"></i>'
                 : '<i class="fas fa-bars"></i>';
         });
 
@@ -998,7 +1069,7 @@
         });
 
         // Inicializar partículas en el hero
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             particlesJS("particles-js", {
                 particles: {
                     number: { value: 80, density: { enable: true, value_area: 800 } },
@@ -1037,17 +1108,17 @@
 
         // Formulario de contacto
         const contactForm = document.getElementById('contactForm');
-        
-        contactForm.addEventListener('submit', function(e) {
+
+        contactForm.addEventListener('submit', function (e) {
             e.preventDefault();
-            
+
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const subject = document.getElementById('subject').value;
             const message = document.getElementById('message').value;
-            
+
             const mailtoLink = `mailto:contacto@chimi-soluciones.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Nombre: ${name}\nEmail: ${email}\n\nMensaje:\n${message}`)}`;
-            
+
             window.location.href = mailtoLink;
             contactForm.reset();
             alert('¡Gracias por tu mensaje! Serás redirigido a tu cliente de correo.');
@@ -1056,11 +1127,11 @@
         // Animación de scroll reveal
         function revealOnScroll() {
             const elements = document.querySelectorAll('.section-header, .project-card, .about-content, .contact-content');
-            
+
             elements.forEach(element => {
                 const elementTop = element.getBoundingClientRect().top;
                 const elementVisible = 150;
-                
+
                 if (elementTop < window.innerHeight - elementVisible) {
                     element.classList.add('revealed');
                 }
@@ -1091,7 +1162,7 @@
         window.addEventListener('scroll', revealOnScroll);
         window.addEventListener('load', revealOnScroll);
         setTimeout(revealOnScroll, 100);
-        
+
         setTimeout(() => {
             document.querySelectorAll('.project-card').forEach(card => {
                 card.classList.remove('hidden');
@@ -1100,4 +1171,5 @@
         }, 300);
     </script>
 </body>
+
 </html>
