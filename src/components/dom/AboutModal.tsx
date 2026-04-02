@@ -3,13 +3,13 @@
 import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
-import { 
+import {
   SiPhp, SiLaravel, SiNodedotjs, SiNestjs, SiExpress,
   SiReact, SiNextdotjs, SiAngular, SiVuedotjs, SiTailwindcss, SiJavascript, SiHtml5, SiCss,
   SiPostgresql, SiMysql,
   SiPython, SiScikitlearn,
   SiArduino, SiCplusplus,
-  SiGit, SiGithub, SiDocker, SiPostman 
+  SiGit, SiGithub, SiDocker, SiPostman
 } from "react-icons/si";
 
 interface AboutModalProps {
@@ -18,7 +18,7 @@ interface AboutModalProps {
 }
 
 export default function AboutModal({ isOpen, onClose }: AboutModalProps) {
-  
+
   // Lock scroll when modal is open
   useEffect(() => {
     if (isOpen) {
@@ -32,10 +32,10 @@ export default function AboutModal({ isOpen, onClose }: AboutModalProps) {
   }, [isOpen]);
 
   const SkillIcon = ({ icon: Icon, name, color }: { icon: any, name: string, color?: string }) => (
-    <div style={{ 
-      display: "flex", 
-      flexDirection: "column", 
-      alignItems: "center", 
+    <div style={{
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
       gap: "8px",
       padding: "15px",
       background: "rgba(255, 255, 255, 0.03)",
@@ -43,7 +43,7 @@ export default function AboutModal({ isOpen, onClose }: AboutModalProps) {
       borderRadius: "12px",
       transition: "all 0.3s ease"
     }}
-    className="skill-item"
+      className="skill-item"
     >
       <Icon size={32} color={color || "white"} />
       <span style={{ fontSize: "10px", textTransform: "uppercase", letterSpacing: "1px", opacity: 0.7 }}>{name}</span>
@@ -51,12 +51,12 @@ export default function AboutModal({ isOpen, onClose }: AboutModalProps) {
   );
 
   const SectionTitle = ({ children }: { children: React.ReactNode }) => (
-    <h3 style={{ 
-      fontSize: "14px", 
-      color: "var(--accent-primary)", 
-      marginTop: "40px", 
-      marginBottom: "20px", 
-      textTransform: "uppercase", 
+    <h3 style={{
+      fontSize: "14px",
+      color: "var(--accent-primary)",
+      marginTop: "40px",
+      marginBottom: "20px",
+      textTransform: "uppercase",
       letterSpacing: "2px",
       display: "flex",
       alignItems: "center",
@@ -69,8 +69,8 @@ export default function AboutModal({ isOpen, onClose }: AboutModalProps) {
   return (
     <AnimatePresence>
       {isOpen && (
-        <motion.div 
-          className="modal-overlay" 
+        <motion.div
+          className="modal-overlay"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -91,7 +91,7 @@ export default function AboutModal({ isOpen, onClose }: AboutModalProps) {
           }}
           onClick={onClose}
         >
-          <motion.div 
+          <motion.div
             initial={{ y: -100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -100, opacity: 0 }}
@@ -111,7 +111,7 @@ export default function AboutModal({ isOpen, onClose }: AboutModalProps) {
             onClick={(e) => e.stopPropagation()}
             onWheel={(e) => e.stopPropagation()}
           >
-            <button 
+            <button
               onClick={onClose}
               style={{
                 position: "absolute",
@@ -138,7 +138,7 @@ export default function AboutModal({ isOpen, onClose }: AboutModalProps) {
                 Soy CHIMI, un apasionado desarrollador especializado en crear soluciones digitales innovadoras y eficientes. Mi enfoque combina creatividad, funcionalidad y mejores prácticas de desarrollo para ofrecer productos de alta calidad.
               </p>
               <p style={{ fontSize: "18px", lineHeight: "1.8", color: "rgba(255,255,255,0.8)", marginBottom: "20px" }}>
-                Con experiencia en diversas tecnologías y frameworks, me especializo en construir aplicaciones web modernas, responsivas y escalables que cumplen con los objetivos de negocio de mis clientes.
+                Con experiencia en diversas tecnologías y frameworks, me especializo en construir aplicaciones web modernas, responsivas y escalables.
               </p>
               <p style={{ fontSize: "18px", lineHeight: "1.8", color: "rgba(255,255,255,0.8)" }}>
                 Mi filosofía se basa en la <strong>curiosidad insaciable</strong> y el <strong>aprendizaje constante</strong>; disfruto integrando múltiples tecnologías en un solo proyecto para crear soluciones robustas, variadas y siempre a la vanguardia.
@@ -147,7 +147,7 @@ export default function AboutModal({ isOpen, onClose }: AboutModalProps) {
 
             <section>
               <h2 style={{ fontSize: "28px", fontWeight: 800, marginBottom: "10px" }}>Stacks Tecnoglógicos</h2>
-              
+
               <SectionTitle>Backend</SectionTitle>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(100px, 1fr))", gap: "15px" }}>
                 <SkillIcon icon={SiPhp} name="PHP" color="#777BB4" />
