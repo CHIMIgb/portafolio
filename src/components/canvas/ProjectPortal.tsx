@@ -87,7 +87,7 @@ export default function ProjectPortal({ project, index }: ProjectPortalProps) {
       >
         <planeGeometry args={[4.5, 5]} />
         <meshStandardMaterial
-          color={hovered ? "#00C2FF" : "#111"}
+          color="#111"
           metalness={0.9}
           roughness={0.1}
           transparent
@@ -99,10 +99,10 @@ export default function ProjectPortal({ project, index }: ProjectPortalProps) {
       <Image
         url={imageUrl}
         transparent
-        opacity={hovered ? 1 : 0.85}
+        opacity={1}
         scale={[4.2, 4.2]}
         position={[0, 0.25, 0.02]}
-        grayscale={hovered ? 0 : 0.45}
+        grayscale={0}
         onClick={() => {
           if (project.link) window.open(project.link, "_blank");
         }}
