@@ -15,7 +15,7 @@ export default function ProjectPortal({ project, index }: ProjectPortalProps) {
   const [entranceProgress, setEntranceProgress] = useState(0);
   const meshRef = useRef<THREE.Group>(null);
 
-  const imageUrl = `https://picsum.photos/seed/${project.id}/800/800`;
+  const imageUrl = project.image || `https://picsum.photos/seed/${project.id}/800/800`;
 
   // Entrance animation logic (Warp Jump)
   const ENTRANCE_DURATION = 1.6;
