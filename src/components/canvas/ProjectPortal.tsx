@@ -108,13 +108,23 @@ export default function ProjectPortal({ project, index }: ProjectPortalProps) {
         }}
       />
 
+      {/* Internal illumination overlay */}
+      <mesh position={[0, 0, 0.03]}>
+        <planeGeometry args={[4.5, 5]} />
+        <meshBasicMaterial
+          color="#FFFFFF"
+          transparent
+          opacity={hovered ? 0.12 : 0}
+        />
+      </mesh>
+
       {/* Dynamic Glow Frame */}
       <mesh position={[0, 0, -0.01]}>
         <planeGeometry args={[4.6, 5.1]} />
         <meshBasicMaterial
-          color="#00C2FF"
+          color="#FFFFFF"
           transparent
-          opacity={hovered ? 0.5 : 0.15}
+          opacity={hovered ? 0.35 : 0.12}
         />
       </mesh>
     </group>
