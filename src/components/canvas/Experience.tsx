@@ -1,7 +1,7 @@
 "use client";
 
 import { useFrame, useThree } from "@react-three/fiber";
-import { Stars } from "@react-three/drei";
+import { Stars, Sparkles } from "@react-three/drei";
 import { useState } from "react";
 import * as THREE from "three";
 import { projects } from "../../data/projects";
@@ -34,10 +34,30 @@ export default function Experience({ scroll }: { scroll: number }) {
       <ambientLight intensity={0.6} />
 
       {/* 
-          Deep Space Environment: Only fixed Stars and global Lights
+          Deep Space Environment: Stars + Dynamic Sparkles (Twinkling)
       */}
       <group position={[0, 0, camera.position.z]}>
-        <Stars radius={250} depth={50} count={9000} factor={4} saturation={0} fade speed={0.2} />
+        <Stars radius={250} depth={50} count={9000} factor={4} saturation={0} fade speed={0.4} />
+        
+        {/* Adding individual twinkling stars with noise */}
+        <Sparkles 
+          count={500} 
+          scale={150} 
+          size={1.5} 
+          speed={0.5} 
+          opacity={0.8} 
+          noise={1} 
+          color="#00C2FF" 
+        />
+        <Sparkles 
+          count={300} 
+          scale={200} 
+          size={1} 
+          speed={0.2} 
+          opacity={0.5} 
+          noise={0.5} 
+          color="#FFF" 
+        />
 
         <pointLight position={[10, 10, 10]} intensity={3} color="#00C2FF" />
         <pointLight position={[-10, -10, -20]} intensity={3} color="#FF00F7" />
