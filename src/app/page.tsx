@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Lenis from "lenis";
-import Scene from "../components/canvas/Scene";
+import Scene from "@/components/canvas/Scene";
 
 export default function Home() {
   const [totalScrolled, setTotalScrolled] = useState(0);

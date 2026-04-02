@@ -5,7 +5,7 @@ import { Stars, Sparkles } from "@react-three/drei";
 import { useState } from "react";
 import * as THREE from "three";
 import { projects } from "../../data/projects";
-import ProjectPortal from "./ProjectPortal";
+import ProjectPortal from "@/components/canvas/ProjectPortal";
 
 export default function Experience({ scroll }: { scroll: number }) {
   const { camera } = useThree();
@@ -95,8 +95,9 @@ function ProjectPortalWithLeapfrog({ project, index, loopLength }: { project: an
   useFrame(() => {
     const originalZ = project.position[2];
 
-    // Leapfrog math: find the correct loop index to keep the project in view
-    const loopOffset = Math.floor((camera.position.z - originalZ + 20) / loopLength);
+    // Leapfrog math: jump when well past the camera
+    const jumpThreshold = 30; 
+    const loopOffset = Math.floor((camera.position.z - originalZ + jumpThreshold) / loopLength);
     const targetZ = originalZ + (loopOffset * loopLength);
 
     if (currentZ !== targetZ) {

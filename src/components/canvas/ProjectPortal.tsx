@@ -1,8 +1,8 @@
 "use client";
 
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import { Float, Text, Image, Html } from "@react-three/drei";
-import { useRef, useState } from "react";
+import { useRef, useState, useMemo } from "react";
 import * as THREE from "three";
 import { Project } from "../../types/project";
 import { motion } from "framer-motion-3d";
@@ -15,6 +15,9 @@ interface ProjectPortalProps {
 export default function ProjectPortal({ project, index }: ProjectPortalProps) {
   const [hovered, setHovered] = useState(false);
   const meshRef = useRef<THREE.Group>(null);
+  const cardMaterialRef = useRef<THREE.MeshStandardMaterial>(null);
+  const glowMaterialRef = useRef<THREE.MeshBasicMaterial>(null);
+  const imageRef = useRef<any>(null);
 
   const imageUrl = `https://picsum.photos/seed/${project.id}/800/800`;
 
@@ -47,12 +50,31 @@ export default function ProjectPortal({ project, index }: ProjectPortalProps) {
         THREE.MathUtils.lerp(meshRef.current.scale.y, targetScale, 0.1),
         THREE.MathUtils.lerp(meshRef.current.scale.z, targetScale, 0.1)
       );
+
+      // Distance-based opacity for smooth rendering
+      const dist = Math.abs(meshRef.current.position.z - state.camera.position.z);
+      
+      // Fade in/out logic
+      // dist < 12: fade out (too close to camera)
+      // dist > 60: fade out (too far / leapfrog point)
+      let opacity = 1;
+      if (dist < 12) {
+        opacity = THREE.MathUtils.smoothstep(dist, 4, 12);
+      } else if (dist > 60) {
+        opacity = 1 - THREE.MathUtils.smoothstep(dist, 60, 85);
+      }
+
+      if (cardMaterialRef.current) cardMaterialRef.current.opacity = opacity * 0.96;
+      if (glowMaterialRef.current) glowMaterialRef.current.opacity = opacity * (hovered ? 0.6 : 0.15);
+      if (imageRef.current) {
+         imageRef.current.material.opacity = opacity * (hovered ? 1 : 0.85);
+      }
     }
   });
 
   return (
     <group position={project.position} ref={meshRef} rotation={[0, tiltAngle, 0]}>
-      {/* Main Project Card - Now Clickable */}
+      {/* Main Project Card */}
       <mesh
         onPointerOver={() => {
           setHovered(true);
@@ -68,6 +90,7 @@ export default function ProjectPortal({ project, index }: ProjectPortalProps) {
       >
         <planeGeometry args={[4.5, 5]} />
         <meshStandardMaterial
+          ref={cardMaterialRef}
           color={hovered ? "#00C2FF" : "#111"}
           metalness={0.9}
           roughness={0.1}
@@ -76,8 +99,9 @@ export default function ProjectPortal({ project, index }: ProjectPortalProps) {
         />
       </mesh>
 
-      {/* Project Image - Also Clickable */}
+      {/* Project Image */}
       <Image
+        ref={imageRef}
         url={imageUrl}
         transparent
         opacity={hovered ? 1 : 0.85}
@@ -93,13 +117,12 @@ export default function ProjectPortal({ project, index }: ProjectPortalProps) {
       <mesh position={[0, 0, -0.01]}>
         <planeGeometry args={[4.6, 5.1]} />
         <meshBasicMaterial
+          ref={glowMaterialRef}
           color="#00C2FF"
           transparent
           opacity={hovered ? 0.5 : 0.15}
         />
       </mesh>
-
-      {/* Tech tags - REMOVED for minimalist look */}
     </group>
   );
 }
