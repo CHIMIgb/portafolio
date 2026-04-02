@@ -15,7 +15,7 @@ interface ProjectPortalProps {
 export default function ProjectPortal({ project, index }: ProjectPortalProps) {
   const [hovered, setHovered] = useState(false);
   const meshRef = useRef<THREE.Group>(null);
-  
+
   const imageUrl = `https://picsum.photos/seed/${project.id}/800/800`;
 
   // Tilt towards center based on X position
@@ -26,16 +26,16 @@ export default function ProjectPortal({ project, index }: ProjectPortalProps) {
     if (meshRef.current) {
       const time = state.clock.getElapsedTime();
       const speed = 0.5;
-      
+
       // Vertical sway (Y) - More pronounced
       meshRef.current.position.y = Math.sin(time * speed + index) * 0.35;
-      
+
       // Lateral movement (X) - Drifting effect
       meshRef.current.position.x = project.position[0] + Math.cos(time * (speed * 0.8) + index) * 0.25;
-      
+
       // Z-depth pulsing (subtle)
       meshRef.current.position.z = project.position[2] + Math.sin(time * (speed * 0.5) + index) * 0.15;
-      
+
       // Rhythmic rotation
       meshRef.current.rotation.y = tiltAngle + Math.sin(time * 0.4 + index) * 0.12;
       meshRef.current.rotation.z = Math.sin(time * 0.3 + index) * 0.05;
@@ -53,11 +53,11 @@ export default function ProjectPortal({ project, index }: ProjectPortalProps) {
   return (
     <group position={project.position} ref={meshRef} rotation={[0, tiltAngle, 0]}>
       {/* Main Project Card - Now Clickable */}
-      <mesh 
+      <mesh
         onPointerOver={() => {
           setHovered(true);
           document.body.style.cursor = "pointer";
-        }} 
+        }}
         onPointerOut={() => {
           setHovered(false);
           document.body.style.cursor = "default";
@@ -67,18 +67,18 @@ export default function ProjectPortal({ project, index }: ProjectPortalProps) {
         }}
       >
         <planeGeometry args={[4.5, 5]} />
-        <meshStandardMaterial 
-          color={hovered ? "#00C2FF" : "#111"} 
-          metalness={0.9} 
-          roughness={0.1} 
-          transparent 
-          opacity={0.96} 
+        <meshStandardMaterial
+          color={hovered ? "#00C2FF" : "#111"}
+          metalness={0.9}
+          roughness={0.1}
+          transparent
+          opacity={0.96}
         />
       </mesh>
-      
+
       {/* Project Image - Also Clickable */}
-      <Image 
-        url={imageUrl} 
+      <Image
+        url={imageUrl}
         transparent
         opacity={hovered ? 1 : 0.85}
         scale={[4.2, 4.2]}
@@ -88,17 +88,17 @@ export default function ProjectPortal({ project, index }: ProjectPortalProps) {
           if (project.link) window.open(project.link, "_blank");
         }}
       />
-      
+
       {/* Dynamic Glow Frame */}
       <mesh position={[0, 0, -0.01]}>
         <planeGeometry args={[4.6, 5.1]} />
-        <meshBasicMaterial 
-          color="#00C2FF" 
-          transparent 
-          opacity={hovered ? 0.5 : 0.15} 
+        <meshBasicMaterial
+          color="#00C2FF"
+          transparent
+          opacity={hovered ? 0.5 : 0.15}
         />
       </mesh>
-      
+
       {/* Tech tags - REMOVED for minimalist look */}
     </group>
   );
