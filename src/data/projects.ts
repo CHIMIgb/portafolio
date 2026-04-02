@@ -23,6 +23,7 @@ export const projects: Project[] = [
     link: "https://desarrollo-urbano.onrender.com/",
     featured: true,
     icon: "city",
+    image: "/urban-plan3d.png",
     position: [2, 0, -25]
   },
 ];
