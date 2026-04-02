@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Send, Mail, Phone } from "lucide-react";
 import { FaGithub, FaInstagram } from "react-icons/fa";
@@ -26,11 +26,26 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
     alert("¡Gracias por tu mensaje! Se abrirá tu cliente de correo.");
   };
 
+  // Lock scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
+
   return (
     <AnimatePresence>
       {isOpen && (
-        <div 
+        <motion.div 
           className="modal-overlay" 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
           style={{
             position: "fixed",
             top: 0,
@@ -43,14 +58,16 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            padding: "20px"
+            padding: "20px",
+            pointerEvents: "auto" // Re-enable pointer events for the modal
           }}
           onClick={onClose}
         >
           <motion.div 
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
+            initial={{ y: -100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -100, opacity: 0 }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
             className="modal-content glass-panel"
             style={{
               width: "100%",
@@ -62,6 +79,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
               position: "relative"
             }}
             onClick={(e) => e.stopPropagation()}
+            onWheel={(e) => e.stopPropagation()} // Prevent scroll propagation to background
           >
             <button 
               onClick={onClose}
@@ -140,7 +158,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
               </div>
             </div>
           </motion.div>
-        </div>
+        </motion.div>
       )}
     </AnimatePresence>
   );
