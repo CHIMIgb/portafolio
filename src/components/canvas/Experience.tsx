@@ -34,19 +34,13 @@ export default function Experience({ scroll }: { scroll: number }) {
       <ambientLight intensity={0.6} />
 
       {/* 
-          Stable Environment: Fixed Stars and a subtle Ground
+          Deep Space Environment: Only fixed Stars and global Lights
       */}
       <group position={[0, 0, camera.position.z]}>
-        <Stars radius={250} depth={50} count={9000} factor={4} saturation={0} fade speed={0.1} />
+        <Stars radius={250} depth={50} count={9000} factor={4} saturation={0} fade speed={0.2} />
 
-        {/* Subtle dark floor for the stands to rest on */}
-        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -2.35, -50]}>
-          <planeGeometry args={[20, 200]} />
-          <meshStandardMaterial color="#050505" roughness={0} metalness={1} />
-        </mesh>
-
-        <pointLight position={[10, 10, 10]} intensity={2.5} color="#00C2FF" />
-        <pointLight position={[-10, -10, -20]} intensity={2.5} color="#FF00F7" />
+        <pointLight position={[10, 10, 10]} intensity={3} color="#00C2FF" />
+        <pointLight position={[-10, -10, -20]} intensity={3} color="#FF00F7" />
       </group>
 
       {/* 

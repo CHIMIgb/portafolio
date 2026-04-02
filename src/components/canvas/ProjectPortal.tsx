@@ -21,30 +21,30 @@ export default function ProjectPortal({ project, index }: ProjectPortalProps) {
   // Tilt towards center based on X position
   const tiltAngle = project.position[0] > 0 ? -0.3 : 0.3;
 
-  // Manual very subtle animation
+  // Manual subtle floating animation
   useFrame((state) => {
     if (meshRef.current) {
-      // Tiny breathe
-      meshRef.current.position.y += Math.sin(state.clock.getElapsedTime() + index) * 0.001;
-      // Oscillate around the tilt angle
-      meshRef.current.rotation.y = tiltAngle + Math.sin(state.clock.getElapsedTime() * 0.5 + index) * 0.01;
+      // Gentle vertical sway
+      meshRef.current.position.y = Math.sin(state.clock.getElapsedTime() * 0.5 + index) * 0.1;
+      // Soft rhythmic rotation
+      meshRef.current.rotation.y = tiltAngle + Math.sin(state.clock.getElapsedTime() * 0.3 + index) * 0.02;
     }
   });
 
   return (
     <group position={project.position} ref={meshRef} rotation={[0, tiltAngle, 0]}>
-      {/* Main Project Card - More square-ish [4, 4.5] like the reference */}
+      {/* Main Project Card */}
       <mesh 
         onPointerOver={() => setHovered(true)} 
         onPointerOut={() => setHovered(false)}
       >
-        <planeGeometry args={[4, 4.5]} />
+        <planeGeometry args={[4.5, 5]} />
         <meshStandardMaterial 
           color={hovered ? "#00C2FF" : "#0D0D0D"} 
           metalness={0.9} 
           roughness={0.1} 
           transparent 
-          opacity={0.98} 
+          opacity={0.96} 
         />
       </mesh>
       
@@ -53,20 +53,14 @@ export default function ProjectPortal({ project, index }: ProjectPortalProps) {
         url={imageUrl} 
         transparent
         opacity={0.9}
-        scale={[3.8, 3.8]}
-        position={[0, 0.2, 0.02]}
+        scale={[4.2, 4.2]}
+        position={[0, 0.25, 0.02]}
         grayscale={hovered ? 0 : 0.4}
       />
       
-      {/* Base/Stand like in the reference image */}
-      <mesh position={[0, -2.3, 0]}>
-        <boxGeometry args={[4.2, 0.1, 0.2]} />
-        <meshBasicMaterial color="#00C2FF" transparent opacity={hovered ? 0.8 : 0.3} />
-      </mesh>
-      
       {/* Subtle Glow Frame */}
       <mesh position={[0, 0, -0.01]}>
-        <planeGeometry args={[4.1, 4.6]} />
+        <planeGeometry args={[4.6, 5.1]} />
         <meshBasicMaterial 
           color="#00C2FF" 
           transparent 
@@ -74,9 +68,9 @@ export default function ProjectPortal({ project, index }: ProjectPortalProps) {
         />
       </mesh>
       
-      {/* Title Text - Placed at top in reference */}
+      {/* Title Text */}
       <Text
-        position={[0, 2.5, 0]}
+        position={[0, 2.8, 0]}
         fontSize={0.25}
         color="white"
         anchorX="center"
@@ -84,13 +78,13 @@ export default function ProjectPortal({ project, index }: ProjectPortalProps) {
         {project.title}
       </Text>
       
-      {/* Tech tags - Discrete */}
-      <group position={[0, -1.9, 0.03]}>
+      {/* Tech tags */}
+      <group position={[0, -2.1, 0.03]}>
         {project.tech.slice(0, 3).map((t, i) => (
           <Text
             key={t}
-            position={[(i - 1) * 1.3, 0, 0]}
-            fontSize={0.12}
+            position={[(i - 1) * 1.5, 0, 0]}
+            fontSize={0.15}
             color="#00C2FF"
             anchorX="center"
             fillOpacity={hovered ? 1 : 0.6}
@@ -107,10 +101,10 @@ export default function ProjectPortal({ project, index }: ProjectPortalProps) {
             style={{ 
               background: "rgba(0, 194, 255, 0.9)", 
               color: "#000", 
-              padding: "10px 20px", 
-              borderRadius: "2px", 
+              padding: "10px 25px", 
+              borderRadius: "50px", 
               fontWeight: "bold",
-              fontSize: "0.8rem",
+              fontSize: "0.9rem",
               cursor: "pointer",
               boxShadow: "0 0 30px rgba(0, 194, 255, 0.6)",
               whiteSpace: "nowrap",
@@ -119,7 +113,7 @@ export default function ProjectPortal({ project, index }: ProjectPortalProps) {
             }}
             onClick={() => window.open(project.link, "_blank")}
           >
-            Explorar Proyecto
+            Ver Proyecto
           </div>
         </Html>
       )}
