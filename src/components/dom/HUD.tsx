@@ -21,7 +21,10 @@ export default function HUD() {
   return (
     <div style={{ pointerEvents: "none", width: "100vw", height: "100vh", position: "fixed", top: 0, left: 0, zIndex: 1000 }}>
       {/* Top-Left HUD (Wonderland Style) */}
-      <nav
+      <motion.nav
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 1, delay: 1.2, ease: "easeOut" }}
         style={{
           position: "absolute",
           top: "40px",
@@ -102,12 +105,17 @@ export default function HUD() {
             Sobre mí
           </button>
         </div>
-      </nav>
+      </motion.nav>
 
       {/* 3D Scene is immediate - No Hero Overlay as requested */}
 
       {/* Footer Overlay (At the bottom) */}
-      <footer style={{ position: "absolute", bottom: 0, left: 0, width: "100%", padding: "40px 0", pointerEvents: "auto" }}>
+      <motion.footer
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, delay: 1.5, ease: "easeOut" }}
+        style={{ position: "absolute", bottom: 0, left: 0, width: "100%", padding: "40px 0", pointerEvents: "auto" }}
+      >
         <div className="container">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <span style={{ color: "var(--accent-secondary)", fontSize: "12px" }}>&copy; 2026 CHIMI</span>
@@ -117,7 +125,7 @@ export default function HUD() {
             </div>
           </div>
         </div>
-      </footer>
+      </motion.footer>
 
       {/* Modals */}
       <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />

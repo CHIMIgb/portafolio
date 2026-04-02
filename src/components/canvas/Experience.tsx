@@ -14,11 +14,22 @@ export default function Experience({ scroll }: { scroll: number }) {
   const LOOP_LENGTH = 100;
 
   useFrame((state) => {
+    const time = state.clock.getElapsedTime();
+    const ENTRANCE_TIME = 2.5;
+    
     // Persistent Z coordinate tracking (synced with page.tsx virtual offset)
     const targetZ = -(scroll * 0.05);
 
+    // Initial "Warp Exit" recoil effect
+    // We start at a higher Z and zoom into position
+    const isInitial = time < ENTRANCE_TIME;
+    const entranceFactor = isInitial ? 1 - Math.pow(1 - time / ENTRANCE_TIME, 3) : 1;
+    
+    const baseCameraZ = targetZ + 7;
+    const warpRecoil = isInitial ? (1 - entranceFactor) * 20 : 0;
+
     // GENTLE movement (lerp = 0.03) for a more static/stable feeling
-    camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetZ + 7, 0.03);
+    camera.position.z = THREE.MathUtils.lerp(camera.position.z, baseCameraZ + warpRecoil, 0.03);
 
     // Minimal horizontal sway
     state.camera.position.x = THREE.MathUtils.lerp(state.camera.position.x, state.mouse.x * 0.3, 0.02);
