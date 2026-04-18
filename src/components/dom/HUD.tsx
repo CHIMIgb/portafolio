@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ArrowRight, Code } from "lucide-react";
 import { FaGithub, FaInstagram } from "react-icons/fa";
 import { motion } from "framer-motion";
@@ -10,6 +10,14 @@ export default function HUD() {
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
+  // Refs to capture button positions for tracer animation
+  const contactBtnRef = useRef<HTMLButtonElement>(null);
+  const aboutBtnRef = useRef<HTMLButtonElement>(null);
+
+  // Store the origin coordinates of the click
+  const [contactOrigin, setContactOrigin] = useState<{ x: number; y: number } | null>(null);
+  const [aboutOrigin, setAboutOrigin] = useState<{ x: number; y: number } | null>(null);
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
@@ -17,6 +25,22 @@ export default function HUD() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleContactClick = () => {
+    if (contactBtnRef.current) {
+      const rect = contactBtnRef.current.getBoundingClientRect();
+      setContactOrigin({ x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 });
+    }
+    setIsContactOpen(true);
+  };
+
+  const handleAboutClick = () => {
+    if (aboutBtnRef.current) {
+      const rect = aboutBtnRef.current.getBoundingClientRect();
+      setAboutOrigin({ x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 });
+    }
+    setIsAboutOpen(true);
+  };
 
   return (
     <div style={{ pointerEvents: "none", width: "100vw", height: "100vh", position: "fixed", top: 0, left: 0, zIndex: 1000 }}>
@@ -45,6 +69,7 @@ export default function HUD() {
         {/* Navigation Buttons */}
         <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginTop: "10px" }}>
           <button
+            ref={contactBtnRef}
             className="btn btn-primary"
             style={{
               padding: "10px 24px",
@@ -68,12 +93,13 @@ export default function HUD() {
               e.currentTarget.style.color = "white";
               e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.3)";
             }}
-            onClick={() => setIsContactOpen(true)}
+            onClick={handleContactClick}
           >
             Contactame
           </button>
 
           <button
+            ref={aboutBtnRef}
             className="btn btn-primary"
             style={{
               padding: "10px 24px",
@@ -97,7 +123,7 @@ export default function HUD() {
               e.currentTarget.style.color = "white";
               e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.3)";
             }}
-            onClick={() => setIsAboutOpen(true)}
+            onClick={handleAboutClick}
           >
             Sobre mí
           </button>
@@ -120,8 +146,8 @@ export default function HUD() {
       </footer>
 
       {/* Modals */}
-      <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
-      <AboutModal isOpen={isAboutOpen} onClose={() => setIsAboutOpen(false)} />
+      <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} origin={contactOrigin} />
+      <AboutModal isOpen={isAboutOpen} onClose={() => setIsAboutOpen(false)} origin={aboutOrigin} />
     </div>
   );
 }
