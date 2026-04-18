@@ -27,6 +27,16 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
 }
 
+.halo-text {
+  font-family: var(--font-halo), sans-serif;
+  letter-spacing: 2px;
+}
+
+.covenant-text {
+  font-family: var(--font-covenant), var(--font-halo), sans-serif;
+  letter-spacing: 2px;
+}
+
 .container {
   width: 100%;
   max-width: var(--container-max-width);

@@ -4,6 +4,7 @@ import { FaGithub, FaInstagram } from "react-icons/fa";
 import { motion } from "framer-motion";
 import ContactModal from "./ContactModal";
 import AboutModal from "./AboutModal";
+import ScrambledText from "../ui/ScrambledText";
 
 export default function HUD() {
   const [isContactOpen, setIsContactOpen] = useState(false);
@@ -58,11 +59,11 @@ export default function HUD() {
       >
         {/* Brand Info */}
         <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
-          <a href="#" className="logo" style={{ fontSize: "24px", fontWeight: 900, color: "white", textDecoration: "none", letterSpacing: "0.2em" }}>
-            CHIMI
+          <a href="#" className="logo halo-text" style={{ fontSize: "24px", color: "white", textDecoration: "none" }}>
+            <ScrambledText text="CHIMI" delay={100} duration={5000} />
           </a>
-          <span style={{ color: "var(--accent-secondary)", fontSize: "10px", letterSpacing: "0.1em", fontWeight: 500 }}>
-            FULL STACK DEVELOPER
+          <span style={{ color: "var(--accent-secondary)", fontSize: "10px", letterSpacing: "0.1em" }}>
+            <ScrambledText text="FULL STACK DEVELOPER" delay={400} duration={5000} />
           </span>
         </div>
 
@@ -95,7 +96,7 @@ export default function HUD() {
             }}
             onClick={handleContactClick}
           >
-            Contactame
+            <ScrambledText text="CONTACTAME" delay={800} duration={5000} />
           </button>
 
           <button
@@ -125,18 +126,18 @@ export default function HUD() {
             }}
             onClick={handleAboutClick}
           >
-            Sobre mí
+            <ScrambledText text="SOBRE MÍ" delay={1000} duration={5000} />
           </button>
         </div>
       </nav>
-
-      {/* 3D Scene is immediate - No Hero Overlay as requested */}
 
       {/* Footer Overlay (At the bottom) */}
       <footer style={{ position: "absolute", bottom: 0, left: 0, width: "100%", padding: "40px 0", pointerEvents: "auto" }}>
         <div className="container">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <span style={{ color: "var(--accent-secondary)", fontSize: "12px" }}>&copy; 2026 CHIMI</span>
+            <span style={{ color: "var(--accent-secondary)", fontSize: "12px" }}>
+              <ScrambledText text="© 2026 CHIMI" delay={1300} duration={5000} />
+            </span>
             <div style={{ display: "flex", gap: "20px" }}>
               <a href="#" style={{ color: "white" }}><FaGithub size={20} /></a>
               <a href="#" style={{ color: "white" }}><FaInstagram size={20} /></a>

@@ -226,91 +226,93 @@ export default function ContactModal({ isOpen, onClose, origin }: ContactModalPr
             onClick={(e) => e.stopPropagation()}
             onWheel={(e) => e.stopPropagation()}
           >
-            <div className="holo-grid-overlay" />
-            <div className="holo-corner holo-corner--tl" />
-            <div className="holo-corner holo-corner--tr" />
-            <div className="holo-corner holo-corner--bl" />
-            <div className="holo-corner holo-corner--br" />
-            <span className="holo-label holo-label--top">[ CANAL :: ABIERTO ]</span>
-            <span className="holo-label holo-label--bottom">FREQ 47.3 GHz</span>
+            <div className="holo-flicker-wrapper">
+              <div className="holo-grid-overlay" />
+              <div className="holo-corner holo-corner--tl" />
+              <div className="holo-corner holo-corner--tr" />
+              <div className="holo-corner holo-corner--bl" />
+              <div className="holo-corner holo-corner--br" />
+              <span className="holo-label holo-label--top">[ CANAL :: ABIERTO ]</span>
+              <span className="holo-label holo-label--bottom">FREQ 47.3 GHz</span>
 
-            <button className="holo-close-btn" onClick={handleClose}>
-              <X size={18} />
-            </button>
+              <button className="holo-close-btn" onClick={handleClose}>
+                <X size={18} />
+              </button>
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: isClosing ? 0 : 1 }}
-              transition={isClosing
-                ? { duration: CLOSE_CONTENT_DUR }
-                : { delay: CONTENT_DELAY, duration: 0.5 }
-              }
-              style={{ position: "relative", zIndex: 2 }}
-            >
-              <header style={{ marginBottom: "30px" }}>
-                <h2 className="holo-title halo-text">Contáctame</h2>
-                <div className="holo-title-bar" />
-                <p className="holo-text" style={{ marginBottom: 0 }}>
-                  ¿Tienes un proyecto en mente? Hablemos sobre cómo puedo ayudarte a hacerlo realidad.
-                </p>
-              </header>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: isClosing ? 0 : 1 }}
+                transition={isClosing
+                  ? { duration: CLOSE_CONTENT_DUR }
+                  : { delay: CONTENT_DELAY, duration: 0.5 }
+                }
+                style={{ position: "relative", zIndex: 2 }}
+              >
+                <header style={{ marginBottom: "30px" }}>
+                  <h2 className="holo-title">Contáctame</h2>
+                  <div className="holo-title-bar" />
+                  <p className="holo-text" style={{ marginBottom: 0 }}>
+                    ¿Tienes un proyecto en mente? Hablemos sobre cómo puedo ayudarte a hacerlo realidad.
+                  </p>
+                </header>
 
-              <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-                <input 
-                  type="text" 
-                  placeholder="Tu nombre" 
-                  required 
-                  className="holo-input"
-                  value={formState.name}
-                  onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                />
-                <input 
-                  type="email" 
-                  placeholder="Tu email" 
-                  required 
-                  className="holo-input"
-                  value={formState.email}
-                  onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                />
-                <input 
-                  type="text" 
-                  placeholder="Asunto" 
-                  required 
-                  className="holo-input"
-                  value={formState.subject}
-                  onChange={(e) => setFormState({ ...formState, subject: e.target.value })}
-                />
-                <textarea 
-                  placeholder="Tu mensaje" 
-                  required 
-                  className="holo-input"
-                  rows={5}
-                  value={formState.message}
-                  onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                  style={{ resize: "vertical" }}
-                />
-                <button type="submit" className="holo-submit-btn">
-                  Enviar Mensaje <Send size={16} />
-                </button>
-              </form>
+                <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                  <input 
+                    type="text" 
+                    placeholder="Tu nombre" 
+                    required 
+                    className="holo-input"
+                    value={formState.name}
+                    onChange={(e) => setFormState({ ...formState, name: e.target.value })}
+                  />
+                  <input 
+                    type="email" 
+                    placeholder="Tu email" 
+                    required 
+                    className="holo-input"
+                    value={formState.email}
+                    onChange={(e) => setFormState({ ...formState, email: e.target.value })}
+                  />
+                  <input 
+                    type="text" 
+                    placeholder="Asunto" 
+                    required 
+                    className="holo-input"
+                    value={formState.subject}
+                    onChange={(e) => setFormState({ ...formState, subject: e.target.value })}
+                  />
+                  <textarea 
+                    placeholder="Tu mensaje" 
+                    required 
+                    className="holo-input"
+                    rows={5}
+                    value={formState.message}
+                    onChange={(e) => setFormState({ ...formState, message: e.target.value })}
+                    style={{ resize: "vertical" }}
+                  />
+                  <button type="submit" className="holo-submit-btn">
+                    Enviar Mensaje <Send size={16} />
+                  </button>
+                </form>
 
-              <div className="holo-separator" />
+                <div className="holo-separator" />
 
-              <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-                <div className="holo-contact-info">
-                  <Mail size={16} />
-                  <span>chimisolucionesdigitales@gmail.com</span>
+                <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                  <div className="holo-contact-info">
+                    <Mail size={16} />
+                    <span>chimisolucionesdigitales@gmail.com</span>
+                  </div>
+                  <div className="holo-contact-info">
+                    <Phone size={16} />
+                    <span>+52 323 101 3548</span>
+                  </div>
+                  <div style={{ display: "flex", gap: "12px", marginTop: "8px" }}>
+                    <a href="#" className="holo-social-link"><FaGithub size={18} /></a>
+                    <a href="#" className="holo-social-link"><FaInstagram size={18} /></a>
+                  </div>
                 </div>
-                <div className="holo-contact-info">
-                  <Phone size={16} />
-                  <span>+52 323 101 3548</span>
-                </div>
-                <div style={{ display: "flex", gap: "12px", marginTop: "8px" }}>
-                  <a href="#" className="holo-social-link"><FaGithub size={18} /></a>
-                  <a href="#" className="holo-social-link"><FaInstagram size={18} /></a>
-                </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            </div>
           </motion.div>
         </motion.div>
       )}
