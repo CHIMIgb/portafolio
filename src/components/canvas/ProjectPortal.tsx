@@ -15,6 +15,7 @@ interface ProjectPortalProps {
 export default function ProjectPortal({ project, index }: ProjectPortalProps) {
   const [hovered, setHovered] = useState(false);
   const meshRef = useRef<THREE.Group>(null);
+  const prevZRef = useRef(project.position[2]);
 
   const imageUrl = `https://picsum.photos/seed/${project.id}/800/800`;
 
@@ -24,6 +25,12 @@ export default function ProjectPortal({ project, index }: ProjectPortalProps) {
   // Enhanced multi-axis floating animation
   useFrame((state) => {
     if (meshRef.current) {
+      // If the Z position changed (leapfrogged), reset scale to 0 to trigger a smooth pop-in transition
+      if (Math.abs(prevZRef.current - project.position[2]) > 1) {
+        meshRef.current.scale.set(0, 0, 0);
+        prevZRef.current = project.position[2];
+      }
+
       const time = state.clock.getElapsedTime();
       const speed = 0.5;
 
@@ -40,18 +47,18 @@ export default function ProjectPortal({ project, index }: ProjectPortalProps) {
       meshRef.current.rotation.y = tiltAngle + Math.sin(time * 0.4 + index) * 0.12;
       meshRef.current.rotation.z = Math.sin(time * 0.3 + index) * 0.05;
 
-      // Smooth scale on hover
+      // Smooth scale transition on appear and hover
       const targetScale = hovered ? 1.08 : 1;
       meshRef.current.scale.set(
-        THREE.MathUtils.lerp(meshRef.current.scale.x, targetScale, 0.1),
-        THREE.MathUtils.lerp(meshRef.current.scale.y, targetScale, 0.1),
-        THREE.MathUtils.lerp(meshRef.current.scale.z, targetScale, 0.1)
+        THREE.MathUtils.lerp(meshRef.current.scale.x, targetScale, 0.05),
+        THREE.MathUtils.lerp(meshRef.current.scale.y, targetScale, 0.05),
+        THREE.MathUtils.lerp(meshRef.current.scale.z, targetScale, 0.05)
       );
     }
   });
 
   return (
-    <group position={project.position} ref={meshRef} rotation={[0, tiltAngle, 0]}>
+    <group position={project.position} ref={meshRef} rotation={[0, tiltAngle, 0]} scale={[0, 0, 0]}>
       {/* Main Project Card - Now Clickable */}
       <mesh
         onPointerOver={() => {
