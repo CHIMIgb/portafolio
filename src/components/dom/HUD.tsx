@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { ArrowRight, Code } from "lucide-react";
-import { FaGithub, FaInstagram } from "react-icons/fa";
+import { FaGithub, FaInstagram, FaVolumeUp, FaVolumeMute } from "react-icons/fa";
 import { motion } from "framer-motion";
 import ContactModal from "./ContactModal";
 import AboutModal from "./AboutModal";
@@ -11,6 +11,8 @@ export default function HUD() {
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   // Refs to capture button positions for tracer animation
   const contactBtnRef = useRef<HTMLButtonElement>(null);
@@ -27,6 +29,22 @@ export default function HUD() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+
+
+  // El audio solo inicia cuando el usuario activa el botón explícitamente
+  const toggleMute = useCallback(() => {
+    if (audioRef.current) {
+      if (isMuted) {
+        audioRef.current.volume = 0.6;
+        audioRef.current.muted = false;
+        audioRef.current.play().catch(() => { });
+      } else {
+        audioRef.current.muted = true;
+      }
+    }
+    setIsMuted(!isMuted);
+  }, [isMuted]);
 
   const handleContactClick = () => {
     if (contactBtnRef.current) {
@@ -130,6 +148,7 @@ export default function HUD() {
             <ScrambledText text="SOBRE MÍ" delay={1000} duration={5000} />
           </button>
 
+          {/*
           <Link href="/models" style={{ textDecoration: 'none' }}>
             <button
               className="btn btn-primary"
@@ -157,20 +176,57 @@ export default function HUD() {
                 e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.3)";
               }}
             >
+
               <ScrambledText text="BASE DE DATOS NAVES HALO" delay={1200} duration={5000} />
             </button>
           </Link>
+          */}
         </div>
       </nav>
+
+      {/* Audio element */}
+      <audio
+        ref={audioRef}
+        src="/audio/Halo 5 Guardians OST Soundtrack Main Menu Theme HD Audio - vgBR - VideoGames Brasil.mp3"
+        loop
+        preload="auto"
+      />
 
       {/* Footer Overlay (At the bottom) */}
       <footer style={{ position: "absolute", bottom: 0, left: 0, width: "100%", padding: "40px 0", pointerEvents: "auto" }}>
         <div className="container">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <span style={{ color: "var(--accent-secondary)", fontSize: "12px" }}>
-              <ScrambledText text="© 2026 CHIMI" delay={1300} duration={5000} />
-            </span>
-            <div style={{ display: "flex", gap: "20px" }}>
+                <ScrambledText text="© 2026 CHIMI" delay={1300} duration={5000} />
+              </span>
+            <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+              <button
+                onClick={toggleMute}
+                style={{
+                  background: "transparent",
+                  border: "1px solid rgba(255, 255, 255, 0.2)",
+                  borderRadius: "50%",
+                  width: "32px",
+                  height: "32px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  color: isMuted ? "rgba(255,255,255,0.3)" : "#00C2FF",
+                  transition: "all 0.3s ease"
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = "#00C2FF";
+                  e.currentTarget.style.boxShadow = "0 0 8px rgba(0, 194, 255, 0.3)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.2)";
+                  e.currentTarget.style.boxShadow = "none";
+                }}
+                title={isMuted ? "Activar audio" : "Desactivar audio"}
+              >
+                {isMuted ? <FaVolumeMute size={14} /> : <FaVolumeUp size={14} />}
+              </button>
               <a href="#" style={{ color: "white" }}><FaGithub size={20} /></a>
               <a href="#" style={{ color: "white" }}><FaInstagram size={20} /></a>
             </div>

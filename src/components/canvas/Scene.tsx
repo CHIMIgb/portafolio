@@ -6,7 +6,7 @@ import { Canvas } from "@react-three/fiber";
 import Experience from "./Experience";
 import HUD from "../dom/HUD";
 import RefitStationModel from "./RefitStationModel";
-import MarathonCruiserModel from "./MarathonCruiserModel";
+import ParisFrigateModel from "./ParisFrigateModel";
 
 export default function Scene({ scroll }: { scroll: number }) {
   const [mounted, setMounted] = useState(false);
@@ -30,7 +30,7 @@ export default function Scene({ scroll }: { scroll: number }) {
           <Experience scroll={scroll} />
           {/* Estructuras de la base de datos UNSC */}
           <RefitStationModel />
-          <MarathonCruiserModel />
+          <ParisFrigateModel />
         </Suspense>
       </Canvas>
       <HUD />
