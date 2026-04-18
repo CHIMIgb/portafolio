@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
 import { ArrowRight, Code } from "lucide-react";
 import { FaGithub, FaInstagram } from "react-icons/fa";
 import { motion } from "framer-motion";
@@ -128,6 +129,37 @@ export default function HUD() {
           >
             <ScrambledText text="SOBRE MÍ" delay={1000} duration={5000} />
           </button>
+
+          <Link href="/models" style={{ textDecoration: 'none' }}>
+            <button
+              className="btn btn-primary"
+              style={{
+                padding: "10px 24px",
+                fontSize: "12px",
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                borderRadius: "50px",
+                background: "transparent",
+                border: "1px solid rgba(255, 255, 255, 0.3)",
+                color: "white",
+                textAlign: "left",
+                width: "fit-content",
+                cursor: "pointer"
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "var(--accent-primary)";
+                e.currentTarget.style.color = "black";
+                e.currentTarget.style.borderColor = "var(--accent-primary)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "transparent";
+                e.currentTarget.style.color = "white";
+                e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.3)";
+              }}
+            >
+              <ScrambledText text="BASE DE DATOS NAVES HALO" delay={1200} duration={5000} />
+            </button>
+          </Link>
         </div>
       </nav>
 

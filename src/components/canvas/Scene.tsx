@@ -5,8 +5,8 @@ import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import Experience from "./Experience";
 import HUD from "../dom/HUD";
-import StridentModel from "./StridentModel";
 import RefitStationModel from "./RefitStationModel";
+import MarathonCruiserModel from "./MarathonCruiserModel";
 
 export default function Scene({ scroll }: { scroll: number }) {
   const [mounted, setMounted] = useState(false);
@@ -25,13 +25,12 @@ export default function Scene({ scroll }: { scroll: number }) {
       >
         <color attach="background" args={["#0A0A0A"]} />
         <fog attach="fog" args={["#0A0A0A", 5, 80]} />
-        
+
         <Suspense fallback={<mesh><sphereGeometry args={[0.1]} /><meshBasicMaterial color="#00C2FF" /></mesh>}>
           <Experience scroll={scroll} />
-          {/* Añadimos la fragata Strident escoltando */}
-          <StridentModel />
-          {/* Añadimos la estación Anchor 9 al fondo lejano */}
+          {/* Estructuras de la base de datos UNSC */}
           <RefitStationModel />
+          <MarathonCruiserModel />
         </Suspense>
       </Canvas>
       <HUD />
