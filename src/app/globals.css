@@ -1,6 +1,7 @@
 @import "../styles/colors.css";
 @import "../styles/spacing.css";
 @import "../styles/common.css";
+@import "../styles/hologram.css";
 
 * {
   margin: 0;
@@ -24,6 +25,16 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Poppins', sans-serif;
   font-weight: 600;
+}
+
+.halo-text {
+  font-family: var(--font-halo), sans-serif;
+  letter-spacing: 2px;
+}
+
+.covenant-text {
+  font-family: var(--font-covenant), var(--font-halo), sans-serif;
+  letter-spacing: 2px;
 }
 
 .container {

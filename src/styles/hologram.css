@@ -1,0 +1,465 @@
+/* ============================================
+   HOLOGRAM HUD INTERFACE STYLES
+   Sci-Fi themed modal system
+   ============================================ */
+
+/* --- Scanline Animation --- */
+@keyframes scanline {
+  0% { top: -100%; }
+  100% { top: 100%; }
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; transform: translateX(0); filter: brightness(1); }
+  20% { opacity: 1; transform: translateX(0); filter: brightness(1); }
+  20.5% { opacity: 0.6; transform: translateX(-2px); filter: brightness(1.5); }
+  21% { opacity: 1; transform: translateX(0); filter: brightness(1); }
+  45% { opacity: 1; transform: translateX(0); }
+  45.5% { opacity: 0.4; transform: translateX(2px) skewX(2deg); filter: brightness(2); }
+  46% { opacity: 0.9; transform: translateX(-1px) skewX(-1deg); filter: brightness(1.2); }
+  46.5% { opacity: 1; transform: translateX(0); filter: brightness(1); }
+  75% { opacity: 1; filter: brightness(1); }
+  75.5% { opacity: 0.7; filter: brightness(1.3); }
+  76% { opacity: 1; filter: brightness(1); }
+}
+
+@keyframes holo-glow-pulse {
+  0%, 100% { 
+    box-shadow: 
+      0 0 15px rgba(0, 194, 255, 0.15),
+      inset 0 0 30px rgba(0, 194, 255, 0.03);
+  }
+  50% { 
+    box-shadow: 
+      0 0 25px rgba(0, 194, 255, 0.25),
+      inset 0 0 50px rgba(0, 194, 255, 0.06);
+  }
+}
+
+@keyframes data-stream {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 100%; }
+}
+
+/* --- Hologram Overlay (replaces modal-overlay) --- */
+.holo-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 5, 15, 0.88);
+  backdrop-filter: blur(12px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  pointer-events: auto;
+}
+
+/* --- Hologram Panel (main modal body) --- */
+.holo-panel {
+  position: relative;
+  width: 100%;
+  max-width: 750px;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 50px 40px 40px;
+  
+  /* Background: deep dark with subtle blue tint */
+  background: 
+    linear-gradient(135deg, rgba(0, 15, 25, 0.95) 0%, rgba(0, 8, 18, 0.98) 100%);
+  
+  /* Clipped corners (sci-fi HUD look) */
+  clip-path: polygon(
+    0 20px,         /* top-left corner cut */
+    20px 0,         /* top-left corner cut */
+    calc(100% - 20px) 0,  /* top-right corner cut */
+    100% 20px,       /* top-right corner cut */
+    100% calc(100% - 20px), /* bottom-right corner cut */
+    calc(100% - 20px) 100%, /* bottom-right corner cut */
+    20px 100%,       /* bottom-left corner cut */
+    0 calc(100% - 20px)    /* bottom-left corner cut */
+  );
+  
+  /* Glow border effect */
+  animation: holo-glow-pulse 4s ease-in-out infinite;
+}
+
+.holo-flicker-wrapper {
+  width: 100%;
+  height: 100%;
+  animation: flicker 6s infinite;
+}
+
+/* Outer border glow frame (sits behind clip-path) */
+.holo-panel::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  bottom: -1px;
+  background: linear-gradient(135deg, #00C2FF, #0066aa, #00C2FF);
+  clip-path: polygon(
+    0 20px,
+    20px 0,
+    calc(100% - 20px) 0,
+    100% 20px,
+    100% calc(100% - 20px),
+    calc(100% - 20px) 100%,
+    20px 100%,
+    0 calc(100% - 20px)
+  );
+  z-index: -1;
+  opacity: 0.4;
+}
+
+/* Scanline sweep effect */
+.holo-panel::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 194, 255, 0.03) 50%,
+    transparent 100%
+  );
+  animation: scanline 6s linear infinite;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Grid Overlay Texture */
+.holo-grid-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(0, 194, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 194, 255, 0.03) 1px, transparent 1px);
+  background-size: 30px 30px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* --- Corner Brackets --- */
+.holo-corner {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  z-index: 5;
+}
+
+.holo-corner--tl {
+  top: 22px;
+  left: 22px;
+  border-top: 2px solid rgba(0, 194, 255, 0.6);
+  border-left: 2px solid rgba(0, 194, 255, 0.6);
+}
+
+.holo-corner--tr {
+  top: 22px;
+  right: 22px;
+  border-top: 2px solid rgba(0, 194, 255, 0.6);
+  border-right: 2px solid rgba(0, 194, 255, 0.6);
+}
+
+.holo-corner--bl {
+  bottom: 22px;
+  left: 22px;
+  border-bottom: 2px solid rgba(0, 194, 255, 0.6);
+  border-left: 2px solid rgba(0, 194, 255, 0.6);
+}
+
+.holo-corner--br {
+  bottom: 22px;
+  right: 22px;
+  border-bottom: 2px solid rgba(0, 194, 255, 0.6);
+  border-right: 2px solid rgba(0, 194, 255, 0.6);
+}
+
+/* --- Telemetry / Decorative Labels --- */
+.holo-label {
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(0, 194, 255, 0.4);
+  position: absolute;
+  z-index: 5;
+  font-family: monospace;
+}
+
+.holo-label--top {
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.holo-label--bottom {
+  bottom: 8px;
+  right: 30px;
+}
+
+/* --- Close Button (Hologram Style) --- */
+.holo-close-btn {
+  position: absolute;
+  top: 28px;
+  right: 28px;
+  background: rgba(0, 194, 255, 0.08);
+  border: 1px solid rgba(0, 194, 255, 0.25);
+  color: #00C2FF;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 20;
+  transition: all 0.3s ease;
+  clip-path: polygon(
+    0 4px, 4px 0, calc(100% - 4px) 0, 100% 4px,
+    100% calc(100% - 4px), calc(100% - 4px) 100%,
+    4px 100%, 0 calc(100% - 4px)
+  );
+}
+
+.holo-close-btn:hover {
+  background: rgba(0, 194, 255, 0.2);
+  box-shadow: 0 0 15px rgba(0, 194, 255, 0.3);
+  color: white;
+}
+
+/* --- Section Titles --- */
+.holo-title {
+  font-size: 28px;
+  color: #00C2FF;
+  text-shadow: 0 0 20px rgba(0, 194, 255, 0.3);
+  margin-bottom: 8px;
+  position: relative;
+  z-index: 2;
+}
+
+.holo-title-bar {
+  height: 2px;
+  width: 80px;
+  background: linear-gradient(to right, #00C2FF, transparent);
+  margin-bottom: 30px;
+}
+
+.holo-section-title {
+  font-size: 12px;
+  color: #00C2FF;
+  margin-top: 35px;
+  margin-bottom: 18px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  z-index: 2;
+}
+
+.holo-section-title::before {
+  content: '▸';
+  color: rgba(0, 194, 255, 0.5);
+}
+
+.holo-section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, rgba(0, 194, 255, 0.2), transparent);
+}
+
+/* --- Content Text --- */
+.holo-text {
+  font-size: 15px;
+  line-height: 1.9;
+  color: rgba(200, 220, 240, 0.85);
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 2;
+}
+
+.holo-text strong {
+  color: #00C2FF;
+  font-weight: normal;
+  text-shadow: 0 0 8px rgba(0, 194, 255, 0.2);
+}
+
+/* --- Skill Grid Items --- */
+.holo-skill-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 14px;
+  background: rgba(0, 194, 255, 0.03);
+  border: 1px solid rgba(0, 194, 255, 0.08);
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
+  clip-path: polygon(
+    0 6px, 6px 0, calc(100% - 6px) 0, 100% 6px,
+    100% calc(100% - 6px), calc(100% - 6px) 100%,
+    6px 100%, 0 calc(100% - 6px)
+  );
+}
+
+.holo-skill-item:hover {
+  background: rgba(0, 194, 255, 0.1);
+  border-color: rgba(0, 194, 255, 0.3);
+  box-shadow: 0 0 12px rgba(0, 194, 255, 0.15);
+}
+
+.holo-skill-item span {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: rgba(0, 194, 255, 0.6);
+}
+
+/* --- Hologram Input Fields --- */
+.holo-input {
+  padding: 14px 16px;
+  background: rgba(0, 15, 30, 0.6);
+  border: 1px solid rgba(0, 194, 255, 0.15);
+  color: rgba(200, 220, 240, 0.9);
+  font-family: inherit;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  outline: none;
+  width: 100%;
+  clip-path: polygon(
+    0 5px, 5px 0, calc(100% - 5px) 0, 100% 5px,
+    100% calc(100% - 5px), calc(100% - 5px) 100%,
+    5px 100%, 0 calc(100% - 5px)
+  );
+}
+
+.holo-input:focus {
+  border-color: rgba(0, 194, 255, 0.5);
+  box-shadow: 0 0 15px rgba(0, 194, 255, 0.1);
+  background: rgba(0, 20, 40, 0.7);
+}
+
+.holo-input::placeholder {
+  color: rgba(0, 194, 255, 0.25);
+  letter-spacing: 1px;
+}
+
+/* --- Hologram Submit Button --- */
+.holo-submit-btn {
+  padding: 14px 30px;
+  background: rgba(0, 194, 255, 0.1);
+  border: 1px solid rgba(0, 194, 255, 0.35);
+  color: #00C2FF;
+  font-family: inherit;
+  font-size: 13px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  clip-path: polygon(
+    0 6px, 6px 0, calc(100% - 6px) 0, 100% 6px,
+    100% calc(100% - 6px), calc(100% - 6px) 100%,
+    6px 100%, 0 calc(100% - 6px)
+  );
+}
+
+.holo-submit-btn:hover {
+  background: rgba(0, 194, 255, 0.2);
+  box-shadow: 0 0 20px rgba(0, 194, 255, 0.3);
+  color: white;
+}
+
+/* --- Contact Info Items --- */
+.holo-contact-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  color: rgba(200, 220, 240, 0.7);
+  font-size: 14px;
+  position: relative;
+  z-index: 2;
+}
+
+.holo-contact-info svg {
+  color: #00C2FF;
+  opacity: 0.7;
+}
+
+/* Social Links */
+.holo-social-link {
+  display: inline-flex;
+  padding: 10px;
+  background: rgba(0, 194, 255, 0.05);
+  border: 1px solid rgba(0, 194, 255, 0.15);
+  color: rgba(0, 194, 255, 0.7);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  clip-path: polygon(
+    0 4px, 4px 0, calc(100% - 4px) 0, 100% 4px,
+    100% calc(100% - 4px), calc(100% - 4px) 100%,
+    4px 100%, 0 calc(100% - 4px)
+  );
+}
+
+.holo-social-link:hover {
+  background: rgba(0, 194, 255, 0.15);
+  color: white;
+  box-shadow: 0 0 12px rgba(0, 194, 255, 0.2);
+}
+
+/* --- Separator --- */
+.holo-separator {
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(0, 194, 255, 0.2), transparent);
+  margin: 30px 0;
+  position: relative;
+  z-index: 2;
+}
+
+/* --- Scrollbar inside holo-panel --- */
+.holo-panel::-webkit-scrollbar {
+  width: 6px;
+}
+
+.holo-panel::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.holo-panel::-webkit-scrollbar-thumb {
+  background: rgba(0, 194, 255, 0.2);
+  border-radius: 3px;
+}
+
+.holo-panel::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 194, 255, 0.4);
+}
+
+/* --- Responsive --- */
+@media (max-width: 600px) {
+  .holo-panel {
+    padding: 40px 20px 30px;
+    clip-path: polygon(
+      0 12px, 12px 0, calc(100% - 12px) 0, 100% 12px,
+      100% calc(100% - 12px), calc(100% - 12px) 100%,
+      12px 100%, 0 calc(100% - 12px)
+    );
+  }
+  
+  .holo-title {
+    font-size: 22px;
+  }
+}

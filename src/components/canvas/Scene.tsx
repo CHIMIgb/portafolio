@@ -3,6 +3,10 @@
 import { useState, useEffect } from "react";
 import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
+import Experience from "./Experience";
+import HUD from "../dom/HUD";
+import RefitStationModel from "./RefitStationModel";
+import ParisFrigateModel from "./ParisFrigateModel";
 import Experience from "@/components/canvas/Experience";
 import HUD from "@/components/dom/HUD";
 
@@ -23,9 +27,12 @@ export default function Scene({ scroll }: { scroll: number }) {
       >
         <color attach="background" args={["#0A0A0A"]} />
         <fog attach="fog" args={["#0A0A0A", 5, 80]} />
-        
+
         <Suspense fallback={<mesh><sphereGeometry args={[0.1]} /><meshBasicMaterial color="#00C2FF" /></mesh>}>
           <Experience scroll={scroll} />
+          {/* Estructuras de la base de datos UNSC */}
+          <RefitStationModel />
+          <ParisFrigateModel />
         </Suspense>
       </Canvas>
       <HUD />

@@ -1,5 +1,18 @@
 import type { Metadata } from "next";
+import localFont from "next/font/local";
 import "./globals.css";
+
+const haloFont = localFont({
+  src: "../../public/fonts/halo/Halo.ttf",
+  variable: "--font-halo",
+  display: "swap",
+});
+
+const covenantFont = localFont({
+  src: "../../public/fonts/covenant/Halo Covenant.ttf",
+  variable: "--font-covenant",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "CHIMI - Full Stack Developer",
@@ -18,7 +31,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </head>
-      <body>{children}</body>
+      <body className={`${haloFont.variable} ${covenantFont.variable}`}>{children}</body>
     </html>
   );
 }
