@@ -8,22 +8,22 @@ export const projects: Project[] = [
     tech: ["PHP", "JavaScript", "Docker", "EmulatorJS", "Google Drive API", "PostgreSQL", "CSS"],
     category: ["html", "javascript", "css", "php"],
     link: "https://roms-vault.up.railway.app/",
+    github: "https://github.com/CHIMIgb/ROMs-Vault",
     featured: true,
     icon: "gamepad",
     image: "/roms-vault.png",
     consoles: ["PSP", "PS1", "N64", "GBA", "GBC", "NES", "SNES", "Sega Genesis"],
-    position: [-2, 0, -10]
   },
   {
     id: "desarrollo-urbano",
-    title: "",
+    title: "Desarrollo Urbano",
     description: "Plataforma para planificación y diseño urbano interactivo. Permite análisis de métricas espaciales, edición en base a lotes y visualización en un entorno 3D dinámico. Incluye un sistema robusto de CI/CD para automatizar pruebas y despliegues.",
     tech: ["JavaScript", "MapLibre GL", "Node.js / Express", "PostgreSQL / Supabase", "Docker"],
     category: ["javascript", "nodejs", "postgresql", "python", "docker"],
     link: "https://desarrollo-urbano.onrender.com/",
+    github: "https://github.com/CHIMIgb/Desarrollo-Urbano",
     featured: true,
     icon: "city",
     image: "/urban-plan3d.png",
-    position: [2, 0, -25]
   },
 ];
