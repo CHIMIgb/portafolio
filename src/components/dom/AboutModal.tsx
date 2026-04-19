@@ -54,6 +54,12 @@ export default function AboutModal({ isOpen, onClose, origin }: AboutModalProps)
         <p className="holo-text">
           Fuera del entorno de código, me encontrarás inmerso en simulaciones de combate táctico. Soy un gran apasionado de los videojuegos, especialmente de la saga <strong>Halo</strong>, llevando a <em>Halo: Reach</em> como estandarte personal.
         </p>
+
+        <div style={{ marginTop: "24px" }}>
+          <a href="/CV/CV.docx" download="CV_Backend_CHIMI.docx" className="holo-submit-btn" style={{ textDecoration: "none", display: "inline-flex", width: "auto", padding: "10px 24px" }}>
+            [ DESCARGAR EXPEDIENTE / CV ]
+          </a>
+        </div>
       </section>
 
       <section>

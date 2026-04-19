@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
-import { ArrowRight, Code } from "lucide-react";
+import { ArrowRight, Code, Download } from "lucide-react";
 import { FaGithub, FaInstagram, FaVolumeUp, FaVolumeMute } from "react-icons/fa";
 import { motion } from "framer-motion";
 import ContactModal from "./ContactModal";
@@ -237,8 +237,8 @@ export default function HUD() {
         <div className="container">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <span style={{ color: "var(--accent-secondary)", fontSize: "12px" }}>
-                <ScrambledText text="© 2026 CHIMI" delay={1300} duration={5000} />
-              </span>
+              <ScrambledText text="© 2026 CHIMI" delay={1300} duration={5000} />
+            </span>
             <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
               <button
                 onClick={toggleMute}
@@ -267,6 +267,7 @@ export default function HUD() {
               >
                 {isMuted ? <FaVolumeMute size={14} /> : <FaVolumeUp size={14} />}
               </button>
+              <a href="/CV/CV.docx" download="CV_CHIMI.docx" style={{ color: "#00C2FF", border: "1px solid rgba(0,194,255,0.3)", padding: "4px 12px", borderRadius: "15px", fontSize: "12px", textDecoration: "none", transition: "all 0.3s ease", display: "flex", alignItems: "center", gap: "6px", fontFamily: "monospace" }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "rgba(0,194,255,0.1)"; e.currentTarget.style.borderColor = "#00C2FF"; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "transparent"; e.currentTarget.style.borderColor = "rgba(0,194,255,0.3)"; }}>DESC_CV <Download size={12} /></a>
               <a href="https://github.com/CHIMIgb" target="_blank" rel="noopener noreferrer" style={{ color: "white", transition: "color 0.3s" }} onMouseEnter={(e) => e.currentTarget.style.color = "#00C2FF"} onMouseLeave={(e) => e.currentTarget.style.color = "white"}><FaGithub size={20} /></a>
               <a href="https://www.instagram.com/chimi_gb?igsh=MXg4NmJpZ2I0ejI1dA==" target="_blank" rel="noopener noreferrer" style={{ color: "white", transition: "color 0.3s" }} onMouseEnter={(e) => e.currentTarget.style.color = "#FF00F7"} onMouseLeave={(e) => e.currentTarget.style.color = "white"}><FaInstagram size={20} /></a>
             </div>
