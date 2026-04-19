@@ -5,11 +5,13 @@ import { FaGithub, FaInstagram, FaVolumeUp, FaVolumeMute } from "react-icons/fa"
 import { motion } from "framer-motion";
 import ContactModal from "./ContactModal";
 import AboutModal from "./AboutModal";
+import ProjectsModal from "./ProjectsModal";
 import ScrambledText from "../ui/ScrambledText";
 
 export default function HUD() {
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
+  const [isProjectsOpen, setIsProjectsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -17,10 +19,12 @@ export default function HUD() {
   // Refs to capture button positions for tracer animation
   const contactBtnRef = useRef<HTMLButtonElement>(null);
   const aboutBtnRef = useRef<HTMLButtonElement>(null);
+  const projectsBtnRef = useRef<HTMLButtonElement>(null);
 
   // Store the origin coordinates of the click
   const [contactOrigin, setContactOrigin] = useState<{ x: number; y: number } | null>(null);
   const [aboutOrigin, setAboutOrigin] = useState<{ x: number; y: number } | null>(null);
+  const [projectsOrigin, setProjectsOrigin] = useState<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,8 +33,6 @@ export default function HUD() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-
 
   // El audio solo inicia cuando el usuario activa el botón explícitamente
   const toggleMute = useCallback(() => {
@@ -45,6 +47,14 @@ export default function HUD() {
     }
     setIsMuted(!isMuted);
   }, [isMuted]);
+
+  const handleProjectsClick = () => {
+    if (projectsBtnRef.current) {
+      const rect = projectsBtnRef.current.getBoundingClientRect();
+      setProjectsOrigin({ x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 });
+    }
+    setIsProjectsOpen(true);
+  };
 
   const handleContactClick = () => {
     if (contactBtnRef.current) {
@@ -91,6 +101,36 @@ export default function HUD() {
 
         {/* Navigation Buttons */}
         <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginTop: "10px" }}>
+          <button
+            ref={projectsBtnRef}
+            className="btn btn-primary"
+            style={{
+              padding: "10px 24px",
+              fontSize: "12px",
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              borderRadius: "50px",
+              background: "transparent",
+              border: "1px solid rgba(255, 255, 255, 0.3)",
+              color: "white",
+              textAlign: "left",
+              width: "fit-content"
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "var(--accent-primary)";
+              e.currentTarget.style.color = "black";
+              e.currentTarget.style.borderColor = "var(--accent-primary)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "transparent";
+              e.currentTarget.style.color = "white";
+              e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.3)";
+            }}
+            onClick={handleProjectsClick}
+          >
+            <ScrambledText text="PROYECTOS" delay={700} duration={5000} />
+          </button>
+
           <button
             ref={contactBtnRef}
             className="btn btn-primary"
@@ -243,6 +283,7 @@ export default function HUD() {
       </motion.footer>
 
       {/* Modals */}
+      <ProjectsModal isOpen={isProjectsOpen} onClose={() => setIsProjectsOpen(false)} origin={projectsOrigin} />
       <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} origin={contactOrigin} />
       <AboutModal isOpen={isAboutOpen} onClose={() => setIsAboutOpen(false)} origin={aboutOrigin} />
     </div>

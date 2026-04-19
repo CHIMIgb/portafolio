@@ -57,92 +57,135 @@
   padding: 20px;
   pointer-events: auto;
 }
+/* ═══════════════════════════════════════════════════════
+   HOLO MODAL — Bootstrap-style structure
+   header (fixed) / body (scrolls) / footer (fixed)
+   ═══════════════════════════════════════════════════════ */
 
-/* --- Hologram Panel (main modal body) --- */
-.holo-panel {
+.holo-modal {
   position: relative;
-  width: 100%;
+  width: 95vw;
   max-width: 750px;
   max-height: 85vh;
-  overflow-y: auto;
-  padding: 50px 40px 40px;
-  
-  /* Background: deep dark with subtle blue tint */
-  background: 
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  background:
     linear-gradient(135deg, rgba(0, 15, 25, 0.95) 0%, rgba(0, 8, 18, 0.98) 100%);
-  
-  /* Clipped corners (sci-fi HUD look) */
+
   clip-path: polygon(
-    0 20px,         /* top-left corner cut */
-    20px 0,         /* top-left corner cut */
-    calc(100% - 20px) 0,  /* top-right corner cut */
-    100% 20px,       /* top-right corner cut */
-    100% calc(100% - 20px), /* bottom-right corner cut */
-    calc(100% - 20px) 100%, /* bottom-right corner cut */
-    20px 100%,       /* bottom-left corner cut */
-    0 calc(100% - 20px)    /* bottom-left corner cut */
+    0 20px, 20px 0,
+    calc(100% - 20px) 0, 100% 20px,
+    100% calc(100% - 20px), calc(100% - 20px) 100%,
+    20px 100%, 0 calc(100% - 20px)
   );
-  
-  /* Glow border effect */
-  animation: holo-glow-pulse 4s ease-in-out infinite;
+
+  animation: holo-glow-pulse 4s ease-in-out infinite, flicker 6s infinite;
 }
 
-.holo-flicker-wrapper {
-  width: 100%;
-  height: 100%;
-  animation: flicker 6s infinite;
-}
-
-/* Outer border glow frame (sits behind clip-path) */
-.holo-panel::before {
+/* Outer border glow frame */
+.holo-modal::before {
   content: '';
   position: absolute;
-  top: -1px;
-  left: -1px;
-  right: -1px;
-  bottom: -1px;
+  top: -1px; left: -1px; right: -1px; bottom: -1px;
   background: linear-gradient(135deg, #00C2FF, #0066aa, #00C2FF);
   clip-path: polygon(
-    0 20px,
-    20px 0,
-    calc(100% - 20px) 0,
-    100% 20px,
-    100% calc(100% - 20px),
-    calc(100% - 20px) 100%,
-    20px 100%,
-    0 calc(100% - 20px)
+    0 20px, 20px 0,
+    calc(100% - 20px) 0, 100% 20px,
+    100% calc(100% - 20px), calc(100% - 20px) 100%,
+    20px 100%, 0 calc(100% - 20px)
   );
   z-index: -1;
   opacity: 0.4;
 }
 
-/* Scanline sweep effect */
-.holo-panel::after {
+/* Scanline sweep */
+.holo-modal::after {
   content: '';
   position: absolute;
-  top: -100%;
-  left: 0;
-  width: 100%;
-  height: 50%;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(0, 194, 255, 0.03) 50%,
-    transparent 100%
-  );
+  top: -100%; left: 0;
+  width: 100%; height: 50%;
+  background: linear-gradient(to bottom, transparent 0%, rgba(0, 194, 255, 0.03) 50%, transparent 100%);
   animation: scanline 6s linear infinite;
   pointer-events: none;
   z-index: 10;
 }
 
+/* ── Header ── */
+.holo-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 24px 32px 16px;
+  border-bottom: 1px solid rgba(0, 194, 255, 0.12);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.holo-modal-header .holo-title {
+  margin-bottom: 0;
+}
+
+.holo-modal-header .holo-title-bar {
+  margin-bottom: 0;
+  margin-top: 4px;
+}
+
+.holo-modal-header .holo-close-btn {
+  position: static;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* ── Body (scrollable) ── */
+.holo-modal-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 24px 32px;
+  position: relative;
+  z-index: 2;
+
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 194, 255, 0.2) transparent;
+}
+
+.holo-modal-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.holo-modal-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.holo-modal-body::-webkit-scrollbar-thumb {
+  background: rgba(0, 194, 255, 0.2);
+  border-radius: 3px;
+}
+
+.holo-modal-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 194, 255, 0.4);
+}
+
+/* ── Footer ── */
+.holo-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 32px;
+  border-top: 1px solid rgba(0, 194, 255, 0.08);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+}
+
 /* Grid Overlay Texture */
 .holo-grid-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: 
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-image:
     linear-gradient(rgba(0, 194, 255, 0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0, 194, 255, 0.03) 1px, transparent 1px);
   background-size: 30px 30px;
@@ -150,62 +193,14 @@
   z-index: 1;
 }
 
-/* --- Corner Brackets --- */
-.holo-corner {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  z-index: 5;
-}
-
-.holo-corner--tl {
-  top: 22px;
-  left: 22px;
-  border-top: 2px solid rgba(0, 194, 255, 0.6);
-  border-left: 2px solid rgba(0, 194, 255, 0.6);
-}
-
-.holo-corner--tr {
-  top: 22px;
-  right: 22px;
-  border-top: 2px solid rgba(0, 194, 255, 0.6);
-  border-right: 2px solid rgba(0, 194, 255, 0.6);
-}
-
-.holo-corner--bl {
-  bottom: 22px;
-  left: 22px;
-  border-bottom: 2px solid rgba(0, 194, 255, 0.6);
-  border-left: 2px solid rgba(0, 194, 255, 0.6);
-}
-
-.holo-corner--br {
-  bottom: 22px;
-  right: 22px;
-  border-bottom: 2px solid rgba(0, 194, 255, 0.6);
-  border-right: 2px solid rgba(0, 194, 255, 0.6);
-}
-
-/* --- Telemetry / Decorative Labels --- */
+/* --- Telemetry Labels (inline in header/footer) --- */
 .holo-label {
   font-size: 9px;
   letter-spacing: 3px;
   text-transform: uppercase;
   color: rgba(0, 194, 255, 0.4);
-  position: absolute;
-  z-index: 5;
   font-family: monospace;
-}
-
-.holo-label--top {
-  top: 8px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.holo-label--bottom {
-  bottom: 8px;
-  right: 30px;
+  white-space: nowrap;
 }
 
 /* --- Close Button (Hologram Style) --- */
@@ -430,36 +425,176 @@
   z-index: 2;
 }
 
-/* --- Scrollbar inside holo-panel --- */
-.holo-panel::-webkit-scrollbar {
-  width: 6px;
-}
-
-.holo-panel::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.holo-panel::-webkit-scrollbar-thumb {
-  background: rgba(0, 194, 255, 0.2);
-  border-radius: 3px;
-}
-
-.holo-panel::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 194, 255, 0.4);
-}
-
 /* --- Responsive --- */
 @media (max-width: 600px) {
-  .holo-panel {
-    padding: 40px 20px 30px;
+  .holo-modal {
     clip-path: polygon(
       0 12px, 12px 0, calc(100% - 12px) 0, 100% 12px,
       100% calc(100% - 12px), calc(100% - 12px) 100%,
       12px 100%, 0 calc(100% - 12px)
     );
   }
+
+  .holo-modal-header {
+    padding: 16px 20px 12px;
+  }
+
+  .holo-modal-body {
+    padding: 16px 20px;
+  }
+
+  .holo-modal-footer {
+    padding: 8px 20px;
+  }
   
   .holo-title {
     font-size: 22px;
   }
 }
+
+/* --- Project Grid & Cards --- */
+.holo-project-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding-bottom: 20px;
+}
+
+@media (max-width: 700px) {
+  .holo-project-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.holo-project-card {
+  position: relative;
+  background: rgba(0, 194, 255, 0.03);
+  border: 1px solid rgba(0, 194, 255, 0.15);
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  overflow: hidden;
+  clip-path: polygon(
+    0 15px, 15px 0, calc(100% - 15px) 0, 100% 15px,
+    100% calc(100% - 15px), calc(100% - 15px) 100%,
+    15px 100%, 0 calc(100% - 15px)
+  );
+}
+
+.holo-project-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: linear-gradient(135deg, rgba(0, 194, 255, 0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.holo-project-card:hover {
+  background: rgba(0, 194, 255, 0.08);
+  border-color: rgba(0, 194, 255, 0.5);
+  box-shadow: 0 0 25px rgba(0, 194, 255, 0.2);
+  transform: translateY(-5px);
+}
+
+.holo-project-card:hover::before {
+  opacity: 1;
+}
+
+.holo-card-inner {
+  padding: 24px;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.holo-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.holo-card-icon-wrap {
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 194, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 194, 255, 0.2);
+}
+
+.holo-card-title {
+  font-size: 18px;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+.holo-card-text {
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(200, 220, 240, 0.7);
+  margin-bottom: 20px;
+  flex-grow: 1;
+}
+
+.holo-tech-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 24px;
+}
+
+.holo-tech-badge {
+  font-size: 9px;
+  padding: 4px 10px;
+  background: rgba(0, 194, 255, 0.08);
+  border: 1px solid rgba(0, 194, 255, 0.2);
+  color: rgba(0, 194, 255, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  clip-path: polygon(0 4px, 4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%);
+}
+
+.holo-card-footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.holo-project-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  color: rgba(0, 194, 255, 0.7);
+  background: rgba(0, 194, 255, 0.05);
+  border: 1px solid rgba(0, 194, 255, 0.15);
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.holo-project-btn--primary {
+  flex-grow: 1;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  gap: 8px;
+  clip-path: polygon(
+    0 10px, 10px 0, calc(100% - 10px) 0, 100% 10px,
+    100% calc(100% - 10px), calc(100% - 10px) 100%,
+    100% 100%, 0 100%
+  );
+}
+
+.holo-project-btn:hover {
+  background: rgba(0, 194, 255, 0.2);
+  color: #fff;
+  border-color: rgba(0, 194, 255, 0.5);
+  box-shadow: 0 0 15px rgba(0, 194, 255, 0.2);
+}
+

@@ -9,5 +9,4 @@ export interface Project {
   icon?: string;
   image?: string;
   consoles?: string[]; // Specifically for ROMs Vault
-  position: [number, number, number]; // [x, y, z] for 3D placement
 }
