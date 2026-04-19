@@ -7,10 +7,10 @@ import Experience from "./Experience";
 import HUD from "../dom/HUD";
 import RefitStationModel from "./RefitStationModel";
 import ParisFrigateModel from "./ParisFrigateModel";
-import Experience from "@/components/canvas/Experience";
-import HUD from "@/components/dom/HUD";
+import MarathonCruiserModel from "./MarathonCruiserModel";
+import HalberdDestroyerModel from "./HalberdDestroyerModel";
 
-export default function Scene({ scroll }: { scroll: number }) {
+export default function Scene() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -23,16 +23,22 @@ export default function Scene({ scroll }: { scroll: number }) {
     <div style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", background: "#0A0A0A" }}>
       <Canvas
         camera={{ position: [0, 0, 5], fov: 75 }}
-        gl={{ antialias: true }}
+        gl={{ antialias: true, powerPreference: "high-performance" }}
+        dpr={[1, 1.5]}
       >
         <color attach="background" args={["#0A0A0A"]} />
         <fog attach="fog" args={["#0A0A0A", 5, 80]} />
 
-        <Suspense fallback={<mesh><sphereGeometry args={[0.1]} /><meshBasicMaterial color="#00C2FF" /></mesh>}>
-          <Experience scroll={scroll} />
-          {/* Estructuras de la base de datos UNSC */}
-          <RefitStationModel />
-          <ParisFrigateModel />
+        <Suspense fallback={<group><mesh><sphereGeometry args={[0.1]} /><meshBasicMaterial color="#00C2FF" /></mesh></group>}>
+          <Experience />
+          
+          {/* Flota de la UNSC en el espacio profundo */}
+          <group>
+            <RefitStationModel />
+            <ParisFrigateModel />
+            <MarathonCruiserModel />
+            <HalberdDestroyerModel />
+          </group>
         </Suspense>
       </Canvas>
       <HUD />

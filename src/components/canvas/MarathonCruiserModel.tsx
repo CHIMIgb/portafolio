@@ -10,18 +10,18 @@ export default function MarathonCruiserModel() {
   const meshRef = useRef<THREE.Mesh>(null);
   const { camera } = useThree();
 
-  const geometry = useLoader(STLLoader, '/models/paris-class-frigate-unsc-grafton-armada-legends-hal20240707-1-s9je8u/spacenavy90/paris-class-frigate-unsc-grafton-armada-legends-halo/paris_v2.stl');
+  const geometry = useLoader(STLLoader, '/models/marathon-class-heavy-cruiser-armada-legends-halo20240707-1-9tkus/spacenavy90/marathon-class-heavy-cruiser-armada-legends-halo/marathon.stl');
 
   // ==========================================
   // VARIABLES DE CONTROL (Ajustar libremente)
   // ==========================================
   const config = {
-    position: { x: -270, y: -75, z: -135 },  // Empieza fuera de pantalla por la izquierda
+    position: { x: 300, y: -45, z: -100 },  // Empieza fuera de pantalla por la derecha
     rotation: { x: -Math.PI / 2, y: 0, z: Math.PI / 2 }, // Vista lateral
-    scale: 1.0,
-    speed: 5.0,         // Velocidad de desplazamiento (unidades/segundo)
-    rangeX: 600,          // Recorrido total en X (de -200 a +200, sale por ambos lados de la pantalla)
-    heightVariation: 30   // Cuánto varía la altura (Y) entre pasadas
+    scale: 0.8,         // Escala ligeramente más pequeña si el modelo base es grande, o la dejamos
+    speed: 3.5,         // Velocidad distinta para efecto parallax con la París
+    rangeX: 800,          // Recorrido total en X
+    heightVariation: 20   // Variación de altura
   };
 
   // Ref para rastrear la pasada actual y variar la altura
