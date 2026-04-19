@@ -598,3 +598,98 @@
   box-shadow: 0 0 15px rgba(0, 194, 255, 0.2);
 }
 
+/* ═══════════════════════════════════════════════════════
+   HUD LAYOUT & MOBILE RESPONSIVENESS
+   ═══════════════════════════════════════════════════════ */
+
+.hud-nav {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  pointer-events: auto;
+}
+
+.hud-logo {
+  font-size: 24px;
+  color: white;
+  text-decoration: none;
+}
+
+.hud-subtitle {
+  color: var(--accent-secondary);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+}
+
+.hud-buttons {
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.hud-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 40px 0;
+  pointer-events: auto;
+}
+
+/* --- Mobile Breakpoints --- */
+@media (max-width: 768px) {
+  .hud-nav {
+    top: 20px;
+    left: 20px;
+    gap: 15px;
+  }
+
+  .hud-logo {
+    font-size: 18px !important;
+  }
+
+  .hud-buttons {
+    gap: 8px;
+  }
+
+  /* Make HUD buttons slightly smaller on mobile */
+  .hud-buttons .btn {
+    padding: 8px 16px !important;
+    font-size: 10px !important;
+  }
+
+  .hud-footer {
+    padding: 20px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .hud-nav {
+    top: 15px;
+    left: 15px;
+  }
+
+  /* For very small screens, adjust modal further to prevent cutoff */
+  .holo-modal {
+    width: 98vw;
+    clip-path: polygon(
+      0 8px, 8px 0, calc(100% - 8px) 0, 100% 8px,
+      100% calc(100% - 8px), calc(100% - 8px) 100%,
+      8px 100%, 0 calc(100% - 8px)
+    );
+  }
+
+  .holo-modal-header {
+    padding: 12px 16px 8px;
+  }
+
+  .holo-modal-body {
+    padding: 12px 16px;
+  }
+
+  .holo-modal-footer {
+    padding: 6px 16px;
+  }
+}

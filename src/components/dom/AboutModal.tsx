@@ -45,13 +45,14 @@ export default function AboutModal({ isOpen, onClose, origin }: AboutModalProps)
     >
       <section style={{ marginBottom: "50px" }}>
         <p className="holo-text">
-          Soy CHIMI, un apasionado desarrollador especializado en crear soluciones digitales innovadoras y eficientes. Mi enfoque combina creatividad, funcionalidad y mejores prácticas de desarrollo para ofrecer productos de alta calidad.
+          Identificación de operador: <strong>CHIMI</strong>. <br /><br />
+          Actualmente soy un estudiante de tecnología combinando mi base académica con operaciones activas como desarrollador freelancer. Aunque ejecuto arquitecturas Full Stack completas, mi especialidad y enfoque primario es el <strong>Backend y la creación de APIs robustas</strong>.
         </p>
         <p className="holo-text">
-          Con experiencia en diversas tecnologías y frameworks, me especializo en construir aplicaciones web modernas, responsivas y escalables que cumplen con los objetivos de negocio de mis clientes.
+          Mi filosofía de desarrollo radica en establecer núcleos inquebrantables. Me apasiona analizar la raíz de cualquier sistema para diseñar APIs sólidas y estables; estructuras tan agnósticas y bien construidas que permitan conectar cualquier interfaz Frontend en el futuro sin que el núcleo de la aplicación corra peligro.
         </p>
         <p className="holo-text">
-          Mi filosofía se basa en la <strong>curiosidad insaciable</strong> y el <strong>aprendizaje constante</strong>; disfruto integrando múltiples tecnologías en un solo proyecto para crear soluciones robustas, variadas y siempre a la vanguardia.
+          Fuera del entorno de código, me encontrarás inmerso en simulaciones de combate táctico. Soy un gran apasionado de los videojuegos, especialmente de la saga <strong>Halo</strong>, llevando a <em>Halo: Reach</em> como estandarte personal.
         </p>
       </section>
 

@@ -76,31 +76,23 @@ export default function HUD() {
     <div style={{ pointerEvents: "none", width: "100vw", height: "100vh", position: "fixed", top: 0, left: 0, zIndex: 1000 }}>
       {/* Top-Left HUD (Wonderland Style) */}
       <motion.nav
+        className="hud-nav"
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 1, delay: 1.2, ease: "easeOut" }}
-        style={{
-          position: "absolute",
-          top: "40px",
-          left: "40px",
-          display: "flex",
-          flexDirection: "column",
-          gap: "25px",
-          pointerEvents: "auto"
-        }}
       >
         {/* Brand Info */}
         <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
-          <a href="#" className="logo halo-text" style={{ fontSize: "24px", color: "white", textDecoration: "none" }}>
+          <a href="#" className="logo halo-text hud-logo">
             <ScrambledText text="CHIMI" delay={100} duration={5000} />
           </a>
-          <span style={{ color: "var(--accent-secondary)", fontSize: "10px", letterSpacing: "0.1em" }}>
+          <span className="hud-subtitle">
             <ScrambledText text="FULL STACK DEVELOPER" delay={400} duration={5000} />
           </span>
         </div>
 
         {/* Navigation Buttons */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginTop: "10px" }}>
+        <div className="hud-buttons" style={{ display: "flex", flexDirection: "column" }}>
           <button
             ref={projectsBtnRef}
             className="btn btn-primary"
@@ -237,10 +229,10 @@ export default function HUD() {
 
       {/* Footer Overlay (At the bottom) */}
       <motion.footer
+        className="hud-footer"
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, delay: 1.5, ease: "easeOut" }}
-        style={{ position: "absolute", bottom: 0, left: 0, width: "100%", padding: "40px 0", pointerEvents: "auto" }}
       >
         <div className="container">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -275,8 +267,8 @@ export default function HUD() {
               >
                 {isMuted ? <FaVolumeMute size={14} /> : <FaVolumeUp size={14} />}
               </button>
-              <a href="#" style={{ color: "white" }}><FaGithub size={20} /></a>
-              <a href="#" style={{ color: "white" }}><FaInstagram size={20} /></a>
+              <a href="https://github.com/CHIMIgb" target="_blank" rel="noopener noreferrer" style={{ color: "white", transition: "color 0.3s" }} onMouseEnter={(e) => e.currentTarget.style.color = "#00C2FF"} onMouseLeave={(e) => e.currentTarget.style.color = "white"}><FaGithub size={20} /></a>
+              <a href="https://www.instagram.com/chimi_gb?igsh=MXg4NmJpZ2I0ejI1dA==" target="_blank" rel="noopener noreferrer" style={{ color: "white", transition: "color 0.3s" }} onMouseEnter={(e) => e.currentTarget.style.color = "#FF00F7"} onMouseLeave={(e) => e.currentTarget.style.color = "white"}><FaInstagram size={20} /></a>
             </div>
           </div>
         </div>

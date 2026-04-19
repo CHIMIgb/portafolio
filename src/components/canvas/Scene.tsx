@@ -22,7 +22,8 @@ export default function Scene() {
     <div style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", background: "#0A0A0A" }}>
       <Canvas
         camera={{ position: [0, 0, 5], fov: 75 }}
-        gl={{ antialias: true }}
+        gl={{ antialias: true, powerPreference: "high-performance" }}
+        dpr={[1, 1.5]}
       >
         <color attach="background" args={["#0A0A0A"]} />
         <fog attach="fog" args={["#0A0A0A", 5, 80]} />

@@ -64,9 +64,11 @@ export default function ProjectsModal({ isOpen, onClose, origin }: ProjectsModal
                     <span>VER PROYECTO</span>
                     <ExternalLink size={14} />
                   </a>
-                  <a href="#" className="holo-project-btn">
-                    <FaGithub size={18} />
-                  </a>
+                  {project.github && (
+                    <a href={project.github} target="_blank" rel="noopener noreferrer" className="holo-project-btn">
+                      <FaGithub size={18} />
+                    </a>
+                  )}
                 </footer>
               </div>
             </motion.div>

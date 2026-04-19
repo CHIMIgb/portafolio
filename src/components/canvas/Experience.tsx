@@ -42,13 +42,13 @@ export default function Experience() {
       */}
       <group position={[0, 0, camera.position.z]}>
         {/* Layer 1: Fixed Distant Universe */}
-        <Stars radius={250} depth={80} count={12000} factor={6} saturation={0} fade speed={0.2} />
+        <Stars radius={250} depth={80} count={4000} factor={6} saturation={0} fade speed={0.2} />
         
         {/* Layer 2: Micro Star Dust (Subtle & Constant) */}
         <Sparkles 
-          count={800} 
+          count={200} 
           scale={200} 
-          size={0.6} 
+          size={1.2} 
           speed={0.4} 
           opacity={0.4} 
           noise={0.3} 
@@ -57,9 +57,9 @@ export default function Experience() {
 
         {/* Layer 3: Vibrant Pulsing Stars (Active Twinkling) */}
         <Sparkles 
-          count={400} 
+          count={100} 
           scale={180} 
-          size={1.8} 
+          size={3.0} 
           speed={2.5} 
           opacity={0.9} 
           noise={2.5} 

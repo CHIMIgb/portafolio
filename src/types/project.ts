@@ -5,6 +5,7 @@ export interface Project {
   tech: string[];
   category: string[];
   link: string;
+  github?: string;
   featured?: boolean;
   icon?: string;
   image?: string;
