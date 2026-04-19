@@ -7,6 +7,8 @@ import Experience from "./Experience";
 import HUD from "../dom/HUD";
 import RefitStationModel from "./RefitStationModel";
 import ParisFrigateModel from "./ParisFrigateModel";
+import Experience from "@/components/canvas/Experience";
+import HUD from "@/components/dom/HUD";
 
 export default function Scene({ scroll }: { scroll: number }) {
   const [mounted, setMounted] = useState(false);
