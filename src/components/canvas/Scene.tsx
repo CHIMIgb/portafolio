@@ -8,6 +8,7 @@ import HUD from "../dom/HUD";
 import RefitStationModel from "./RefitStationModel";
 import ParisFrigateModel from "./ParisFrigateModel";
 import MarathonCruiserModel from "./MarathonCruiserModel";
+import HalberdDestroyerModel from "./HalberdDestroyerModel";
 
 export default function Scene() {
   const [mounted, setMounted] = useState(false);
@@ -36,6 +37,7 @@ export default function Scene() {
             <RefitStationModel />
             <ParisFrigateModel />
             <MarathonCruiserModel />
+            <HalberdDestroyerModel />
           </group>
         </Suspense>
       </Canvas>
