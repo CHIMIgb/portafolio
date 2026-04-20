@@ -602,6 +602,20 @@
    HUD LAYOUT & MOBILE RESPONSIVENESS
    ═══════════════════════════════════════════════════════ */
 
+/* ── HUD Wrapper (viewport-safe on mobile) ── */
+.hud-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;          /* fallback */
+  height: 100dvh;         /* dynamic viewport height — respects mobile browser chrome */
+  z-index: 1000;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+}
+
 .hud-nav {
   position: absolute;
   top: 40px;
@@ -630,11 +644,9 @@
 }
 
 .hud-footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
+  margin-top: auto;       /* push to the bottom of the flex container */
   width: 100%;
-  padding: 40px 0;
+  padding: 20px 0;
   pointer-events: auto;
 }
 
@@ -660,9 +672,6 @@
     font-size: 10px !important;
   }
 
-  .hud-footer {
-    padding: 20px 0;
-  }
 }
 
 @media (max-width: 480px) {

@@ -73,7 +73,7 @@ export default function HUD() {
   };
 
   return (
-    <div style={{ pointerEvents: "none", width: "100vw", height: "100vh", position: "fixed", top: 0, left: 0, zIndex: 1000 }}>
+    <div className="hud-wrapper">
       {/* Top-Left HUD (Wonderland Style) */}
       <motion.nav
         className="hud-nav"
