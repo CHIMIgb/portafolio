@@ -9,6 +9,8 @@ import RefitStationModel from "./RefitStationModel";
 import ParisFrigateModel from "./ParisFrigateModel";
 import MarathonCruiserModel from "./MarathonCruiserModel";
 import HalberdDestroyerModel from "./HalberdDestroyerModel";
+import SabreModel from "./SabreModel";
+import SpaceBansheeModel from "./SpaceBansheeModel";
 
 export default function Scene() {
   const [mounted, setMounted] = useState(false);
@@ -38,6 +40,8 @@ export default function Scene() {
             <ParisFrigateModel />
             <MarathonCruiserModel />
             <HalberdDestroyerModel />
+            <SabreModel />
+            <SpaceBansheeModel />
           </group>
         </Suspense>
       </Canvas>

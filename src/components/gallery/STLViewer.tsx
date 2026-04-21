@@ -1,6 +1,7 @@
 import { useLoader } from '@react-three/fiber';
 import { useGLTF } from '@react-three/drei';
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader.js';
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import * as THREE from 'three';
 import { Suspense, useMemo } from 'react';
 
@@ -34,6 +35,45 @@ function Model({ url, extension }: { url: string; extension: string }) {
           opacity={0.15} 
         />
       </mesh>
+    );
+  }
+
+  // Manejo de OBJ (ej. Banshee)
+  if (extension === '.obj') {
+    const obj = useLoader(OBJLoader, url);
+    const copiedObj = useMemo(() => {
+      const clone = obj.clone();
+      // Verificamos si es la Banshee por la URL para darle sus colores especiales
+      const isBanshee = url.toLowerCase().includes('banshee');
+      
+      const materialProps = isBanshee ? {
+        color: "#a65fb5",
+        emissive: "#59357a",
+        emissiveIntensity: 0.2,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.25
+      } : {
+        color: "#00C2FF",
+        wireframe: true,
+        transparent: true,
+        opacity: 0.15
+      };
+
+      clone.traverse((node) => {
+        if ((node as THREE.Mesh).isMesh) {
+          const mesh = node as THREE.Mesh;
+          mesh.material = new THREE.MeshStandardMaterial(materialProps);
+        }
+      });
+      return clone;
+    }, [obj, url]);
+
+    return (
+      <primitive 
+        object={copiedObj} 
+        // Normalmente los objs pueden ser enormes o diminutos, pero Center lo ajusta
+      />
     );
   }
 
