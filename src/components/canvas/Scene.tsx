@@ -33,15 +33,29 @@ export default function Scene() {
 
         <Suspense fallback={<group><mesh><sphereGeometry args={[0.1]} /><meshBasicMaterial color="#00C2FF" /></mesh></group>}>
           <Experience />
-          
+
           {/* Flota de la UNSC en el espacio profundo */}
           <group>
             <RefitStationModel />
+            {/*
             <ParisFrigateModel />
             <MarathonCruiserModel />
             <HalberdDestroyerModel />
-            <SabreModel />
-            <SpaceBansheeModel />
+            */}
+            {/* Escuadrón Alfa (Banshee liderando, Sabre persigue, Banshee embosca por detrás) */}
+            <SpaceBansheeModel seed={0} startDelay={2} delay={0} />
+            <SabreModel seed={0} delay={0.4} />
+            <SpaceBansheeModel seed={0} startDelay={3.5} delay={0.8} />
+            
+            {/* Escuadrón Bravo (Un Sabre letal dando caza a dos Banshees rezagadas) */}
+            <SpaceBansheeModel seed={1} startDelay={2.5} delay={0} />
+            <SpaceBansheeModel seed={1} startDelay={3} delay={0.4} />
+            <SabreModel seed={1} delay={0.8} />
+
+            {/* Escuadrón Charlie (Duelo a tres bandas: Sabre vs Banshee vs Sabre) */}
+            <SabreModel seed={2} delay={0} />
+            <SpaceBansheeModel seed={2} startDelay={2.8} delay={0.4} />
+            <SabreModel seed={2} delay={0.9} />
           </group>
         </Suspense>
       </Canvas>
