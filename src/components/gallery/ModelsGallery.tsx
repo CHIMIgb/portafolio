@@ -6,6 +6,8 @@ import { OrbitControls, Center } from '@react-three/drei';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import STLViewer from './STLViewer';
+import SabreModel from '../canvas/SabreModel';
+import SpaceBansheeModel from '../canvas/SpaceBansheeModel';
 
 type ModelData = {
   name: string;
@@ -96,9 +98,14 @@ export default function ModelsGallery({ initialModels }: { initialModels: ModelD
               {/* Controles para rotar alrededor de la figura */}
               <OrbitControls makeDefault autoRotate autoRotateSpeed={0.5} />
               
-              {/* Center se encarga de reescalar y centrar en 0,0 cualquier modelo no importando su tamaño o pivot original */}
               <Center>
-                <STLViewer url={selectedModel.url} extension={selectedModel.extension} />
+                {selectedModel.name.toLowerCase().includes('sabre') ? (
+                  <SabreModel isStatic={true} />
+                ) : selectedModel.name.toLowerCase().includes('banshee') ? (
+                  <SpaceBansheeModel isStatic={true} />
+                ) : (
+                  <STLViewer url={selectedModel.url} extension={selectedModel.extension} />
+                )}
               </Center>
             </Canvas>
           </>

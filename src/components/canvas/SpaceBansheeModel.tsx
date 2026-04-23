@@ -9,15 +9,27 @@ interface SpaceBansheeModelProps {
   seed?: number;
   startDelay?: number;
   delay?: number;
+  isStatic?: boolean;
 }
 
-export default function SpaceBansheeModel({ seed = 0, startDelay = 0, delay = 0 }: SpaceBansheeModelProps) {
+export default function SpaceBansheeModel({ seed = 0, startDelay = 0, delay = 0, isStatic = false }: SpaceBansheeModelProps) {
   const groupRef = useRef<THREE.Group>(null);
   const innerRollRef = useRef<THREE.Group>(null);
-  const slipspaceFlashRef = useRef<THREE.PointLight>(null);
+  
+  // Laser System Refs
+  const laser1Ref = useRef<THREE.Mesh>(null);
+  const laser2Ref = useRef<THREE.Mesh>(null);
+  const muzzleFlashRef = useRef<THREE.PointLight>(null);
+  const shotStateRef = useRef({ 
+    lastShot: -(seed * 2),
+    burstsLeft: 0,
+    lastBurstCooldown: -(seed * 2),
+    nextCooldownTarget: 5 + Math.random() * 5
+  });
+  
   const { camera } = useThree();
 
-  const obj = useLoader(OBJLoader, '/models/Space Banshee - 3992435/files/Body.obj');
+  const obj = useLoader(OBJLoader, '/models/Space Banshee - 3992435/files/Space_Banshee.obj');
 
   const bansheeObj = useMemo(() => {
     const clonedObj = obj.clone();
@@ -36,9 +48,9 @@ export default function SpaceBansheeModel({ seed = 0, startDelay = 0, delay = 0 
           emissiveIntensity: 0.2,
           metalness: 0.9,
           roughness: 0.1,
-          wireframe: false, // Solid look for cinematic fight
+          wireframe: false,
           transparent: true,
-          opacity: 0.8,     // Higher opacity for visibility
+          opacity: 0.8,
           fog: false
         });
       }
@@ -47,7 +59,7 @@ export default function SpaceBansheeModel({ seed = 0, startDelay = 0, delay = 0 
   }, [obj]);
 
   const config = {
-    scale: 3 / 15,
+    scale: 6 / 15,
     rollLerp: 0.05
   };
 
@@ -55,36 +67,31 @@ export default function SpaceBansheeModel({ seed = 0, startDelay = 0, delay = 0 
     if (!groupRef.current || !innerRollRef.current) return;
     
     const t = state.clock.getElapsedTime();
-    const activeTime = t - startDelay;
     
-    // --- SLIPSPACE ENTRANCE LOGIC ---
-    if (activeTime < 0) {
-      // Not yet jumped in
-      groupRef.current.scale.setScalar(0);
+    if (isStatic) {
+      groupRef.current.scale.setScalar(config.scale);
+      
+      const pulse = Math.sin(t * 2) * 0.1 + 0.3;
+      innerRollRef.current.traverse((child) => {
+        if ((child as THREE.Mesh).isMesh) {
+          const m = (child as THREE.Mesh).material as THREE.MeshStandardMaterial;
+          m.emissiveIntensity = pulse;
+        }
+      });
       return;
     }
     
-    // Flash intensity spikes on entrance, fades quickly
-    if (slipspaceFlashRef.current) {
-      if (activeTime < 1.5) {
-        slipspaceFlashRef.current.intensity = (1.5 - activeTime) * 30; // Bright flash
-      } else {
-        slipspaceFlashRef.current.intensity = 0;
-      }
-    }
-    
-    // Smooth scaling up from 0 to target scale in 0.5s
-    const currentScale = THREE.MathUtils.clamp(activeTime * 2, 0, 1) * config.scale;
-    groupRef.current.scale.setScalar(currentScale);
+    // Al igual que los Sabres, la Banshee siempre mantiene su escala original y viaja 
+    // su trayectoria matemática desde el segundo 0, entrando a la vista de forma natural.
+    groupRef.current.scale.setScalar(config.scale);
 
     // --- FLIGHT MATH LOGIC ---
-    // Apply flight delay for pursuing Sabres
-    const trackTime = Math.max(0, activeTime - delay);
+    const trackTime = Math.max(0, t - delay);
     const lookAheadTime = trackTime + 0.1;
     
     const currentPos = getFlightPosition(trackTime, seed, camera.position.z);
     const nextPos = getFlightPosition(lookAheadTime, seed, camera.position.z);
-    
+
     groupRef.current.position.copy(currentPos);
     groupRef.current.lookAt(nextPos);
     
@@ -101,24 +108,73 @@ export default function SpaceBansheeModel({ seed = 0, startDelay = 0, delay = 0 
     innerRollRef.current.traverse((child) => {
       if ((child as THREE.Mesh).isMesh) {
         const m = (child as THREE.Mesh).material as THREE.MeshStandardMaterial;
-        // Keep wireframe off, just pulse intensity
         m.emissiveIntensity = pulse;
       }
     });
+    
+    // --- SHOOTING LOGIC ---
+    const shotState = shotStateRef.current;
+    
+    if (shotState.burstsLeft <= 0) {
+      if (t - shotState.lastBurstCooldown > shotState.nextCooldownTarget) {
+        if (Math.random() > 0.6) { // Solo 40% de probabilidad de disparar este ciclo
+          shotState.burstsLeft = Math.floor(Math.random() * 3) + 2; 
+          shotState.lastShot = t;
+          shotState.burstsLeft--;
+        } else {
+          // Salta el turno: inicia otro cooldown de 5-10s sin haber disparado
+          shotState.lastBurstCooldown = t;
+          shotState.nextCooldownTarget = 5 + Math.random() * 5;
+        }
+      }
+    } else {
+      const rapidFireRate = 0.25; 
+      if (t - shotState.lastShot > rapidFireRate) {
+        shotState.lastShot = t;
+        shotState.burstsLeft--;
+        
+        if (shotState.burstsLeft <= 0) {
+          shotState.lastBurstCooldown = t;
+          shotState.nextCooldownTarget = 5 + Math.random() * 5;
+        }
+      }
+    }
+
+    const timeSinceShot = t - shotState.lastShot;
+    
+    if (timeSinceShot < 0.2) {
+      const progress = timeSinceShot / 0.2;
+      const fireDist = progress * 80; // Hacia +Z local (el Banshee encara +Z en el renderizado local)
+      const opacityOut = 1 - progress;
+      
+      if (laser1Ref.current && laser2Ref.current) {
+        // En este modelo, el frente parece ser +Z
+        laser1Ref.current.position.z = fireDist;
+        laser2Ref.current.position.z = fireDist;
+        
+        laser1Ref.current.scale.y = 1 + (progress * 5);
+        laser2Ref.current.scale.y = 1 + (progress * 5);
+        
+        (laser1Ref.current.material as THREE.MeshBasicMaterial).opacity = opacityOut;
+        (laser2Ref.current.material as THREE.MeshBasicMaterial).opacity = opacityOut;
+      }
+      
+      if (muzzleFlashRef.current) {
+        muzzleFlashRef.current.intensity = opacityOut * 25;
+      }
+    } else {
+      if (laser1Ref.current) (laser1Ref.current.material as THREE.MeshBasicMaterial).opacity = 0;
+      if (laser2Ref.current) (laser2Ref.current.material as THREE.MeshBasicMaterial).opacity = 0;
+      if (muzzleFlashRef.current) muzzleFlashRef.current.intensity = 0;
+    }
   });
 
   return (
     <group ref={groupRef}>
-      {/* Slipspace arrival flash */}
-      <pointLight ref={slipspaceFlashRef} distance={50} color="#FFFFFF" intensity={0} />
-
       <group ref={innerRollRef}>
-        {/* Alignment offset to face -Z. Adjust as needed if OBJ loads backwards */}
         <group rotation={[0, 0, 0]}>
-          {/* Ambient Purple Light */}
           <pointLight position={[0, 2, 0]} intensity={3} color="#714eaf" />
           
-          {/* Twin Plasma Engines */}
           <group position={[0, -0.5, -0.8]}>
             <pointLight position={[-0.6, 0, 0]} intensity={12} distance={4} color="#00C2FF" />
             <pointLight position={[0.6, 0, 0]} intensity={12} distance={4} color="#00C2FF" />
@@ -127,6 +183,21 @@ export default function SpaceBansheeModel({ seed = 0, startDelay = 0, delay = 0 
           </group>
 
           <primitive object={bansheeObj} />
+          
+          {/* WEAPONS SYSTEM (Muzzle flash + Lasers) */}
+          <group position={[0, -0.2, 1.5]}> {/* Posicionado al frente debajo de la cabina */}
+            <pointLight ref={muzzleFlashRef} distance={30} color="#9b59b6" intensity={0} />
+            
+            {/* Proyectiles de Plasma Morados */}
+            <mesh ref={laser1Ref} position={[-0.8, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
+              <cylinderGeometry args={[0.05, 0.05, 1.5]} />
+              <meshBasicMaterial color="#9b59b6" transparent opacity={0} depthWrite={false} blending={THREE.AdditiveBlending} />
+            </mesh>
+            <mesh ref={laser2Ref} position={[0.8, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
+              <cylinderGeometry args={[0.05, 0.05, 1.5]} />
+              <meshBasicMaterial color="#9b59b6" transparent opacity={0} depthWrite={false} blending={THREE.AdditiveBlending} />
+            </mesh>
+          </group>
         </group>
       </group>
     </group>

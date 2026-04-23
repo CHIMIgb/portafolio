@@ -1,14 +1,20 @@
 import * as THREE from 'three';
 
 export function getFlightPosition(t: number, seed: number, cameraZ: number): THREE.Vector3 {
-  // Base speed multiplier
   const time = t * 1.5 + seed * 100;
+  
+  // Extraemos factores del seed para crear órbitas únicas
+  // Con esto obligamos a que diferentes semillas traten rutas totalmente diferentes 
+  // (anchas, cerradas, erráticas) en lugar de la misma ruta desplazada.
+  const routeModX = 1 + (seed % 5) * 0.1;
+  const routeModY = 1 + (seed % 3) * 0.2;
+  const radX = 35 + (seed % 4) * 5;
+  const radY = 20 + (seed % 3) * 8;
 
-  // Lissajous curve with offset frequencies for organic, chaotic flight
-  // X: Broad sweeps across the screen
-  const x = Math.sin(time * 0.4) * 35 + Math.sin(time * 0.7) * 15;
-  // Y: Vertical maneuvers
-  const y = Math.cos(time * 0.5) * 20 + Math.sin(time * 0.3) * 10;
+  // Lissajous curve con modificadores orgánicos
+  const x = Math.sin(time * 0.4 * routeModX) * radX + Math.sin(time * 0.7) * 15;
+  const y = Math.cos(time * 0.5 * routeModY) * radY + Math.sin(time * 0.3) * 10;
+  
   // Z: Diving in and out of depth (relative to camera)
   const zOffset = Math.sin(time * 0.6) * 30 - 35;
 

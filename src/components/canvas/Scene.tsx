@@ -1,14 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Suspense } from "react";
+import { useState, useEffect, useMemo, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import Experience from "./Experience";
 import HUD from "../dom/HUD";
 import RefitStationModel from "./RefitStationModel";
-import ParisFrigateModel from "./ParisFrigateModel";
-import MarathonCruiserModel from "./MarathonCruiserModel";
-import HalberdDestroyerModel from "./HalberdDestroyerModel";
 import SabreModel from "./SabreModel";
 import SpaceBansheeModel from "./SpaceBansheeModel";
 
@@ -17,6 +13,54 @@ export default function Scene() {
 
   useEffect(() => {
     setMounted(true);
+  }, []);
+
+  // Generador Aleatorio Procedural de Combates
+  const squadrons = useMemo(() => {
+    const squads = [];
+    let currentShips = 0;
+    const maxShips = 4; // Límite estricto y elegante de pantallas
+
+    // Generamos naves puramente hasta llegar o acercarnos al límite de 4 piezas
+    while (currentShips < maxShips) {
+      const type = Math.floor(Math.random() * 4); // 4 tipos de escenario
+      const seed = Math.random() * 100;
+      
+      // Lobo Solitario (Requiere 1 espacio)
+      if (type === 0 && currentShips + 1 <= maxShips) {
+        squads.push(<SabreModel key={`ship-${currentShips}`} seed={seed} delay={Math.random() * 2} />);
+        currentShips++;
+      } 
+      // Reconocimiento Banshee (Requiere 1 espacio)
+      else if (type === 1 && currentShips + 1 <= maxShips) {
+        squads.push(<SpaceBansheeModel key={`ship-${currentShips}`} seed={seed} delay={Math.random() * 2} />);
+        currentShips++;
+      } 
+      // Cacería (Requiere 2 espacios)
+      else if (type === 2 && currentShips + 2 <= maxShips) {
+        squads.push(<SpaceBansheeModel key={`ship-${currentShips}`} seed={seed} delay={0} />);
+        squads.push(<SabreModel key={`ship-${currentShips+1}`} seed={seed} delay={0.4 + Math.random() * 0.4} />);
+        currentShips += 2;
+      } 
+      // Enjambre (Requiere 3 espacios)
+      else if (type === 3 && currentShips + 3 <= maxShips) {
+        squads.push(<SabreModel key={`ship-${currentShips}`} seed={seed} delay={0} />);
+        squads.push(<SpaceBansheeModel key={`ship-${currentShips+1}`} seed={seed} delay={0.3} />);
+        
+        if (Math.random() > 0.5) {
+          squads.push(<SpaceBansheeModel key={`ship-${currentShips+2}`} seed={seed} delay={0.6 + Math.random() * 0.5} />);
+        } else {
+          squads.push(<SabreModel key={`ship-${currentShips+2}`} seed={seed} delay={0.6 + Math.random() * 0.5} />);
+        }
+        currentShips += 3;
+      } 
+      // Si el tipo elegido requiere más espacio del que queda, forzamos un lobo solitario para llenar y salir
+      else {
+        squads.push(<SabreModel key={`ship-${currentShips}`} seed={seed} delay={Math.random() * 2} />);
+        currentShips++;
+      }
+    }
+    return squads;
   }, []);
 
   if (!mounted) return <div style={{ width: "100%", height: "100vh", background: "#0A0A0A" }} />;
@@ -33,29 +77,11 @@ export default function Scene() {
 
         <Suspense fallback={<group><mesh><sphereGeometry args={[0.1]} /><meshBasicMaterial color="#00C2FF" /></mesh></group>}>
           <Experience />
-
           {/* Flota de la UNSC en el espacio profundo */}
           <group>
             <RefitStationModel />
-            {/*
-            <ParisFrigateModel />
-            <MarathonCruiserModel />
-            <HalberdDestroyerModel />
-            */}
-            {/* Escuadrón Alfa (Banshee liderando, Sabre persigue, Banshee embosca por detrás) */}
-            <SpaceBansheeModel seed={0} startDelay={2} delay={0} />
-            <SabreModel seed={0} delay={0.4} />
-            <SpaceBansheeModel seed={0} startDelay={3.5} delay={0.8} />
-            
-            {/* Escuadrón Bravo (Un Sabre letal dando caza a dos Banshees rezagadas) */}
-            <SpaceBansheeModel seed={1} startDelay={2.5} delay={0} />
-            <SpaceBansheeModel seed={1} startDelay={3} delay={0.4} />
-            <SabreModel seed={1} delay={0.8} />
-
-            {/* Escuadrón Charlie (Duelo a tres bandas: Sabre vs Banshee vs Sabre) */}
-            <SabreModel seed={2} delay={0} />
-            <SpaceBansheeModel seed={2} startDelay={2.8} delay={0.4} />
-            <SabreModel seed={2} delay={0.9} />
+            {/* Renderizar los escuadrones generados algorítmicamente */}
+            {squadrons}
           </group>
         </Suspense>
       </Canvas>
