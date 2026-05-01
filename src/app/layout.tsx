@@ -15,7 +15,7 @@ const covenantFont = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "CHIMI - Full Stack Developer",
+  title: "CHIMI - Backend Developer",
   description: "Portafolio de CHIMI - Desarrollador de Soluciones Digitales. Experiencia inmersiva 3D con proyectos web innovadores.",
 };
 

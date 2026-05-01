@@ -4,7 +4,7 @@ export const projects: Project[] = [
   {
     id: "roms-vault",
     title: "ROMs Vault",
-    description: "Plataforma web completa para descubrir, descargar y ejecutar juegos retro directamente en el navegador. Integra EmulatorJS para emulación online sin instalaciones, con soporte para múltiples consolas clásicas y streaming de ISOs grandes desde Google Drive.",
+    description: "Plataforma web completa para descubrir, descargar y ejecutar juegos retro directamente en el navegador. Integra EmulatorJS para emulación online sin instalaciones, con soporte para múltiples consolas clásicas.",
     tech: ["PHP", "JavaScript", "Docker", "EmulatorJS", "Google Drive API", "PostgreSQL", "CSS"],
     category: ["html", "javascript", "css", "php"],
     link: "https://roms-vault.up.railway.app/",
@@ -17,7 +17,7 @@ export const projects: Project[] = [
   {
     id: "desarrollo-urbano",
     title: "Desarrollo Urbano",
-    description: "Plataforma para planificación y diseño urbano interactivo. Permite análisis de métricas espaciales, edición en base a lotes y visualización en un entorno 3D dinámico. Incluye un sistema robusto de CI/CD para automatizar pruebas y despliegues.",
+    description: "Plataforma para planificación y diseño urbano interactivo. Permite análisis de métricas espaciales, edición en base a lotes y visualización en un entorno 3D dinámico.",
     tech: ["JavaScript", "MapLibre GL", "Node.js / Express", "PostgreSQL / Supabase", "Docker"],
     category: ["javascript", "nodejs", "postgresql", "python", "docker"],
     link: "https://desarrollo-urbano.onrender.com/",

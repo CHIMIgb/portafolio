@@ -1,7 +1,7 @@
 "use client";
 
 import {
-  SiPhp, SiLaravel, SiNodedotjs, SiNestjs, SiExpress,
+  SiPhp, SiLaravel, SiNodedotjs, SiNestjs, SiExpress, SiDjango,
   SiReact, SiNextdotjs, SiAngular, SiVuedotjs, SiTailwindcss, SiJavascript, SiHtml5, SiCss,
   SiPostgresql, SiMysql,
   SiPython, SiScikitlearn,
@@ -45,19 +45,22 @@ export default function AboutModal({ isOpen, onClose, origin }: AboutModalProps)
     >
       <section style={{ marginBottom: "50px" }}>
         <p className="holo-text">
-          Identificación de operador: <strong>CHIMI</strong>. <br /><br />
-          Actualmente soy un estudiante de tecnología combinando mi base académica con operaciones activas como desarrollador freelancer. Aunque ejecuto arquitecturas Full Stack completas, mi especialidad y enfoque primario es el <strong>Backend y la creación de APIs robustas</strong>.
+          Identificación: <strong>CHIMI</strong>. <br /><br />
+          Recién egresado, con proyectos corriendo en paralelo desde antes de terminar la carrera. Me especializo en <strong>Backend</strong>: diseño APIs REST y trabajo principalmente con <strong>Python (FastAPI / Django)</strong>, <strong>PHP Flight</strong> y <strong>PostgreSQL</strong>.
         </p>
         <p className="holo-text">
-          Mi filosofía de desarrollo radica en establecer núcleos inquebrantables. Me apasiona analizar la raíz de cualquier sistema para diseñar APIs sólidas y estables; estructuras tan agnósticas y bien construidas que permitan conectar cualquier interfaz Frontend en el futuro sin que el núcleo de la aplicación corra peligro.
+          Lo que me importa al construir un sistema es que el núcleo aguante. Una API bien diseñada debería poder conectar cualquier frontend sin que haya que tocar lo de adentro. Eso es lo que busco cada vez.
         </p>
         <p className="holo-text">
-          Fuera del entorno de código, me encontrarás inmerso en simulaciones de combate táctico. Soy un gran apasionado de los videojuegos, especialmente de la saga <strong>Halo</strong>, llevando a <em>Halo: Reach</em> como estandarte personal.
+          Dependiendo del proyecto, trabajo solo o en equipo — no tengo preferencia fija, me adapto a lo que pide la situación. A futuro quiero profundizar en arquitectura de APIs y análisis de datos. Ahí es donde quiero llegar.
+        </p>
+        <p className="holo-text">
+          Fuera del código juego videojuegos, sobre todo los que tienen buena historia. <strong>Halo: Reach</strong> es el que más me marcó — no por la acción sino por lo que cuenta.
         </p>
 
         <div style={{ marginTop: "24px" }}>
           <a href="/CV/CV.pdf" download="CV_Backend_CHIMI.pdf" className="holo-submit-btn" style={{ textDecoration: "none", display: "inline-flex", width: "auto", padding: "10px 24px" }}>
-            [ DESCARGAR EXPEDIENTE / CV ]
+            [ DESCARGAR CV ]
           </a>
         </div>
       </section>
@@ -73,6 +76,7 @@ export default function AboutModal({ isOpen, onClose, origin }: AboutModalProps)
           <SkillIcon icon={SiNodedotjs} name="Node.js" color="#339933" />
           <SkillIcon icon={SiNestjs} name="NestJS" color="#E0234E" />
           <SkillIcon icon={SiExpress} name="Express" color="#ffffff" />
+          <SkillIcon icon={SiDjango} name="Django" color="#092E20" />
         </div>
 
         <SectionTitle>Frontend</SectionTitle>

@@ -87,7 +87,7 @@ export default function HUD() {
             <ScrambledText text="CHIMI" delay={100} duration={5000} />
           </a>
           <span className="hud-subtitle">
-            <ScrambledText text="FULL STACK DEVELOPER" delay={400} duration={5000} />
+            <ScrambledText text="BACKEND DEVELOPER" delay={400} duration={5000} />
           </span>
         </div>
 

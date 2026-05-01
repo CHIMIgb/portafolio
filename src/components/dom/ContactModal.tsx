@@ -141,7 +141,7 @@ export default function ContactModal({ isOpen, onClose, origin }: ContactModalPr
       <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
         <div className="holo-contact-info">
           <Mail size={16} />
-          <span>chimisolucionesdigitales@gmail.com</span>
+          <span>chimi.7zip@gmail.com</span>
         </div>
         <div className="holo-contact-info">
           <Phone size={16} />
