@@ -13,7 +13,7 @@ No es un template genérico de portafolio. La escena espacial con Three.js, los 
 Las animaciones de tracers, el efecto de apertura/cierre tipo holograma, los detalles como `[ CANAL :: ABIERTO ]` y `FREQ 47.3 GHz` — demuestra atención al detalle y dominio de Framer Motion.
 
 ### 3. Stack técnico sólido
-El "Sobre Mí" muestra un stack amplio y realista: Laravel, NestJS, Angular, React, Next.js, Docker, PostgreSQL. Eso es lo que le gusta ver a un reclutador.
+El "Sobre Mí" muestra un stack amplio y realista: Flight PHP, NestJS, Angular, React, Next.js, Docker, PostgreSQL. Eso es lo que le gusta ver a un reclutador.
 
 ### 4. El scroll infinito con leapfrog
 Es técnicamente impresionante y demuestra dominio de matemáticas aplicadas a UI/UX.

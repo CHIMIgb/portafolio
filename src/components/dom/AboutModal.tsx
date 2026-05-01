@@ -1,13 +1,5 @@
 "use client";
 
-import {
-  SiPhp, SiLaravel, SiNodedotjs, SiNestjs, SiExpress, SiDjango,
-  SiReact, SiNextdotjs, SiAngular, SiVuedotjs, SiTailwindcss, SiJavascript, SiHtml5, SiCss,
-  SiPostgresql, SiMysql,
-  SiPython, SiScikitlearn,
-  SiArduino, SiCplusplus,
-  SiGit, SiGithub, SiDocker, SiPostman
-} from "react-icons/si";
 import HoloModal from "./HoloModal";
 
 interface AboutModalProps {
@@ -16,12 +8,28 @@ interface AboutModalProps {
   origin?: { x: number; y: number } | null;
 }
 
-const SkillIcon = ({ icon: Icon, name, color }: { icon: any; name: string; color?: string }) => (
-  <div className="holo-skill-item">
-    <Icon size={28} color={color || "#00C2FF"} />
-    <span>{name}</span>
-  </div>
-);
+const SkillIcon = ({ icon: Icon, name, color, img, link, style, imgHeight }: { icon?: any; name: string; color?: string; img?: string; link?: string; style?: React.CSSProperties; imgHeight?: string }) => {
+  const content = (
+    <div className="holo-skill-item" style={link ? { height: '100%', width: '100%' } : style}>
+      {img ? (
+        <img src={img} alt={name} style={{ height: imgHeight || "28px", width: "auto", objectFit: "contain" }} />
+      ) : (
+        Icon && <Icon size={28} color={color || "#00C2FF"} />
+      )}
+      <span>{name}</span>
+    </div>
+  );
+
+  if (link) {
+    return (
+      <a href={link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", ...style }}>
+        {content}
+      </a>
+    );
+  }
+
+  return content;
+};
 
 const SectionTitle = ({ children }: { children: React.ReactNode }) => (
   <h3 className="holo-section-title">{children}</h3>
@@ -71,50 +79,56 @@ export default function AboutModal({ isOpen, onClose, origin }: AboutModalProps)
 
         <SectionTitle>Backend</SectionTitle>
         <div style={skillGrid}>
-          <SkillIcon icon={SiPhp} name="PHP" color="#777BB4" />
-          <SkillIcon icon={SiLaravel} name="Laravel" color="#FF2D20" />
-          <SkillIcon icon={SiNodedotjs} name="Node.js" color="#339933" />
-          <SkillIcon icon={SiNestjs} name="NestJS" color="#E0234E" />
-          <SkillIcon icon={SiExpress} name="Express" color="#ffffff" />
-          <SkillIcon icon={SiDjango} name="Django" color="#092E20" />
+          <SkillIcon img="https://skillicons.dev/icons?i=php&theme=dark" name="PHP" link="https://www.php.net/docs.php" />
+          <SkillIcon 
+            img="https://img.shields.io/badge/Flight_PHP-777BB4?style=flat-square&logo=php&logoColor=white&labelColor=4F5B93" 
+            name="Flight PHP" 
+            link="https://docs.flightphp.com/es/v3/" 
+            style={{ gridColumn: "span 2" }}
+            imgHeight="32px"
+          />
+          <SkillIcon img="https://skillicons.dev/icons?i=nodejs&theme=dark" name="Node.js" link="https://nodejs.org/en/docs" />
+          <SkillIcon img="https://skillicons.dev/icons?i=nestjs&theme=dark" name="NestJS" link="https://nestjs.com/" />
+          <SkillIcon img="https://skillicons.dev/icons?i=express&theme=dark" name="Express" link="https://expressjs.com/en/5x/api.html" />
+          <SkillIcon img="https://skillicons.dev/icons?i=django&theme=dark" name="Django" link="https://www.djangoproject.com/" />
         </div>
 
         <SectionTitle>Frontend</SectionTitle>
         <div style={skillGrid}>
-          <SkillIcon icon={SiReact} name="React" color="#61DAFB" />
-          <SkillIcon icon={SiNextdotjs} name="Next.js" color="#ffffff" />
-          <SkillIcon icon={SiAngular} name="Angular" color="#DD0031" />
-          <SkillIcon icon={SiVuedotjs} name="Vue" color="#4FC08D" />
-          <SkillIcon icon={SiTailwindcss} name="Tailwind" color="#06B6D4" />
-          <SkillIcon icon={SiJavascript} name="JavaScript" color="#F7DF1E" />
-          <SkillIcon icon={SiHtml5} name="HTML5" color="#E34F26" />
-          <SkillIcon icon={SiCss} name="CSS" color="#1572B6" />
+          <SkillIcon img="https://skillicons.dev/icons?i=react&theme=dark" name="React" link="https://react.dev/" />
+          <SkillIcon img="https://skillicons.dev/icons?i=nextjs&theme=dark" name="Next.js" link="https://nextjs.org/docs" />
+          <SkillIcon img="https://skillicons.dev/icons?i=angular&theme=dark" name="Angular" link="https://angular.io/docs" />
+          <SkillIcon img="https://skillicons.dev/icons?i=vue&theme=dark" name="Vue" link="https://vuejs.org/" />
+          <SkillIcon img="https://skillicons.dev/icons?i=tailwind&theme=dark" name="Tailwind" link="https://tailwindcss.com/docs" />
+          <SkillIcon img="https://skillicons.dev/icons?i=js&theme=dark" name="JavaScript" link="https://developer.mozilla.org/en-US/docs/Web/JavaScript" />
+          <SkillIcon img="https://skillicons.dev/icons?i=html&theme=dark" name="HTML5" link="https://developer.mozilla.org/en-US/docs/Web/HTML" />
+          <SkillIcon img="https://skillicons.dev/icons?i=css&theme=dark" name="CSS" link="https://developer.mozilla.org/en-US/docs/Web/CSS" />
         </div>
 
         <SectionTitle>Bases de datos</SectionTitle>
         <div style={skillGrid}>
-          <SkillIcon icon={SiPostgresql} name="PostgreSQL" color="#4169E1" />
-          <SkillIcon icon={SiMysql} name="MySQL" color="#4479A1" />
+          <SkillIcon img="https://skillicons.dev/icons?i=postgres&theme=dark" name="PostgreSQL" link="https://www.postgresql.org/docs/" />
+          <SkillIcon img="https://skillicons.dev/icons?i=mysql&theme=dark" name="MySQL" link="https://dev.mysql.com/doc/" />
         </div>
 
         <SectionTitle>Data & Machine Learning</SectionTitle>
         <div style={skillGrid}>
-          <SkillIcon icon={SiPython} name="Python" color="#3776AB" />
-          <SkillIcon icon={SiScikitlearn} name="Scikit-Learn" color="#F7931E" />
+          <SkillIcon img="https://skillicons.dev/icons?i=python&theme=dark" name="Python" link="https://docs.python.org/3/" />
+          <SkillIcon img="https://skillicons.dev/icons?i=sklearn&theme=dark" name="Scikit-Learn" link="https://scikit-learn.org/stable/" />
         </div>
 
         <SectionTitle>IoT & Hardware</SectionTitle>
         <div style={skillGrid}>
-          <SkillIcon icon={SiArduino} name="Arduino" color="#00979D" />
-          <SkillIcon icon={SiCplusplus} name="C++" color="#00599C" />
+          <SkillIcon img="https://skillicons.dev/icons?i=arduino&theme=dark" name="Arduino" link="https://www.arduino.cc/" />
+          <SkillIcon img="https://skillicons.dev/icons?i=cpp&theme=dark" name="C++" link="https://en.cppreference.com/w/" />
         </div>
 
         <SectionTitle>Herramientas</SectionTitle>
         <div style={skillGrid}>
-          <SkillIcon icon={SiGit} name="Git" color="#F05032" />
-          <SkillIcon icon={SiGithub} name="GitHub" color="#ffffff" />
-          <SkillIcon icon={SiDocker} name="Docker" color="#2496ED" />
-          <SkillIcon icon={SiPostman} name="Postman" color="#FF6C37" />
+          <SkillIcon img="https://skillicons.dev/icons?i=git&theme=dark" name="Git" link="https://git-scm.com/" />
+          <SkillIcon img="https://skillicons.dev/icons?i=github&theme=dark" name="GitHub" link="https://github.com/" />
+          <SkillIcon img="https://skillicons.dev/icons?i=docker&theme=dark" name="Docker" link="https://www.docker.com/" />
+          <SkillIcon img="https://skillicons.dev/icons?i=postman&theme=dark" name="Postman" link="https://www.postman.com/" />
         </div>
       </section>
     </HoloModal>

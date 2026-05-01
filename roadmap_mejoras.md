@@ -63,7 +63,7 @@ Actualmente solo tienes 2 proyectos. Un reclutador necesita ver consistencia y v
 
 - [ ] **API REST Pura con Swagger/OpenAPI:** Un sistema de autenticación JWT completo con roles y permisos. Sin frontend. Solo la API documentada con Swagger UI. Demuestra que puedes construir el núcleo sin necesitar la cara bonita.
 - [ ] **Microservicio Útil:** Un acortador de URLs, un sistema de webhooks, o una API de agregación de datos. Pequeño, limpio, desplegado en Railway o Render con Docker.
-- [ ] **Proyecto con NestJS o Laravel:** Para demostrar que dominas frameworks enterprise-grade, no solo Express.js básico.
+- [ ] **Proyecto con NestJS o Flight PHP:** Para demostrar que dominas frameworks estructurados, no solo Express.js básico.
 
 > [!TIP]
 > No tienen que ser proyectos enormes. Un reclutador prefiere ver 5 proyectos pequeños bien documentados que 1 proyecto gigante sin README.
