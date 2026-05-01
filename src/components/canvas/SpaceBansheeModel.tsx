@@ -21,10 +21,10 @@ export default function SpaceBansheeModel({ seed = 0, startDelay = 0, delay = 0,
   const laser2Ref = useRef<THREE.Mesh>(null);
   const muzzleFlashRef = useRef<THREE.PointLight>(null);
   const shotStateRef = useRef({ 
-    lastShot: -(seed * 2),
+    lastShot: -10,
     burstsLeft: 0,
-    lastBurstCooldown: -(seed * 2),
-    nextCooldownTarget: 5 + Math.random() * 5
+    lastBurstCooldown: -10,
+    nextCooldownTarget: 2 + Math.random() * 3
   });
   
   const { camera } = useThree();
@@ -60,7 +60,8 @@ export default function SpaceBansheeModel({ seed = 0, startDelay = 0, delay = 0,
 
   const config = {
     scale: 6 / 15,
-    rollLerp: 0.05
+    rollLerp: 0.05,
+    speed: 3.0
   };
 
   useFrame((state) => {
@@ -86,7 +87,7 @@ export default function SpaceBansheeModel({ seed = 0, startDelay = 0, delay = 0,
     groupRef.current.scale.setScalar(config.scale);
 
     // --- FLIGHT MATH LOGIC ---
-    const trackTime = Math.max(0, t - delay);
+    const trackTime = Math.max(0, (t - delay) * config.speed);
     const lookAheadTime = trackTime + 0.1;
     
     const currentPos = getFlightPosition(trackTime, seed, camera.position.z);
@@ -117,25 +118,25 @@ export default function SpaceBansheeModel({ seed = 0, startDelay = 0, delay = 0,
     
     if (shotState.burstsLeft <= 0) {
       if (t - shotState.lastBurstCooldown > shotState.nextCooldownTarget) {
-        if (Math.random() > 0.6) { // Solo 40% de probabilidad de disparar este ciclo
-          shotState.burstsLeft = Math.floor(Math.random() * 3) + 2; 
+        if (Math.random() > 0.3) { // 70% de probabilidad de disparar
+          shotState.burstsLeft = Math.floor(Math.random() * 3) + 3; 
           shotState.lastShot = t;
           shotState.burstsLeft--;
         } else {
-          // Salta el turno: inicia otro cooldown de 5-10s sin haber disparado
+          // Salta el turno: inicia otro cooldown corto
           shotState.lastBurstCooldown = t;
-          shotState.nextCooldownTarget = 5 + Math.random() * 5;
+          shotState.nextCooldownTarget = 2 + Math.random() * 3;
         }
       }
     } else {
-      const rapidFireRate = 0.25; 
+      const rapidFireRate = 0.05; 
       if (t - shotState.lastShot > rapidFireRate) {
         shotState.lastShot = t;
         shotState.burstsLeft--;
         
         if (shotState.burstsLeft <= 0) {
           shotState.lastBurstCooldown = t;
-          shotState.nextCooldownTarget = 5 + Math.random() * 5;
+          shotState.nextCooldownTarget = 2 + Math.random() * 3;
         }
       }
     }
@@ -144,7 +145,7 @@ export default function SpaceBansheeModel({ seed = 0, startDelay = 0, delay = 0,
     
     if (timeSinceShot < 0.2) {
       const progress = timeSinceShot / 0.2;
-      const fireDist = progress * 80; // Hacia +Z local (el Banshee encara +Z en el renderizado local)
+      const fireDist = progress * 150; // Aumentado de 80 a 150 para velocidad hipersónica
       const opacityOut = 1 - progress;
       
       if (laser1Ref.current && laser2Ref.current) {

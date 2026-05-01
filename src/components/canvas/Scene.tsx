@@ -19,41 +19,50 @@ export default function Scene() {
   const squadrons = useMemo(() => {
     const squads = [];
     let currentShips = 0;
-    const maxShips = 4; // Límite estricto y elegante de pantallas
+    const maxShips = 6; // Límite aumentado ligeramente para permitir escenarios más ricos
 
-    // Generamos naves puramente hasta llegar o acercarnos al límite de 4 piezas
+    // Generamos naves puramente hasta llegar o acercarnos al límite
     while (currentShips < maxShips) {
-      const type = Math.floor(Math.random() * 4); // 4 tipos de escenario
+      const type = Math.floor(Math.random() * 6); // 6 tipos de escenario
       const seed = Math.random() * 100;
       
-      // Lobo Solitario (Requiere 1 espacio)
+      // 0: Lobo Solitario Sabre (Requiere 1 espacio)
       if (type === 0 && currentShips + 1 <= maxShips) {
         squads.push(<SabreModel key={`ship-${currentShips}`} seed={seed} delay={Math.random() * 2} />);
         currentShips++;
       } 
-      // Reconocimiento Banshee (Requiere 1 espacio)
+      // 1: Reconocimiento Banshee (Requiere 1 espacio)
       else if (type === 1 && currentShips + 1 <= maxShips) {
         squads.push(<SpaceBansheeModel key={`ship-${currentShips}`} seed={seed} delay={Math.random() * 2} />);
         currentShips++;
       } 
-      // Cacería (Requiere 2 espacios)
+      // 2: Cacería Simple (1 Banshee escapando, 1 Sabre persiguiendo - misma ruta) (Requiere 2 espacios)
       else if (type === 2 && currentShips + 2 <= maxShips) {
         squads.push(<SpaceBansheeModel key={`ship-${currentShips}`} seed={seed} delay={0} />);
-        squads.push(<SabreModel key={`ship-${currentShips+1}`} seed={seed} delay={0.4 + Math.random() * 0.4} />);
+        squads.push(<SabreModel key={`ship-${currentShips+1}`} seed={seed} delay={1.2 + Math.random() * 0.5} />); // Más delay para separación natural
         currentShips += 2;
       } 
-      // Enjambre (Requiere 3 espacios)
+      // 3: Cacería Inversa (1 Sabre escapando, 2 Banshees persiguiendo) (Requiere 3 espacios)
       else if (type === 3 && currentShips + 3 <= maxShips) {
         squads.push(<SabreModel key={`ship-${currentShips}`} seed={seed} delay={0} />);
-        squads.push(<SpaceBansheeModel key={`ship-${currentShips+1}`} seed={seed} delay={0.3} />);
-        
-        if (Math.random() > 0.5) {
-          squads.push(<SpaceBansheeModel key={`ship-${currentShips+2}`} seed={seed} delay={0.6 + Math.random() * 0.5} />);
-        } else {
-          squads.push(<SabreModel key={`ship-${currentShips+2}`} seed={seed} delay={0.6 + Math.random() * 0.5} />);
-        }
+        squads.push(<SpaceBansheeModel key={`ship-${currentShips+1}`} seed={seed} delay={0.8} />);
+        squads.push(<SpaceBansheeModel key={`ship-${currentShips+2}`} seed={seed} delay={1.5} />);
         currentShips += 3;
       } 
+      // 4: Escuadrón Patrulla Sabre (3 Sabres con rutas entrelazadas) (Requiere 3 espacios)
+      else if (type === 4 && currentShips + 3 <= maxShips) {
+        squads.push(<SabreModel key={`ship-${currentShips}`} seed={seed} delay={0} />);
+        squads.push(<SabreModel key={`ship-${currentShips+1}`} seed={seed + 10} delay={0.5} />);
+        squads.push(<SabreModel key={`ship-${currentShips+2}`} seed={seed + 20} delay={1.0} />);
+        currentShips += 3;
+      } 
+      // 5: Enjambre Banshee (3 Banshees, rutas similares pero desviadas) (Requiere 3 espacios)
+      else if (type === 5 && currentShips + 3 <= maxShips) {
+        squads.push(<SpaceBansheeModel key={`ship-${currentShips}`} seed={seed} delay={0} />);
+        squads.push(<SpaceBansheeModel key={`ship-${currentShips+1}`} seed={seed + 1} delay={0.4} />);
+        squads.push(<SpaceBansheeModel key={`ship-${currentShips+2}`} seed={seed + 2} delay={0.8} />);
+        currentShips += 3;
+      }
       // Si el tipo elegido requiere más espacio del que queda, forzamos un lobo solitario para llenar y salir
       else {
         squads.push(<SabreModel key={`ship-${currentShips}`} seed={seed} delay={Math.random() * 2} />);
