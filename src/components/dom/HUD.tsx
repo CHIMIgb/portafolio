@@ -235,41 +235,21 @@ export default function HUD() {
         transition={{ duration: 1, delay: 1.5, ease: "easeOut" }}
       >
         <div className="container">
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <span style={{ color: "var(--accent-secondary)", fontSize: "12px" }}>
+          <div className="hud-footer-content">
+            <span className="hud-copyright">
               <ScrambledText text="© 2026 CHIMI" delay={1300} duration={5000} />
             </span>
-            <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+            <div className="hud-footer-actions">
               <button
                 onClick={toggleMute}
-                style={{
-                  background: "transparent",
-                  border: "1px solid rgba(255, 255, 255, 0.2)",
-                  borderRadius: "50%",
-                  width: "32px",
-                  height: "32px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  cursor: "pointer",
-                  color: isMuted ? "rgba(255,255,255,0.3)" : "#00C2FF",
-                  transition: "all 0.3s ease"
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = "#00C2FF";
-                  e.currentTarget.style.boxShadow = "0 0 8px rgba(0, 194, 255, 0.3)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.2)";
-                  e.currentTarget.style.boxShadow = "none";
-                }}
+                className="hud-audio-btn"
                 title={isMuted ? "Activar audio" : "Desactivar audio"}
               >
                 {isMuted ? <FaVolumeMute size={14} /> : <FaVolumeUp size={14} />}
               </button>
-              <a href="/CV/CV.pdf" download="CV_CHIMI.pdf" style={{ color: "#00C2FF", border: "1px solid rgba(0,194,255,0.3)", padding: "4px 12px", borderRadius: "15px", fontSize: "12px", textDecoration: "none", transition: "all 0.3s ease", display: "flex", alignItems: "center", gap: "6px", fontFamily: "monospace" }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "rgba(0,194,255,0.1)"; e.currentTarget.style.borderColor = "#00C2FF"; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "transparent"; e.currentTarget.style.borderColor = "rgba(0,194,255,0.3)"; }}>DESC_CV <Download size={12} /></a>
-              <a href="https://github.com/CHIMIgb" target="_blank" rel="noopener noreferrer" style={{ color: "white", transition: "color 0.3s" }} onMouseEnter={(e) => e.currentTarget.style.color = "#00C2FF"} onMouseLeave={(e) => e.currentTarget.style.color = "white"}><FaGithub size={20} /></a>
-              <a href="https://www.instagram.com/chimi_gb?igsh=MXg4NmJpZ2I0ejI1dA==" target="_blank" rel="noopener noreferrer" style={{ color: "white", transition: "color 0.3s" }} onMouseEnter={(e) => e.currentTarget.style.color = "#FF00F7"} onMouseLeave={(e) => e.currentTarget.style.color = "white"}><FaInstagram size={20} /></a>
+              <a href="/CV/CV.pdf" download="CV_CHIMI.pdf" className="hud-cv-btn">DESC_CV <Download size={12} /></a>
+              <a href="https://github.com/CHIMIgb" target="_blank" rel="noopener noreferrer" className="hud-social-link"><FaGithub size={20} /></a>
+              <a href="https://www.instagram.com/chimi_gb?igsh=MXg4NmJpZ2I0ejI1dA==" target="_blank" rel="noopener noreferrer" className="hud-social-link hud-social-link--insta"><FaInstagram size={20} /></a>
             </div>
           </div>
         </div>

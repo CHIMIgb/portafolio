@@ -231,12 +231,12 @@ export default function HoloModal({
 
             {/* ── HEADER (fixed, never scrolls) ── */}
             <div className="holo-modal-header">
-              <div>
+              <div className="holo-header-title-wrap">
                 <h2 className="holo-title">{title}</h2>
-                <div className="holo-title-bar" />
+                <div className="holo-title-bar" style={{ marginBottom: 0, marginTop: "4px" }} />
+                <span className="holo-label" style={{ position: "static", display: "block", marginTop: "4px" }}>{labelTop}</span>
               </div>
-              <span className="holo-label" style={{ position: "static" }}>{labelTop}</span>
-              <button className="holo-close-btn" onClick={handleClose}>
+              <button className="holo-close-btn" onClick={handleClose} aria-label="Cerrar">
                 <X size={18} />
               </button>
             </div>

@@ -29,8 +29,8 @@ const SectionTitle = ({ children }: { children: React.ReactNode }) => (
 
 const skillGrid: React.CSSProperties = {
   display: "grid",
-  gridTemplateColumns: "repeat(auto-fill, minmax(95px, 1fr))",
-  gap: "12px",
+  gridTemplateColumns: "repeat(auto-fill, minmax(85px, 1fr))",
+  gap: "10px",
 };
 
 export default function AboutModal({ isOpen, onClose, origin }: AboutModalProps) {
