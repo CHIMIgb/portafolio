@@ -54,16 +54,16 @@ export default function AboutModal({ isOpen, onClose, origin }: AboutModalProps)
       <section style={{ marginBottom: "50px" }}>
         <p className="holo-text">
           Identificación: <strong>CHIMI</strong>. <br /><br />
-          Recién egresado, con proyectos corriendo en paralelo desde antes de terminar la carrera. Me especializo en <strong>Backend</strong>: diseño APIs REST y trabajo principalmente con <strong>Python (FastAPI / Django)</strong>, <strong>PHP Flight</strong> y <strong>PostgreSQL</strong>.
+          <strong>Fullstack Developer</strong> recién egresado. Trabajo con <strong>Python (FastAPI / Django)</strong>, <strong>PHP Flight</strong> y <strong>PostgreSQL</strong> en el backend, y me muevo también en el frontend cuando el proyecto lo pide.
         </p>
         <p className="holo-text">
-          Lo que me importa al construir un sistema es que el núcleo aguante. Una API bien diseñada debería poder conectar cualquier frontend sin que haya que tocar lo de adentro. Eso es lo que busco cada vez.
+          Lo que guía mi forma de construir sistemas es simple: el núcleo tiene que aguantar. Una API bien diseñada debería poder conectar cualquier frontend sin que haya que tocar lo de adentro. Eso es lo que busco cada vez que arranco algo nuevo.
         </p>
         <p className="holo-text">
-          Dependiendo del proyecto, trabajo solo o en equipo — no tengo preferencia fija, me adapto a lo que pide la situación. A futuro quiero profundizar en arquitectura de APIs y análisis de datos. Ahí es donde quiero llegar.
+          Empecé proyectos antes de egresar y sigo sumando experiencia en paralelo. A futuro quiero profundizar en arquitectura de APIs y análisis de datos — dos áreas donde veo que puedo aportar algo real.
         </p>
         <p className="holo-text">
-          Fuera del código juego videojuegos, sobre todo los que tienen buena historia. <strong>Halo: Reach</strong> es el que más me marcó — no por la acción sino por lo que cuenta.
+          Fuera del trabajo colecciono videojuegos retro, leo ciencia ficción y armo LEGO. Cosas distintas entre sí, pero todas comparten algo: hay un sistema detrás que vale la pena entender.
         </p>
 
         <div style={{ marginTop: "24px" }}>

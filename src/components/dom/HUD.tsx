@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { ArrowRight, Code, Download } from "lucide-react";
-import { FaGithub, FaInstagram, FaVolumeUp, FaVolumeMute } from "react-icons/fa";
+import { FaGithub, FaInstagram, FaLinkedin, FaVolumeUp, FaVolumeMute } from "react-icons/fa";
 import { motion } from "framer-motion";
 import ContactModal from "./ContactModal";
 import AboutModal from "./AboutModal";
@@ -87,7 +87,7 @@ export default function HUD() {
             <ScrambledText text="CHIMI" delay={100} duration={5000} />
           </a>
           <span className="hud-subtitle">
-            <ScrambledText text="BACKEND DEVELOPER" delay={400} duration={5000} />
+            <ScrambledText text="FULLSTACK DEVELOPER" delay={400} duration={5000} />
           </span>
         </div>
 
@@ -249,6 +249,7 @@ export default function HUD() {
               </button>
               <a href="/CV/CV.pdf" download="CV_CHIMI.pdf" className="hud-cv-btn">DESC_CV <Download size={12} /></a>
               <a href="https://github.com/CHIMIgb" target="_blank" rel="noopener noreferrer" className="hud-social-link"><FaGithub size={20} /></a>
+              <a href="https://www.linkedin.com/in/adrian-gallardo-24791a3a6/" target="_blank" rel="noopener noreferrer" className="hud-social-link"><FaLinkedin size={20} /></a>
               <a href="https://www.instagram.com/chimi_gb?igsh=MXg4NmJpZ2I0ejI1dA==" target="_blank" rel="noopener noreferrer" className="hud-social-link hud-social-link--insta"><FaInstagram size={20} /></a>
             </div>
           </div>

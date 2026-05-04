@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import emailjs from "@emailjs/browser";
 import { Send, Mail, Phone, CheckCircle } from "lucide-react";
-import { FaGithub, FaInstagram } from "react-icons/fa";
+import { FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
 import HoloModal from "./HoloModal";
 import ScrambledText from "../ui/ScrambledText";
 
@@ -149,6 +149,7 @@ export default function ContactModal({ isOpen, onClose, origin }: ContactModalPr
         </div>
         <div style={{ display: "flex", gap: "12px", marginTop: "8px" }}>
           <a href="https://github.com/CHIMIgb" target="_blank" rel="noopener noreferrer" className="holo-social-link"><FaGithub size={18} /></a>
+          <a href="https://www.linkedin.com/in/adrian-gallardo-24791a3a6/" target="_blank" rel="noopener noreferrer" className="holo-social-link"><FaLinkedin size={18} /></a>
           <a href="https://www.instagram.com/chimi_gb?igsh=MXg4NmJpZ2I0ejI1dA==" target="_blank" rel="noopener noreferrer" className="holo-social-link"><FaInstagram size={18} /></a>
         </div>
       </div>
